@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp; -*-
+
 (defface height2 '((t (:height 4.0))) "4x height")
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/w3m")
