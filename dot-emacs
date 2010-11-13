@@ -41,8 +41,6 @@
 ; (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.framework/Home")
 (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.Framework/Versions/1.6.0/Home")
 
-(setq mac-option-modifier 'super)
-
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 ;; (set-terminal-coding-system 'utf-8)
@@ -57,6 +55,7 @@
 (setq user-full-name "Sean McAfee")
 (setq user-mail-address "eefacm@gmail.com")
 
+(setq mac-option-modifier 'super)
 (setq iswitchb-prompt-newbuffer nil)
 (setq-default indent-tabs-mode nil)
 (setq backup-directory-alist '(("" . "~/.emacs_backups")))
@@ -70,6 +69,7 @@
 (setq htmlize-generate-hyperlinks nil)
 ;; (setq term-term-name "vt100")
 (setq bookmark-save-flag 1)
+(setq vc-follow-symlinks t)
 
 
 ;; Key bindings:
@@ -104,7 +104,7 @@
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
 (add-hook 'sgml-mode-hook 'turn-off-auto-fill)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
-(add-hook* 'gnus-group-mode-hook (setq show-trailing-whitespace nil))
+(add-hook 'message-mode-hook 'auto-fill-mode)
 
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
@@ -126,12 +126,16 @@
   (let ((file-list (dired-get-marked-files)))
     (assert (= 1 (length file-list)))
     (emms-play-directory (car file-list)))
-  (emms-playlist-mode-go))
+  (kill-buffer nil)
+  (emms-playlist-mode-go)
+  (goto-line 2))
 
 (global-set-key [(super w) ?d] 'wrif-open-directory)
 (global-set-key [(super w) ?p] 'wrif-play-directory)
 (global-set-key [(super w) ?l] 'emms-playlist-mode-go)
+
 (global-set-key [(super meta x)] 'emms-pause)
+(global-set-key [(super meta p)] 'emms-pause)
 
 (defconst wrif-skip-intervals '((7 . super) (60 . meta) (360 . control)))
 
@@ -155,7 +159,7 @@
       gnus-sum-thread-tree-vertical "│"
       gnus-treat-hide-citation t
       gnus-cited-lines-visible '(0 . 5)
-      gnus-large-newsgroup nil)
+      gnus-large-newsgroup 10000)
 
 
 ;; W3M:
@@ -181,14 +185,14 @@
   "Convenient shorthand for cperl-perldoc.")
 
 (defalias 'gof 'gnus-other-frame)
-(defalias 'ctb 'comint-truncate-buffer)
+(defalias 'tb 'comint-truncate-buffer)
 
 (require 'color-theme)
 (require 'zenburn)
 (color-theme-initialize)
 (zenburn)
 
-(defadvice gnus (before gnus-single-window activate compile)
+(defadvice gnus (before gnus-single-window compile activate)
   (delete-other-windows))
 
 (defadvice open-line (around vi-style-open-line activate)
@@ -204,9 +208,6 @@ putting the current line this far down the window.")
 (defadvice recenter (before recenter-proportionally activate)
   (or (ad-get-arg 0)
       (ad-set-arg 0 (truncate (* recenter-fraction (window-body-height))))))
-
-(defadvice gnus (before delete-other-windows activate)
-  (delete-other-windows))
 
 (quietly-read-abbrev-file "~/.abbrev_defs")
 

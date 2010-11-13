@@ -168,3 +168,6 @@ true, the loop halts."
   (interactive "p")
   (downcase-region (point) (if mark-active (mark) (+ arg (point)))))
 
+(defun crontab ()
+  (interactive)
+  (shell-command "EDITOR=emacsclient crontab -e &"))
