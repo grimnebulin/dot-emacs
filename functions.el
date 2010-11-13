@@ -1,11 +1,11 @@
-(defun start-piped-process (&rest args)
-  (let ((process-connection-type nil))
-    (apply 'start-process args)))
+;; (defun start-piped-process (&rest args)
+;;   (let ((process-connection-type nil))
+;;     (apply 'start-process args)))
 
-(defun join-lines ()
-  (interactive)
-  (end-of-line)
-  (delete-region (point) (line-beginning-position 3)))
+;; (defun join-lines ()
+;;   (interactive)
+;;   (end-of-line)
+;;   (delete-region (point) (line-beginning-position 3)))
 
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
@@ -122,13 +122,21 @@ true, the loop halts."
     (set-frame-position frame 0 0)
     (set-frame-size frame 188 52)))
 
+(defmacro to-system-clipboard (&optional name &rest body)
+  "Execute body in a temporary buffer, then copy the accessible portion
+of the buffer to the system clipboard."
+  `(with-temp-buffer
+     (save-excursion ,@(if (stringp name) body (cons name body)))
+     (clipboard-kill-ring-save (point-min) (point-max))
+     ,@(when (stringp name) (list (message "%s copied to system clipboard" name)))))
+
 (defun stackoverflow-copy-code-snippet (begin end)
   (interactive "r")
   (let ((buffer (current-buffer)))
-    (with-temp-buffer
-      (insert-buffer-substring-no-properties buffer begin end)
-      (indent-rigidly (point-min) (point-max) 4)
-      (clipboard-kill-ring-save (point-min) (point-max)))))
+    (to-system-clipboard
+     "Code snippet"
+     (insert-buffer-substring-no-properties buffer begin end)
+     (indent-rigidly (point-min) (point-max) 4))))
 
 (defvar shell-command-with-?-expansion-history nil)
 
@@ -153,12 +161,11 @@ true, the loop halts."
 (defun kill-this-buffer-and-maybe-associated-file ()
   (interactive)
   (let ((buffer (current-buffer))
-        (file-name (or (buffer-file-name)
-                       (error "Buffer is not visiting a file"))))
+        (file-name (buffer-file-name-or-error)))
     (kill-buffer buffer)
-    (when (and (not (buffer-live-p buffer))
-               (y-or-n-p (concat "Delete file " file-name "? ")))
-      (delete-file file-name))))
+    (and (not (buffer-live-p buffer))
+         (y-or-n-p (concat "Delete file " file-name "? "))
+         (delete-file file-name))))
 
 (defun upcase-region-or-characters (arg)
   (interactive "p")
@@ -168,3 +175,34 @@ true, the loop halts."
   (interactive "p")
   (downcase-region (point) (if mark-active (mark) (+ arg (point)))))
 
+(defun killdir ()
+  (interactive)
+  (if (not default-directory)
+      (error "default-directory is nil")
+    (kill-new default-directory)))
+
+(defun send-last-shell-to-this-directory (prefix)
+  "Switch to the most recently visited shell buffer, and issue a \"cd\"
+command to move it to the default directory of the buffer which was
+current when this command was invoked."
+  (interactive "p")
+  (let* ((buffer (or (loop for buffer being the buffers
+                           if (with-current-buffer buffer
+                                (eq major-mode 'shell-mode))
+                           return buffer)
+                     (error "No shell buffer available")))
+         (proc (get-buffer-process buffer))
+         (dir default-directory)
+         (command (concat "cd " dir "\n")))
+    (or prefix (kill-buffer nil))
+    (switch-to-buffer buffer)
+    (unless comint-process-echoes
+      (insert command))
+    (sit-for 0) ; perform redisplay
+    (comint-send-string proc command)
+    (set-marker (process-mark proc) (point))
+    (cd dir)))
+
+(defun crontab ()
+  (interactive)
+  (shell-command "EDITOR=emacsclient crontab -e &"))
