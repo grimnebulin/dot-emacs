@@ -50,7 +50,7 @@
 
 (setq auto-hscroll-mode nil)
 
-(defconst jdict-dictionary-dir "~/quiz2/jdict-pages/")
+(defconst jdict-dictionary-dir "~/files/jdict-pages/")
 (defconst jdict-hscroll-distance 5)
 (defconst jdict-vscroll-distance 5)
 (defconst jdict-large-page-suffix "60")
