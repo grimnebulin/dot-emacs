@@ -1,3 +1,23 @@
+(defun insert-vowel-with-macron ()
+  (interactive)
+  (insert
+   (case last-input-char
+     (?a "ā")
+     (?A "Ā")
+     (?e "ē")
+     (?E "Ē")
+     (?i "ī")
+     (?I "Ī")
+     (?o "ō")
+     (?O "Ō")
+     (?u "ū")
+     (?U "Ū")
+     (otherwise (char-to-string last-input-char)))))
+
+(loop for char in '(?a ?A ?e ?E ?i ?I ?o ?O ?u ?U) do
+      (global-set-key (vector '(control x) ?9 char) 'insert-vowel-with-macron))
+
+
 (defvar jdict-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map "\C-c\C-f" 'jdict-strip-face-this-line)

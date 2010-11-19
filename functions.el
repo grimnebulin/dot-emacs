@@ -33,17 +33,6 @@
 
 ;; 
 
-(defmacro set-associations (alist &rest new-assocs)
-  (let ((new-assoc (gensym))
-        (found (gensym)))
-    `(loop for ,new-assoc in ',new-assocs do
-       (let ((,found (assoc (car ,new-assoc) ,alist)))
-         (if ,found
-             (setcdr ,found (cdr ,new-assoc))
-           (setq ,alist (cons ,new-assoc ,alist)))))))
-
-;;
-
 (defun other-window-delete-rest (arg)
   "Goes to the next window with other-window, then makes that window
 the only visible window.  With a prefix argument, kills the current
@@ -158,13 +147,12 @@ of the buffer to the system clipboard."
      command)
    output-buffer))
 
-(defun kill-this-buffer-and-maybe-associated-file ()
+(defun kill-this-buffer-and-associated-file ()
   (interactive)
   (let ((buffer (current-buffer))
         (file-name (buffer-file-name-or-error)))
     (kill-buffer buffer)
     (and (not (buffer-live-p buffer))
-         (y-or-n-p (concat "Delete file " file-name "? "))
          (delete-file file-name))))
 
 (defun upcase-region-or-characters (arg)
@@ -206,3 +194,14 @@ current when this command was invoked."
 (defun crontab ()
   (interactive)
   (shell-command "EDITOR=emacsclient crontab -e &"))
+
+(defun toggle-case ()
+  (interactive)
+  (let ((case-fold-search nil))
+    (when (search-forward-regexp "\\=\\([A-Z]\\)\\|\\=\\([a-z]\\)" nil t)
+      (replace-match
+       (if (match-string 1)
+           (downcase (match-string 1))
+         (upcase (match-string 2)))
+       t)
+      (backward-char 1))))
