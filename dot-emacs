@@ -1,74 +1,46 @@
 ;; -*- mode: emacs-lisp; -*-
 
-;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/w3m")
-;; (add-to-list 'load-path "~/emacs/packages/cc-mode")
-;; (add-to-list 'load-path "~/jdee-2.4.0/lisp")
-(add-to-list 'load-path "~/emacs")
-(add-to-list 'load-path "~/emacs/emms-3.0")
-;; (add-to-list 'load-path "~/emacs/yasnippet")
-
-;; (add-to-list 'load-path "~/emacs/dtrt-indent")
-;; (require 'dtrt-indent)
-;; (dtrt-indent-mode 1)
-
-;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mew")
-;; (autoload 'mew "mew" nil t)
-;; (autoload 'mew-send "mew" nil t)
-;; (setq mew-mailbox-type 'mbox)
-;; (setq mew-mbox-command "incm")
-;; (setq mew-mbox-command-arg "-u -d /var/mail/smcafee-mail")
-
-(require 'emms-setup)
-(require 'emms-player-mpg321-remote)
-(require 'emms-playing-time)
-(emms-standard)
-(emms-default-players)
-(push 'emms-player-mpg321-remote emms-player-list)
-(emms-playing-time 1)
-
 (require 'cl)
 
+(add-to-list 'load-path "~/emacs")
+(add-to-list 'load-path "~/emacs/dtrt-indent")
+
 (load "functions")
-;; (load "akamai")
-;; (load "japanese")
-
-; (require 'jde)
-
-;; (setq jde-web-browser "mozilla")
-;; (setq jde-doc-dir "")
-;; (setq jde-db-set-source-paths "")
+(load "wrif")
+(load "akamai" t)
 
 (transient-mark-mode 1)
 (iswitchb-mode 1)
 (tool-bar-mode -1)
 (random t)
 (server-start)
-;; (desktop-save-mode 1)
+(desktop-save-mode 1)
+(quietly-read-abbrev-file)
 
-(setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
-(setenv "NNTPSERVER" "news.supernews.com")
-(setenv "SHELL" "bash")
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+
 ; (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.framework/Home")
 ;; (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.Framework/Versions/1.6.0/Home")
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+(require 'dtrt-indent)
+(dtrt-indent-mode 1)
+
+;;  Variables:
 
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-;; (set-terminal-coding-system 'utf-8)
-;; (set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
-
-;;  Variables:
-
-(set-associations initial-frame-alist (top . 0) (left . -100))
-(set-associations default-frame-alist (width . 90) (height . 54))
+(setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
+(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
 (setq user-full-name "Sean McAfee")
 (setq user-mail-address "eefacm@gmail.com")
 
-(setq mac-option-modifier 'super)
 (setq iswitchb-prompt-newbuffer nil)
 (setq-default indent-tabs-mode nil)
 (setq backup-directory-alist '(("" . "~/.emacs_backups")))
@@ -79,32 +51,34 @@
 (setq-default c-basic-offset 4)
 (setq perl-indent-level 4)
 (setq dired-dwim-target t)
-(setq htmlize-generate-hyperlinks nil)
 (setq bookmark-save-flag 1)
 (setq line-move-visual nil)
 (setq vc-follow-symlinks t)
 (setq term-term-name "vt100")
 
+(setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
+(setenv "NNTPSERVER" "news.supernews.com")
+(setenv "SHELL" "bash")
+
 
 ;; Key bindings:
 
 (global-set-key "\C-x\C-j" 'dired-jump)
+(global-set-key [(control m)] 'newline-and-indent)
+(global-set-key "\C-x\C-j" 'dired-jump)
+(global-set-key "\C-x\C-b" 'ibuffer)
+(global-set-key "\C-x\C-o" 'other-window-delete-rest)
 (global-set-key* [(shift control n)] (next-line) (scroll-up 1))
 (global-set-key* [(shift control p)] (previous-line) (scroll-down 1))
-(global-set-key [(control x) (control b)] 'ibuffer)
-(global-set-key [(control ?*)] 'my-isearch-word-at-point)
-(global-set-key [(control m)] 'newline-and-indent)
-(global-set-key [(control x) (control o)] 'other-window-delete-rest)
 (global-set-key [(super s)] 'shell)
 (global-set-key [(meta  p)] 'shell)
 (global-set-key [(super \\)] 'find-file-at-point)
-;; (global-set-key [(super d)] 'sql-mysql) ;; conflicts with prefix in dd.el
-;; (global-set-key "\C-xm" 'browse-url-at-point)
-(global-set-key* [(super u)] (set-buffer-file-coding-system 'utf-8))
 (global-set-key [(super ?!)] 'shell-command-with-?-expansion)
-(global-set-key "\C-x\M-k" 'kill-this-buffer-and-maybe-associated-file)
+(global-set-key "\C-x\M-k" 'kill-this-buffer-and-associated-file)
 (global-set-key "\C-x\C-u" 'upcase-region-or-characters)
 (global-set-key "\C-x\C-l" 'downcase-region-or-characters)
+(global-set-key [(shift control t)] 'toggle-case)
+(global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (global-set-key [(shift meta b)] 'bury-buffer)
 (global-set-key [(shift meta x)] 'clipboard-kill-region)
 (global-set-key [(shift meta c)] 'clipboard-kill-ring-save)
@@ -135,44 +109,20 @@
 (add-hook* 'comint-exec-hook
   (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))
 
-;; WRIF:
+;; EMMS:
 
-(defconst wrif-directory "~/WRIF")
+(require 'emms-setup)
+(require 'emms-player-mpg321-remote)
+(require 'emms-playing-time)
+(emms-standard)
+(emms-default-players)
+(push 'emms-player-mpg321-remote emms-player-list)
+(emms-playing-time 1)
 
-(defun wrif-open-directory ()
-  (interactive)
-  (dired wrif-directory)
-  (revert-buffer))
+;; Gnus:
 
-(defun wrif-play-directory ()
-  (interactive)
-  (let ((file-list (dired-get-marked-files)))
-    (assert (= 1 (length file-list)))
-    (emms-play-directory (car file-list)))
-  (kill-buffer nil)
-  (emms-playlist-mode-go)
-  (goto-line 2))
-
-(global-unset-key [(super w)])
-
-(global-set-key [(super w) ?d] 'wrif-open-directory)
-(global-set-key [(super w) ?p] 'wrif-play-directory)
-(global-set-key [(super w) ?l] 'emms-playlist-mode-go)
-
-(global-set-key [(super meta x)] 'emms-pause)
-(global-set-key [(super meta p)] 'emms-pause)
-
-(defconst wrif-skip-intervals '((7 . hyper) (60 . meta) (360 . control)))
-
-(loop with modifiers = nil
-      for (magnitude . modifier) in wrif-skip-intervals do
-        (setq modifiers (append modifiers (list modifier)))
-        (loop for (key . func) in '((right . +) (left . -)) do
-          (global-set-key (vector (append modifiers (list key)))
-                          `(lambda () (interactive)
-                             (emms-seek ,(funcall func magnitude))))))
-
-;; Gnus config:
+(defadvice gnus (before gnus-single-window compile activate)
+  (delete-other-windows))
 
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
@@ -189,43 +139,22 @@
       mm-text-html-renderer 'w3m-standalone
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n")
 
-;; W3M:
-
-(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-; (setq browse-url-browser-function 'w3m-browse-url)
-
-
-;; Ibuffer:
-
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-
-
-;; Snippets:
-
-;; (require 'yasnippet)
-;; (yas/load-directory "~/emacs/snippets")
-
 
 ;; Misc:
 
 (require 'term)
 (term-set-escape-char ?\C-x)
 
-(defalias 'perldoc 'cperl-perldoc
-  "Convenient shorthand for cperl-perldoc.")
-
+(defalias 'perldoc 'cperl-perldoc "Convenient shorthand for cperl-perldoc.")
 (defalias 'gof 'gnus-other-frame)
-(defalias 'ctb 'comint-truncate-buffer)
-(defalias 'go 'send-last-shell-to-this-directory)
+(defalias 'tb 'comint-truncate-buffer)
+(defalias 'c\'mere 'send-last-shell-to-this-directory)
 
 (add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 (require 'color-theme)
 (require 'zenburn)
 (color-theme-initialize)
 (zenburn)
-
-(defadvice gnus (before gnus-single-window compile activate)
-  (delete-other-windows))
 
 (defadvice open-line (around vi-style-open-line activate)
   "Make open-line behave more like vi."
@@ -240,30 +169,6 @@ putting the current line this far down the window.")
 (defadvice recenter (before recenter-proportionally activate)
   (or (ad-get-arg 0)
       (ad-set-arg 0 (truncate (* recenter-fraction (window-body-height))))))
-
-(quietly-read-abbrev-file)
-
-;;;;;;;
-
-(defun insert-vowel-with-macron ()
-  (interactive)
-  (insert
-   (case last-input-char
-     (?a "ā")
-     (?A "Ā")
-     (?e "ē")
-     (?E "Ē")
-     (?i "ī")
-     (?I "Ī")
-     (?o "ō")
-     (?O "Ō")
-     (?u "ū")
-     (?U "Ū")
-     (otherwise (char-to-string last-input-char)))))
-
-(loop for char in '(?a ?A ?e ?E ?i ?I ?o ?O ?u ?U) do
-      (global-set-key (vector '(control x) ?9 char) 'insert-vowel-with-macron))
-
 
 ;;
 ;; Erlang
@@ -292,7 +197,7 @@ putting the current line this far down the window.")
  '(isearch-allow-scroll t)
  '(jde-enable-abbrev-mode t)
  '(jde-jdk-registry (quote (("1.6.0" . "/System/Library/Frameworks/JavaVM.Framework/Versions/1.6.0"))))
- '(ldap-host-parameters-alist (quote (("localhost:1389" base "ou=people" binddn "corp.akamai.com\\smcafee" passwd "akama1r00lz" auth simple))))
+ '(ldap-host-parameters-alist (quote (("localhost") ("localhost:1389" base "ou=people" binddn "corp.akamai.com\\smcafee" passwd "akama1r00lz" auth simple))))
  '(w3m-search-engine-alist (quote (("WWWJDIC" "http://www.csse.monash.edu.au/~jwb/cgi-bin/wwwjdic.cgi?1E" undecided "dsrchkey=%s&dsrchtype=J") ("yahoo" "http://search.yahoo.com/bin/search?p=%s" nil) ("yahoo-ja" "http://search.yahoo.co.jp/bin/search?p=%s" euc-japan) ("google" "http://www.google.com/search?q=%s" nil) ("google-ja" "http://www.google.com/search?q=%s&hl=ja&lr=lang_ja&ie=Shift_JIS" shift_jis) ("google groups" "http://groups.google.com/groups?q=%s" nil) ("All the Web" "http://www.alltheweb.com/search?web&_sb_lang=en&q=%s" nil) ("All the Web-ja" "http://www.alltheweb.com/search?web&_sb_lang=ja&cs=euc-jp&q=%s" euc-japan) ("goo-ja" "http://www.goo.ne.jp/default.asp?MT=%s" euc-japan) ("excite-ja" "http://www.excite.co.jp/search.gw?target=combined&look=excite_jp&lang=jp&tsug=-1&csug=-1&search=%s" shift_jis) ("lycos-ja" "http://www.lycos.co.jp/cgi-bin/pursuit?query=\"%s\"&cat=jp&encoding=shift-jis" shift_jis) ("altavista" "http://altavista.com/sites/search/web?q=\"%s\"&kl=ja&search=Search" nil) ("rpmfind" "http://rpmfind.net/linux/rpm2html/search.php?query=%s" nil) ("debian-pkg" "http://packages.debian.org/cgi-bin/search_contents.pl?directories=yes&arch=i386&version=unstable&case=insensitive&word=%s" nil) ("debian-bts" "http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=yes&pkg=%s" nil) ("freebsd-users-jp" "http://home.jp.FreeBSD.org/cgi-bin/namazu.cgi?key=\"%s\"&whence=0&max=50&format=long&sort=score&dbname=FreeBSD-users-jp" euc-japan) ("iij-archie" "http://www.iij.ad.jp/cgi-bin/archieplexform?query=%s&type=Case+Insensitive+Substring+Match&order=host&server=archie1.iij.ad.jp&hits=95&nice=Nice" nil) ("waei" "http://dictionary.goo.ne.jp/cgi-bin/dict_search.cgi?MT=%s&sw=1" euc-japan) ("eiwa" "http://dictionary.goo.ne.jp/cgi-bin/dict_search.cgi?MT=%s&sw=0" nil) ("kokugo" "http://dictionary.goo.ne.jp/cgi-bin/dict_search.cgi?MT=%s&sw=2" euc-japan) ("eiei" "http://www.dictionary.com/cgi-bin/dict.pl?term=%s&r=67" nil) ("amazon" "http://www.amazon.com/exec/obidos/search-handle-form/250-7496892-7797857" nil "url=index=blended&field-keywords=%s") ("amazon-ja" "http://www.amazon.co.jp/exec/obidos/search-handle-form/250-7496892-7797857" shift_jis "url=index=blended&search-type=quick-search&field-keywords=%s")))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
