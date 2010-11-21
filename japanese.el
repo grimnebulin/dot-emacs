@@ -109,6 +109,8 @@
 (defconst hepburn-doubled-consonant-regexp
   "\\([bdfghkmnprstz]\\)\\1\\|tch")
 
+(defface height2 '((t (:height 4.0))) "4x height")
+
 (; defconst
  setq hepburn-basic-syllable-alist
   '(("a" . "あ") ("ā" . "ああ")
