@@ -129,19 +129,19 @@ of the buffer to the system clipboard."
 
 (defvar shell-command-with-?-expansion-history nil)
 
-(defun buffer-file-name-or-error ()
+(defun buffer-file-name* ()
   (or (buffer-file-name) (error "Not visiting a file")))
 
 (defun shell-command-with-?-expansion (command &optional output-buffer)
   (interactive
    (progn
-     (buffer-file-name-or-error)
+     (buffer-file-name*)
      (list (read-from-minibuffer
             "Shell command (with ? expansion): "
             nil nil nil 'shell-command-with-?-expansion-history)
            current-prefix-arg)))
   (shell-command
-   (let ((quoted-file-name (shell-quote-argument (buffer-file-name-or-error))))
+   (let ((quoted-file-name (shell-quote-argument (buffer-file-name*))))
      (while (string-match "\\(^\\|[ \t]\\)\\(\\?\\)\\([ \t]\\|$\\)" command)
        (setq command (replace-match quoted-file-name t t command 2)))
      command)
@@ -150,7 +150,7 @@ of the buffer to the system clipboard."
 (defun kill-this-buffer-and-associated-file ()
   (interactive)
   (let ((buffer (current-buffer))
-        (file-name (buffer-file-name-or-error)))
+        (file-name (buffer-file-name*)))
     (kill-buffer buffer)
     (and (not (buffer-live-p buffer))
          (delete-file file-name))))
@@ -205,3 +205,114 @@ current when this command was invoked."
          (upcase (match-string 2)))
        t)
       (backward-char 1))))
+
+(defconst +cycle-single-quotes+
+  '("''" "q()" "q{}" "q//" "q[]"))
+
+(defconst +cycle-double-quotes+
+  '("\"\"" "qq()" "qq{}" "qq//" "qq[]"))
+
+(defun cycle-perl-quotes (pos)
+  (interactive "d")
+  (or (eq 'font-lock-string-face (get-text-property pos 'face))
+      (error "Not within a string"))
+  (let* ((start (or (previous-single-property-change pos 'face)
+                    (error "Can't find beginning of string")))
+         (end   (or (    next-single-property-change pos 'face)
+                    (error "Can't find end of string")))
+         (string (buffer-substring-no-properties (1+ start) (1- end)))
+         (delims (format "%s%s%c%c"
+                         (if (equal (char-before (1- start)) ?q) "q" "")
+                         (if (equal (char-before     start ) ?q) "q" "")
+                         (char-after start)
+                         (char-before end)))
+         list
+         (tail (or (member delims (setq list +cycle-single-quotes+))
+                   (member delims (setq list +cycle-double-quotes+))
+                   (error "Can't determine string delimiters")))
+         (these-quotes (first tail))
+         (next-quotes (or (loop for q in (append (rest tail) list)
+                                while (not (eq q these-quotes))
+                                if (not (string-match
+                                         (format "[%s%s]"
+                                                 (substring q -1)
+                                                 (substring q -2 -1))
+                                         string))
+                                return q)
+                          (error "No appropriate delimiters"))))
+    (save-excursion
+      (goto-char end)
+      (delete-backward-char 1)
+      (insert (substring next-quotes -1))
+      (goto-char start)
+      (delete-char 1)
+      (delete-backward-char (- (length these-quotes) 2))
+      (insert (substring next-quotes 0 -1)))))
+
+(require 'perl-mode)
+(define-key perl-mode-map [(super q)] 'cycle-perl-quotes)
+
+;; Ganked from somewhere.
+
+;; someday might want to rotate windows if more than 2 of them
+
+(defun swap-windows ()
+  "If you have 2 windows, it swaps them."
+  (interactive)
+  (cond ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
+        (t
+         (let* ((w1 (first (window-list)))
+                (w2 (second (window-list)))
+                (b1 (window-buffer w1))
+                (b2 (window-buffer w2))
+                (s1 (window-start w1))
+                (s2 (window-start w2)))
+           (set-window-buffer w1 b2)
+           (set-window-buffer w2 b1)
+           (set-window-start w1 s2)
+           (set-window-start w2 s1)))))
+
+;; Ganked from somewhere.
+
+;;
+;; Never understood why Emacs doesn't have this function.
+;;
+
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+	(filename (buffer-file-name)))
+    (if (not filename)
+	(message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+	(progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
+
+;; Ganked from somewhere.
+
+;;
+;; Never understood why Emacs doesn't have this function, either.
+;;
+
+(defun move-buffer-file (dir)
+  "Moves both current buffer and file it's visiting to DIR."
+  (interactive "DNew directory: ")
+  (let* ((name (buffer-name))
+	 (filename (buffer-file-name))
+	 (dir
+          (if (string-match dir "\\(?:/\\|\\\\)$")
+              (substring dir 0 -1) dir))
+	 (newname (concat dir "/" name)))
+    (if (not filename)
+	(message "Buffer '%s' is not visiting a file!" name)
+      (progn
+        (copy-file filename newname 1)
+ 	(delete-file filename)
+ 	(set-visited-file-name newname)
+ 	(set-buffer-modified-p nil)
+ 	t))))

@@ -2,11 +2,19 @@
 
 (require 'cl)
 
+(set-face-attribute 'default nil :font "Inconsolata" :height 140)
+; (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 140)
+
+(push "/usr/local/bin" exec-path)
+
 (add-to-list 'load-path "~/emacs")
+(add-to-list 'load-path "~/emacs/emms-3.0")
 (add-to-list 'load-path "~/emacs/dtrt-indent")
 
+(load "~/emacs/haskell-mode-2.8.0/haskell-site-file")
+
 (load "functions")
-(load "wrif")
+(load "wrif" t)
 (load "akamai" t)
 
 (transient-mark-mode 1)
@@ -20,20 +28,20 @@
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
 
-; (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.framework/Home")
+;; (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.framework/Home")
 ;; (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.Framework/Versions/1.6.0/Home")
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(require 'dtrt-indent)
-(dtrt-indent-mode 1)
+;; (require 'dtrt-indent)
+;; (dtrt-indent-mode 1)
 
 ;;  Variables:
 
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier 'super)
+(setq mac-command-modifier 'meta
+      mac-option-modifier 'super)
 
 (setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
 (setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
@@ -57,7 +65,7 @@
 (setq term-term-name "vt100")
 
 (setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
-(setenv "NNTPSERVER" "news.supernews.com")
+(setenv "NNTPSERVER" "news.eternal-september.org")
 (setenv "SHELL" "bash")
 
 
@@ -121,8 +129,8 @@
 
 ;; Gnus:
 
-(defadvice gnus (before gnus-single-window compile activate)
-  (delete-other-windows))
+;; (defadvice gnus (before gnus-single-window compile activate)
+;;   (delete-other-windows))
 
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
@@ -137,7 +145,8 @@
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
       mm-text-html-renderer 'w3m-standalone
-      gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n")
+      gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
+      gnus-save-newsrc-file nil)
 
 
 ;; Misc:
@@ -198,6 +207,8 @@ putting the current line this far down the window.")
  '(jde-enable-abbrev-mode t)
  '(jde-jdk-registry (quote (("1.6.0" . "/System/Library/Frameworks/JavaVM.Framework/Versions/1.6.0"))))
  '(ldap-host-parameters-alist (quote (("localhost") ("localhost:1389" base "ou=people" binddn "corp.akamai.com\\smcafee" passwd "akama1r00lz" auth simple))))
+ '(org-agenda-files (quote ("~/org.org")))
+ '(safe-local-variable-values (quote ((auto-fill-mode))))
  '(w3m-search-engine-alist (quote (("WWWJDIC" "http://www.csse.monash.edu.au/~jwb/cgi-bin/wwwjdic.cgi?1E" undecided "dsrchkey=%s&dsrchtype=J") ("yahoo" "http://search.yahoo.com/bin/search?p=%s" nil) ("yahoo-ja" "http://search.yahoo.co.jp/bin/search?p=%s" euc-japan) ("google" "http://www.google.com/search?q=%s" nil) ("google-ja" "http://www.google.com/search?q=%s&hl=ja&lr=lang_ja&ie=Shift_JIS" shift_jis) ("google groups" "http://groups.google.com/groups?q=%s" nil) ("All the Web" "http://www.alltheweb.com/search?web&_sb_lang=en&q=%s" nil) ("All the Web-ja" "http://www.alltheweb.com/search?web&_sb_lang=ja&cs=euc-jp&q=%s" euc-japan) ("goo-ja" "http://www.goo.ne.jp/default.asp?MT=%s" euc-japan) ("excite-ja" "http://www.excite.co.jp/search.gw?target=combined&look=excite_jp&lang=jp&tsug=-1&csug=-1&search=%s" shift_jis) ("lycos-ja" "http://www.lycos.co.jp/cgi-bin/pursuit?query=\"%s\"&cat=jp&encoding=shift-jis" shift_jis) ("altavista" "http://altavista.com/sites/search/web?q=\"%s\"&kl=ja&search=Search" nil) ("rpmfind" "http://rpmfind.net/linux/rpm2html/search.php?query=%s" nil) ("debian-pkg" "http://packages.debian.org/cgi-bin/search_contents.pl?directories=yes&arch=i386&version=unstable&case=insensitive&word=%s" nil) ("debian-bts" "http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=yes&pkg=%s" nil) ("freebsd-users-jp" "http://home.jp.FreeBSD.org/cgi-bin/namazu.cgi?key=\"%s\"&whence=0&max=50&format=long&sort=score&dbname=FreeBSD-users-jp" euc-japan) ("iij-archie" "http://www.iij.ad.jp/cgi-bin/archieplexform?query=%s&type=Case+Insensitive+Substring+Match&order=host&server=archie1.iij.ad.jp&hits=95&nice=Nice" nil) ("waei" "http://dictionary.goo.ne.jp/cgi-bin/dict_search.cgi?MT=%s&sw=1" euc-japan) ("eiwa" "http://dictionary.goo.ne.jp/cgi-bin/dict_search.cgi?MT=%s&sw=0" nil) ("kokugo" "http://dictionary.goo.ne.jp/cgi-bin/dict_search.cgi?MT=%s&sw=2" euc-japan) ("eiei" "http://www.dictionary.com/cgi-bin/dict.pl?term=%s&r=67" nil) ("amazon" "http://www.amazon.com/exec/obidos/search-handle-form/250-7496892-7797857" nil "url=index=blended&field-keywords=%s") ("amazon-ja" "http://www.amazon.co.jp/exec/obidos/search-handle-form/250-7496892-7797857" shift_jis "url=index=blended&search-type=quick-search&field-keywords=%s")))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
