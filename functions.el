@@ -316,3 +316,23 @@ current when this command was invoked."
  	(set-visited-file-name newname)
  	(set-buffer-modified-p nil)
  	t))))
+
+(defun auto-align-regexp ()
+  (interactive)
+  (let ((regexp-prefix "\\s-*[-_[:alnum:]]+\\s-*"))
+    (save-excursion
+      (beginning-of-line)
+      (or (looking-at (concat regexp-prefix "\\(=>?\\)"))
+          (error "Invalid line"))
+      (let* ((delimiter (match-string 1))
+             (regexp (concat regexp-prefix delimiter))
+             (start (line-beginning-position))
+             (end (line-beginning-position 2)))
+        (save-excursion
+          (while (and (= 0 (forward-line -1))
+                      (looking-at regexp))
+            (setq start (line-beginning-position))))
+        (while (and (= 0 (forward-line 1))
+                    (looking-at regexp))
+          (setq end (line-beginning-position 2)))
+        (align-regexp start end (concat "\\(\\s-*\\)" delimiter) 1 1)))))

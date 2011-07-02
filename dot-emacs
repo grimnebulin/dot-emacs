@@ -25,6 +25,8 @@
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
 
+(windmove-default-keybindings)
+
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
 
@@ -41,13 +43,13 @@
 ;;  Variables:
 
 (setq mac-command-modifier 'meta
-      mac-option-modifier 'super)
+      mac-option-modifier  'super)
 
 (setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
 (setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
-(setq user-full-name "Sean McAfee")
-(setq user-mail-address "eefacm@gmail.com")
+(setq user-full-name    "Sean McAfee"
+      user-mail-address "eefacm@gmail.com")
 
 (setq iswitchb-prompt-newbuffer nil)
 (setq-default indent-tabs-mode nil)
@@ -72,7 +74,7 @@
 ;; Key bindings:
 
 (global-set-key "\C-x\C-j" 'dired-jump)
-(global-set-key [(control m)] 'newline-and-indent)
+(global-set-key "\C-m" 'newline-and-indent)
 (global-set-key "\C-x\C-j" 'dired-jump)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-x\C-o" 'other-window-delete-rest)
