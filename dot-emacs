@@ -10,6 +10,10 @@
 (add-to-list 'load-path "~/emacs")
 (add-to-list 'load-path "~/emacs/emms-3.0")
 (add-to-list 'load-path "~/emacs/dtrt-indent")
+(add-to-list 'load-path "~/emacs/yasnippet")
+
+(setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
+(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
 (load "~/emacs/haskell-mode-2.8.0/haskell-site-file")
 
@@ -40,13 +44,13 @@
 ;; (require 'dtrt-indent)
 ;; (dtrt-indent-mode 1)
 
+(require 'yasnippet)
+(yas/load-directory "~/emacs/snippets")
+
 ;;  Variables:
 
 (setq mac-command-modifier 'meta
       mac-option-modifier  'super)
-
-(setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
-(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
 (setq user-full-name    "Sean McAfee"
       user-mail-address "eefacm@gmail.com")
@@ -65,6 +69,7 @@
 (setq line-move-visual nil)
 (setq vc-follow-symlinks t)
 (setq term-term-name "vt100")
+(setq line-number-display-limit-width 9999)
 
 (setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
 (setenv "NNTPSERVER" "news.eternal-september.org")
@@ -104,6 +109,7 @@
 
 ;; Hooks:
 
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (add-hook* 'perl-mode-hook (setq show-trailing-whitespace t))
 (add-hook* 'java-mode-hook (setq show-trailing-whitespace t))
 (add-hook 'text-mode-hook 'auto-fill-mode)
@@ -157,14 +163,19 @@
 (term-set-escape-char ?\C-x)
 
 (defalias 'perldoc 'cperl-perldoc "Convenient shorthand for cperl-perldoc.")
-(defalias 'gof 'gnus-other-frame)
+; (defalias 'gof 'gnus-other-frame)
 (defalias 'tb 'comint-truncate-buffer)
 (defalias 'c\'mere 'send-last-shell-to-this-directory)
+(defalias 'mb 'rename-buffer)
+(defalias 'ru 'rename-uniquely)
+(defalias 'ar 'align-regexp)
+(defalias 'nm 'normal-mode)
+(defalias 'rb 'revert-buffer)
 
-(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
-(require 'color-theme)
+;;(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
+;;(require 'color-theme)
 (require 'zenburn)
-(color-theme-initialize)
+;; (color-theme-initialize)
 (zenburn)
 
 (defadvice open-line (around vi-style-open-line activate)
