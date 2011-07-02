@@ -16,19 +16,30 @@
   (emms-playlist-mode-go)
   (goto-line 2))
 
+(global-unset-key [(super w)])
 (global-set-key [(super w) ?d] 'wrif-open-directory)
 (global-set-key [(super w) ?p] 'wrif-play-directory)
 (global-set-key [(super w) ?l] 'emms-playlist-mode-go)
 
 (global-set-key [(super meta x)] 'emms-pause)
 (global-set-key [(super meta p)] 'emms-pause)
+(global-set-key [pause] 'emms-pause)
 
-(defconst wrif-skip-intervals '((7 . hyper) (60 . meta) (360 . control)))
+(defconst wrif-skip-intervals '((7 . super) (60 . meta) (360 . control)))
 
-(loop with modifiers = nil
-      for (magnitude . modifier) in wrif-skip-intervals do
-        (setq modifiers (append modifiers (list modifier)))
-        (loop for (key . func) in '((right . +) (left . -)) do
-          (global-set-key (vector (append modifiers (list key)))
-                          `(lambda () (interactive)
-                             (emms-seek ,(funcall func magnitude))))))
+(loop for (magnitude . modifier) in wrif-skip-intervals
+      collecting modifier into modifiers
+      do (loop for key in '(right left)
+               and delta = magnitude then (- magnitude)
+               do (global-set-key (vector (append modifiers (list key)))
+                                  `(lambda () (interactive) (emms-seek ,delta)))))
+
+;; (defconst wrif-skip-intervals '(360 60 7 super meta control))
+
+;; (loop for magnitude in wrif-skip-intervals
+;;       and modifiers on (cdddr wrif-skip-intervals)
+;;       do (loop for key in '(right left)
+;;                and delta = magnitude then (- magnitude)
+;;                do (global-set-key (vector (append modifiers (list key)))
+;;                                   `(lambda () (interactive) (emms-seek ,delta)))))
+

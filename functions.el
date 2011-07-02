@@ -169,14 +169,18 @@ of the buffer to the system clipboard."
       (error "default-directory is nil")
     (kill-new default-directory)))
 
+(defun is-interactive-shell-buffer (buffer)
+  (and (with-current-buffer buffer (eq major-mode 'shell-mode))
+       (let ((proc (get-buffer-process buffer)))
+         (and proc (not (process-sentinel proc))))))
+
 (defun send-last-shell-to-this-directory (prefix)
   "Switch to the most recently visited shell buffer, and issue a \"cd\"
 command to move it to the default directory of the buffer which was
 current when this command was invoked."
   (interactive "p")
   (let* ((buffer (or (loop for buffer being the buffers
-                           if (with-current-buffer buffer
-                                (eq major-mode 'shell-mode))
+                           if (is-interactive-shell-buffer buffer)
                            return buffer)
                      (error "No shell buffer available")))
          (proc (get-buffer-process buffer))
