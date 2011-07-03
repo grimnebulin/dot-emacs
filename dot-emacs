@@ -181,6 +181,7 @@
 (defalias 'ar 'align-regexp)
 (defalias 'nm 'normal-mode)
 (defalias 'rb 'revert-buffer)
+(defalias 'ru 'rename-uniquely)
 
 ;;(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 ;;(require 'color-theme)
