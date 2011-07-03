@@ -83,8 +83,10 @@
 (global-set-key "\C-x\C-j" 'dired-jump)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-x\C-o" 'other-window-delete-rest)
-(global-set-key* [(shift control n)] (next-line) (scroll-up 1))
-(global-set-key* [(shift control p)] (previous-line) (scroll-down 1))
+(global-set-key [(shift control n)]
+                (lambda () (interactive) (next-line) (scroll-up 1))
+(global-set-key [(shift control p)]
+                (lambda () (interactive) (previous-line) (scroll-down 1))
 (global-set-key [(super s)] 'shell)
 (global-set-key [(meta  p)] 'shell)
 (global-set-key [(super \\)] 'find-file-at-point)
@@ -110,10 +112,10 @@
 ;; Hooks:
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-(add-hook* 'perl-mode-hook (setq show-trailing-whitespace t))
-(add-hook* 'java-mode-hook (setq show-trailing-whitespace t))
+(add-hook 'perl-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'java-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'text-mode-hook 'auto-fill-mode)
-(add-hook* 'text-mode-hook (local-set-key [(control m)] 'newline))
+(add-hook 'text-mode-hook (lambda () (local-set-key [(control m)] 'newline)))
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
 (add-hook 'sgml-mode-hook 'turn-off-auto-fill)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
@@ -122,8 +124,11 @@
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
 
-(add-hook* 'comint-exec-hook
-  (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))
+(add-hook 'comint-exec-hook
+          (lambda ()
+            (set-process-query-on-exit-flag
+             (get-buffer-process (current-buffer))
+             nil))
 
 ;; EMMS:
 

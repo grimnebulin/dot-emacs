@@ -25,12 +25,6 @@
            thereis (pipe ,x 'eval 'princ-to-string 'nonempty-p)
            finally return "")))
 
-(defmacro global-set-key* (keys &rest body)
-  `(global-set-key ,keys (lambda () (interactive) ,@body)))
-
-(defmacro add-hook* (hook &rest body)
-  `(add-hook ,hook (lambda () ,@body)))
-
 ;; 
 
 (defun other-window-delete-rest (arg)
