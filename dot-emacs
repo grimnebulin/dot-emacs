@@ -15,7 +15,7 @@
 (setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
 (setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
-(load "~/emacs/haskell-mode-2.8.0/haskell-site-file")
+;; (load "~/emacs/haskell-mode-2.8.0/haskell-site-file") ;; Laptop only!
 
 (load "functions")
 (load "wrif" t)
@@ -68,6 +68,7 @@
 (setq vc-follow-symlinks t)
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
+(setq longlines-show-hard-newlines t)
 
 (setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
 (setenv "NNTPSERVER" "news.eternal-september.org")
