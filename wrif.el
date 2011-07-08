@@ -23,23 +23,15 @@
 (global-set-key [(super meta p)] 'emms-pause)
 (global-set-key [pause] 'emms-pause)
 
-(defconst wrif-skip-intervals '((7 . super) (60 . meta) (360 . control)))
-
-(loop for (magnitude . modifier) in wrif-skip-intervals
-      collecting modifier into modifiers
-      do (loop for key in '(right left)
-               and delta = magnitude then (- magnitude)
-               do (global-set-key (vector (append modifiers (list key)))
-                                  `(lambda () (interactive) (emms-seek ,delta)))))
-
-;; (defconst wrif-skip-intervals '(360 60 7 super meta control))
-
-;; (loop for magnitude in wrif-skip-intervals
-;;       and modifiers on (cdddr wrif-skip-intervals)
-;;       do (loop for key in '(right left)
-;;                and delta = magnitude then (- magnitude)
-;;                do (global-set-key (vector (append modifiers (list key)))
-;;                                   `(lambda () (interactive) (emms-seek ,delta)))))
+(macrolet ((set-seek (delta &rest keys)
+                     `(global-set-key [,keys]
+                        (lambda () (interactive) (emms-seek ,delta)))))
+  (set-seek   +7 super right)
+  (set-seek   -7 super left)
+  (set-seek  +60 super meta right)
+  (set-seek  -60 super meta left)
+  (set-seek +360 super meta control right)
+  (set-seek -360 super meta control left))
 
 (defun wrif-seek-to (prefix)
   (interactive "p")
