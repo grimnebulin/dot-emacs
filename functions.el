@@ -334,3 +334,6 @@ current when this command was invoked."
                     (looking-at regexp))
           (setq end (line-beginning-position 2)))
         (align-regexp start end (concat "\\(\\s-*\\)" delimiter) 1 1)))))
+
+(defun no-process-query-on-exit ()
+  (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))

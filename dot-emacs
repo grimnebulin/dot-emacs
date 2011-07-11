@@ -72,8 +72,7 @@
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
 
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file)
+(load (setq custom-file "~/.emacs-custom.el"))
 
 (setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
 (setenv "NNTPSERVER" "news.eternal-september.org")
@@ -125,14 +124,10 @@
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
 (add-hook 'message-mode-hook 'auto-fill-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'comint-exec-hook 'no-process-query-on-exit)
+
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
-
-(add-hook 'comint-exec-hook
-          (lambda ()
-            (set-process-query-on-exit-flag
-             (get-buffer-process (current-buffer))
-             nil)))
 
 ;; EMMS:
 
@@ -187,6 +182,7 @@
 (defalias 'rb 'revert-buffer)
 (defalias 'ru 'rename-uniquely)
 (defalias 'c 'calendar)
+(defalias 'sh 'shell)
 
 (add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 (require 'color-theme)
