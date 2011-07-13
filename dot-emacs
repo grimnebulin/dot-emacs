@@ -126,6 +126,13 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 
+(add-hook 'find-file-hook 'its-all-text-longlines)
+
+(defun its-all-text-longlines ()
+  (when (string-match "/itsalltext/" (buffer-file-name))
+    (auto-fill-mode -1)
+    (longlines-mode 1)))
+
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
 
@@ -168,7 +175,7 @@
 
 ;; Misc:
 
-(eval-after-load "term"
+(eval-after-load 'term
   '(term-set-escape-char ?\C-x))
 
 (defalias 'perldoc 'cperl-perldoc "Convenient shorthand for cperl-perldoc.")
