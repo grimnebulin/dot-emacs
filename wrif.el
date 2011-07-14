@@ -19,9 +19,6 @@
 (global-set-key [(super w) ?p] 'wrif-play-directory)
 (global-set-key [(super w) ?l] 'emms-playlist-mode-go)
 
-;; (global-set-key [(super meta x)] 'emms-pause)
-;; (global-set-key [(super meta p)] 'emms-pause)
-
 (macrolet ((set-seek (delta &rest keys)
               `(global-set-key [,keys]
                   (lambda () (interactive) (emms-seek ,delta)))))
