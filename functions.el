@@ -338,5 +338,15 @@ current when this command was invoked."
 (defun no-process-query-on-exit ()
   (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))
 
+(defun scroll-one-line-up ()
+  (interactive)
+  (next-line)
+  (scroll-up 1))
+
+(defun scroll-one-line-down ()
+  (interactive)
+  (previous-line)
+  (scroll-down 1))
+
 (defun format-shell-command (string &rest args)
   (shell-command (apply 'format string (mapcar 'shell-quote-argument args))))
