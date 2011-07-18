@@ -337,3 +337,6 @@ current when this command was invoked."
 
 (defun no-process-query-on-exit ()
   (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))
+
+(defun format-shell-command (string &rest args)
+  (shell-command (apply 'format string (mapcar 'shell-quote-argument args))))

@@ -103,6 +103,7 @@
 (global-set-key [(shift meta x)] 'clipboard-kill-region)
 (global-set-key [(shift meta c)] 'clipboard-kill-ring-save)
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
+(global-set-key [(super b)] 'browse-url-at-point)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
@@ -163,7 +164,7 @@
       gnus-cited-lines-visible '(0 . 5)
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
-      mm-text-html-renderer 'w3m-standalone
+      mm-text-html-renderer 'w3m
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
 
@@ -237,3 +238,4 @@ putting the current line this far down the window.")
 ;;     (load
 ;;      (expand-file-name "~/.emacs.d/elpa/package.el"))
 ;;   (package-initialize))
+
