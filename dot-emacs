@@ -21,12 +21,16 @@
 (load "laptop" t)
 
 (transient-mark-mode 1)
-(iswitchb-mode 1)
+;; (iswitchb-mode 1)
 (tool-bar-mode -1)
 (random t)
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
+
+(setq ido-enable-flex-matching t
+      ido-everywhere t)
+(ido-mode 1)
 
 (windmove-default-keybindings)
 
@@ -94,6 +98,7 @@
 (global-set-key [(shift meta c)] 'clipboard-kill-ring-save)
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
 (global-set-key [(super b)] 'browse-url-at-point)
+(global-set-key "\C-x5-" 'delete-frame-and-buffer)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
