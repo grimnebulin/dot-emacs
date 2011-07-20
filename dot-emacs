@@ -28,10 +28,6 @@
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
 
-(setq ido-enable-flex-matching t
-      ido-everywhere t)
-(ido-mode 1)
-
 (windmove-default-keybindings)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
@@ -47,7 +43,45 @@
 (require 'yasnippet)
 (yas/load-directory "~/emacs/snippets")
 
+;;
+;; hippie-expand configuration
+;;
+
+(global-set-key "\M-/" 'hippie-expand)
+
+(setq hippie-expand-try-functions-list '(
+      try-expand-dabbrev
+      try-expand-dabbrev-all-buffers
+      try-expand-dabbrev-from-kill
+      try-complete-file-name-partially
+      try-complete-file-name
+      try-expand-all-abbrevs
+      try-expand-list
+      try-expand-line
+      try-complete-lisp-symbol-partially
+      try-complete-lisp-symbol
+))
+;;
+;; ido configuration
+;;
+
+(setq ido-enable-flex-matching t
+      ido-decorations '(
+          "\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
+          " [Not readable]" " [Too big]" " [Confirm]"
+      )
+)
+
+(ido-mode 1)
+(ido-everywhere 1)
+
+(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
+
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
+
+;;
 ;;  Variables:
+;;
 
 (setq user-full-name    "Sean McAfee"
       user-mail-address "eefacm@gmail.com")
