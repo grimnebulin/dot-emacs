@@ -141,6 +141,10 @@ of the buffer to the system clipboard."
      command)
    output-buffer))
 
+(defun kill-this-buffer ()
+  (interactive)
+  (kill-buffer))
+
 (defun kill-this-buffer-and-associated-file ()
   (interactive)
   (let ((buffer (current-buffer))

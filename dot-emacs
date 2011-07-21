@@ -133,6 +133,7 @@
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
 (global-set-key [(super b)] 'browse-url-at-point)
 (global-set-key "\C-x5-" 'delete-frame-and-buffer)
+(global-set-key [(control super k)] 'kill-this-buffer)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
