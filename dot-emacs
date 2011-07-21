@@ -61,6 +61,7 @@
       try-complete-lisp-symbol-partially
       try-complete-lisp-symbol
 ))
+
 ;;
 ;; ido configuration
 ;;
@@ -78,6 +79,17 @@
 (defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
 
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
+
+(defadvice ido-read-buffer (around ido-read-buffer-possibly-ignore activate)
+  "Check to see if use wanted to avoid using ido"
+  (if (eq (get this-command 'ido) 'ignore)
+      (let ((read-buffer-function nil))
+        (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
+        (apply 'read-buffer (ad-get-args 0)))
+    ad-do-it))
+
+(put 'shell 'ido 'ignore)
+(put 'sh    'ido 'ignore)
 
 ;;
 ;;  Variables:
