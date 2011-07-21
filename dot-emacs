@@ -21,12 +21,18 @@
 (load "laptop" t)
 
 (transient-mark-mode 1)
-(iswitchb-mode 1)
+;; (iswitchb-mode 1)
 (tool-bar-mode -1)
 (random t)
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
+
+(setq ido-enable-flex-matching t
+      ido-everywhere t
+      ido-create-new-buffer 'always)
+
+(ido-mode 1)
 
 (windmove-default-keybindings)
 
@@ -65,6 +71,19 @@
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
 
+(setq hippie-expand-try-functions-list '(
+      try-expand-dabbrev
+      try-expand-dabbrev-all-buffers
+      try-expand-dabbrev-from-kill
+      try-complete-file-name-partially
+      try-complete-file-name
+      try-expand-all-abbrevs
+      try-expand-list
+      try-expand-line
+      try-complete-lisp-symbol-partially
+      try-complete-lisp-symbol
+))
+
 (load (setq custom-file "~/.emacs-custom.el"))
 
 (setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
@@ -93,6 +112,7 @@
 (global-set-key [(shift meta x)] 'clipboard-kill-region)
 (global-set-key [(shift meta c)] 'clipboard-kill-ring-save)
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
+(global-set-key "\M-/" 'hippie-expand)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column

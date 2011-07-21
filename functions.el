@@ -347,3 +347,6 @@ current when this command was invoked."
   (interactive)
   (previous-line)
   (scroll-down 1))
+
+(defun format-shell-command (string &rest args)
+  (shell-command (apply 'format string (mapcar 'shell-quote-argument args))))
