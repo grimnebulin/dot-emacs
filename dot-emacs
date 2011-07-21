@@ -28,6 +28,12 @@
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
 
+(setq ido-enable-flex-matching t
+      ido-everywhere t
+      ido-create-new-buffer 'always)
+
+(ido-mode 1)
+
 (windmove-default-keybindings)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
