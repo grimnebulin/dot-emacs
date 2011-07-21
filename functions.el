@@ -1,12 +1,3 @@
-;; (defun start-piped-process (&rest args)
-;;   (let ((process-connection-type nil))
-;;     (apply 'start-process args)))
-
-;; (defun join-lines ()
-;;   (interactive)
-;;   (end-of-line)
-;;   (delete-region (point) (line-beginning-position 3)))
-
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
@@ -75,8 +66,6 @@ true, the loop halts."
                  ,dir (file-name-as-directory dirname))))
        (or ,done (message "ascend-directories-until: nothing happened")))))
 
-;;
-
 (defun my-isearch-word-at-point ()
   (interactive)
   (call-interactively 'isearch-forward-regexp))
@@ -97,13 +86,6 @@ true, the loop halts."
                     (mapconcat 'isearch-text-char-description string ""))
             isearch-yank-flag t)
       (isearch-search-and-update))))
-
-(defun maximize-frame ()
-  (interactive)
-  ;; Only works on this Mac!
-  (let ((frame (selected-frame)))
-    (set-frame-position frame 0 0)
-    (set-frame-size frame 188 52)))
 
 (defmacro to-system-clipboard (&optional name &rest body)
   "Execute body in a temporary buffer, then copy the accessible portion
