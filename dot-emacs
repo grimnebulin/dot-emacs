@@ -49,7 +49,46 @@
 (require 'yasnippet)
 (yas/load-directory "~/emacs/snippets")
 
+;;
+;; hippie-expand configuration
+;;
+
+(global-set-key "\M-/" 'hippie-expand)
+
+(setq hippie-expand-try-functions-list '(
+      try-expand-dabbrev
+      try-expand-dabbrev-all-buffers
+      try-expand-dabbrev-from-kill
+      try-complete-file-name-partially
+      try-complete-file-name
+      try-expand-all-abbrevs
+      try-expand-list
+      try-expand-line
+      try-complete-lisp-symbol-partially
+      try-complete-lisp-symbol
+))
+
+;;
+;; ido configuration
+;;
+
+(setq ido-enable-flex-matching t
+      ido-decorations '(
+          "\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
+          " [Not readable]" " [Too big]" " [Confirm]"
+      )
+)
+
+(ido-mode 1)
+(ido-everywhere 1)
+
+(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
+
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
+
+;;
 ;;  Variables:
+;;
 
 (setq user-full-name    "Sean McAfee"
       user-mail-address "eefacm@gmail.com")
@@ -70,19 +109,6 @@
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
-
-(setq hippie-expand-try-functions-list '(
-      try-expand-dabbrev
-      try-expand-dabbrev-all-buffers
-      try-expand-dabbrev-from-kill
-      try-complete-file-name-partially
-      try-complete-file-name
-      try-expand-all-abbrevs
-      try-expand-list
-      try-expand-line
-      try-complete-lisp-symbol-partially
-      try-complete-lisp-symbol
-))
 
 (load (setq custom-file "~/.emacs-custom.el"))
 
@@ -112,7 +138,9 @@
 (global-set-key [(shift meta x)] 'clipboard-kill-region)
 (global-set-key [(shift meta c)] 'clipboard-kill-ring-save)
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
-(global-set-key "\M-/" 'hippie-expand)
+(global-set-key [(super b)] 'browse-url-at-point)
+(global-set-key "\C-x5-" 'delete-frame-and-buffer)
+(global-set-key [(control super k)] 'kill-this-buffer)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
@@ -170,7 +198,7 @@
       gnus-cited-lines-visible '(0 . 5)
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
-      mm-text-html-renderer 'w3m-standalone
+      mm-text-html-renderer 'w3m
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
 
@@ -243,3 +271,4 @@ putting the current line this far down the window.")
 ;;     (load
 ;;      (expand-file-name "~/.emacs.d/elpa/package.el"))
 ;;   (package-initialize))
+

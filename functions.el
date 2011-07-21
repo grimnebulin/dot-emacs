@@ -141,6 +141,10 @@ of the buffer to the system clipboard."
      command)
    output-buffer))
 
+(defun kill-this-buffer ()
+  (interactive)
+  (kill-buffer))
+
 (defun kill-this-buffer-and-associated-file ()
   (interactive)
   (let ((buffer (current-buffer))
@@ -348,5 +352,15 @@ current when this command was invoked."
   (previous-line)
   (scroll-down 1))
 
+(defun shell-quote-format (string args)
+  (apply 'format string (mapcar 'shell-quote-argument args)))
+
 (defun format-shell-command (string &rest args)
-  (shell-command (apply 'format string (mapcar 'shell-quote-argument args))))
+  (shell-command (shell-quote-format string args)))
+
+(defun format-shell-command-to-string (string &rest args)
+  (shell-command-to-string (shell-quote-format string args)))
+
+(defun delete-frame-and-buffer ()
+  (interactive)
+  (and (kill-buffer) (delete-frame)))
