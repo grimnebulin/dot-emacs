@@ -28,12 +28,6 @@
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
 
-(setq ido-enable-flex-matching t
-      ido-everywhere t
-      ido-create-new-buffer 'always)
-
-(ido-mode 1)
-
 (windmove-default-keybindings)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
@@ -73,6 +67,7 @@
 ;;
 
 (setq ido-enable-flex-matching t
+      ido-create-new-buffer 'always
       ido-decorations '(
           "\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
           " [Not readable]" " [Too big]" " [Confirm]"
@@ -87,11 +82,11 @@
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
 (defadvice ido-read-buffer (around ido-read-buffer-possibly-ignore activate)
-  "Check to see if use wanted to avoid using ido"
+  "Check to see if user wanted to avoid using ido"
   (if (eq (get this-command 'ido) 'ignore)
       (let ((read-buffer-function nil))
         (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
-        (apply 'read-buffer (ad-get-args 0)))
+        (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
     ad-do-it))
 
 (put 'shell 'ido 'ignore)
