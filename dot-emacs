@@ -19,6 +19,7 @@
 (load "wrif" t)
 (load "akamai" t)
 (load "laptop" t)
+(load "ace-jump-mode/ace-jump-mode.el")
 
 (transient-mark-mode 1)
 ;; (iswitchb-mode 1)
@@ -147,6 +148,7 @@
 (global-set-key [(super b)] 'browse-url-at-point)
 (global-set-key "\C-x5-" 'delete-frame-and-buffer)
 (global-set-key [(control super k)] 'kill-this-buffer)
+(global-set-key [(super j)] 'ace-jump-mode)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
@@ -161,6 +163,7 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'perl-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'java-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'text-mode-hook (lambda () (local-set-key [(control m)] 'newline)))
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
