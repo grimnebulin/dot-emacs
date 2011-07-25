@@ -16,7 +16,7 @@
            thereis (pipe ,x 'eval 'princ-to-string 'nonempty-p)
            finally return "")))
 
-;; 
+;;
 
 (defun other-window-delete-rest (arg)
   "Goes to the next window with other-window, then makes that window
@@ -232,25 +232,20 @@ current when this command was invoked."
 (require 'perl-mode)
 (define-key perl-mode-map [(super q)] 'cycle-perl-quotes)
 
-;; Ganked from somewhere.
+(defun* rotate-windows (&optional backwards (windows (window-list)))
+  (interactive "P")
+  (flet ((get-meta (w)   (cons (window-buffer w)         (window-start w)))
+         (set-meta (w m) (setf (window-buffer w) (car m) (window-start w) (cdr m))))
+    (loop with offset = (mod (if backwards -1 +1) (length windows))
+          with params = (loop for w in windows collect (get-meta w))
+          initially (setcdr (last params) params)  ; Make it circular.
+          for w in windows
+          for m in (nthcdr offset meta)
+          do (set-meta (w m)))))
 
-;; someday might want to rotate windows if more than 2 of them
-
-(defun swap-windows ()
-  "If you have 2 windows, it swaps them."
-  (interactive)
-  (cond ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
-        (t
-         (let* ((w1 (first (window-list)))
-                (w2 (second (window-list)))
-                (b1 (window-buffer w1))
-                (b2 (window-buffer w2))
-                (s1 (window-start w1))
-                (s2 (window-start w2)))
-           (set-window-buffer w1 b2)
-           (set-window-buffer w2 b1)
-           (set-window-start w1 s2)
-           (set-window-start w2 s1)))))
+(defun swap-windows (&optional backwards)
+  (interactive "P")
+  (rotate-windows nil (list (selected-window) (other-window (if backwards -1 +1)))))
 
 ;; Ganked from somewhere.
 
