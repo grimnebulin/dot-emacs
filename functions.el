@@ -234,14 +234,14 @@ current when this command was invoked."
 
 (defun* rotate-windows (&optional backwards (windows (window-list)))
   (interactive "P")
-  (flet ((get-meta (w)   (cons (window-buffer w)         (window-start w)))
+  (flet ((get-meta (w  ) (cons (window-buffer w)         (window-start w)))
          (set-meta (w m) (setf (window-buffer w) (car m) (window-start w) (cdr m))))
     (loop with offset = (mod (if backwards -1 +1) (length windows))
-          with params = (loop for w in windows collect (get-meta w))
-          initially (setcdr (last params) params)  ; Make it circular.
+          with meta   = (mapcar 'get-meta windows)
+          initially (setcdr (last meta) meta)  ; Make it circular.
           for w in windows
           for m in (nthcdr offset meta)
-          do (set-meta (w m)))))
+          do (set-meta w m))))
 
 (defun swap-windows (&optional backwards)
   (interactive "P")
@@ -294,7 +294,7 @@ current when this command was invoked."
 
 (defun auto-align-regexp ()
   (interactive)
-  (let ((regexp-prefix "\\s-*[-_[:alnum:]]+\\s-*"))
+  (let ((regexp-prefix "\\s-*[-._[:alnum:]]+\\s-*"))
     (save-excursion
       (beginning-of-line)
       (or (looking-at (concat regexp-prefix "\\(=>?\\)"))
