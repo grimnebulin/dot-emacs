@@ -346,7 +346,7 @@ current when this command was invoked."
 
 (defun ido-read-char-by-name (prompt)
   (let* ((completion-ignore-case t)
-         (completions (sort (remove-if (lambda (s) (= ?< (aref s 0)))
+         (completions (sort (delete-if (lambda (s) (= ?< (aref s 0)))
                                        (mapcar 'car ucs-completions))
                             'ido-read-char-sort-predicate))
 	 (input (ido-completing-read prompt completions)))
