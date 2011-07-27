@@ -337,3 +337,23 @@ current when this command was invoked."
 (defun delete-frame-and-buffer ()
   (interactive)
   (and (kill-buffer) (delete-frame)))
+
+(defun ido-read-char-sort-predicate (a b)
+  "Order character names first by increasing length, then by lexicographic order."
+  (or (< (length a) (length b))
+      (and (= (length a) (length b))
+           (string-lessp a b))))
+
+(defun ido-read-char-by-name (prompt)
+  (let* ((completion-ignore-case t)
+         (completions (sort (remove-if (lambda (s) (= ?< (aref s 0)))
+                                       (mapcar 'car ucs-completions))
+                            'ido-read-char-sort-predicate))
+	 (input (ido-completing-read prompt completions)))
+    (cond
+     ((string-match-p "^[0-9a-fA-F]+$" input)
+      (string-to-number input 16))
+     ((string-match-p "^#" input)
+      (read input))
+     (t
+      (cdr (assoc-string input (ucs-names) t))))))
