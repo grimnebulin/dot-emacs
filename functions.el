@@ -234,18 +234,19 @@ current when this command was invoked."
 
 (defun* rotate-windows (&optional backwards (windows (window-list)))
   (interactive "P")
-  (flet ((get-meta (w  ) (cons (window-buffer w)         (window-start w)))
-         (set-meta (w m) (setf (window-buffer w) (car m) (window-start w) (cdr m))))
-    (loop with offset = (mod (if backwards -1 +1) (length windows))
-          with meta   = (mapcar 'get-meta windows)
-          initially (setcdr (last meta) meta)  ; Make it circular.
-          for w in windows
-          for m in (nthcdr offset meta)
-          do (set-meta w m))))
+  (when windows
+    (flet ((get-meta (w  ) (cons (window-buffer w) (window-start w)))
+           (set-meta (w m) (setf (window-buffer w) (car m)
+                                 (window-start  w) (cdr m))))
+      (when backwards (setq windows (reverse windows)))
+      (loop with first-meta = (get-meta (first windows))
+            for (this next) on windows
+            do (set-meta this (if next (get-meta next) first-meta))))))
 
 (defun swap-windows (&optional backwards)
   (interactive "P")
-  (rotate-windows nil (list (selected-window) (other-window (if backwards -1 +1)))))
+  (rotate-windows nil (list (selected-window)
+                            (if backwards (previous-window) (next-window)))))
 
 ;; Ganked from somewhere.
 
