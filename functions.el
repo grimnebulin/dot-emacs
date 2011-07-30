@@ -240,7 +240,7 @@ current when this command was invoked."
     (when backwards (setq windows (reverse windows)))
     (loop with first-meta = (and windows (get-meta (first windows)))
           for (this next) on windows
-          do (set-meta this (if next (get-meta next) first-meta))))))
+          do (set-meta this (if next (get-meta next) first-meta)))))
 
 (defun swap-windows (&optional backwards)
   (interactive "P")
@@ -345,6 +345,7 @@ current when this command was invoked."
            (string-lessp a b))))
 
 (defun ido-read-char-by-name (prompt)
+  "Replacement for read-char-by-name that uses ido to read character names."
   (let* ((completion-ignore-case t)
          (completions (sort (delete-if (lambda (s) (= ?< (aref s 0)))
                                        (mapcar 'car ucs-completions))
