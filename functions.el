@@ -348,7 +348,7 @@ current when this command was invoked."
   "Replacement for read-char-by-name that uses ido to read character names."
   (let* ((completion-ignore-case t)
          (completions (sort (delete-if (lambda (s) (= ?< (aref s 0)))
-                                       (mapcar 'car ucs-completions))
+                                       (mapcar 'car (ucs-names)))
                             'ido-read-char-sort-predicate))
 	 (input (ido-completing-read prompt completions)))
     (cond
