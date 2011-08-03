@@ -294,7 +294,7 @@ current when this command was invoked."
 
 (defun auto-align-regexp ()
   (interactive)
-  (let ((regexp-prefix "\\s-*[-._[:alnum:]]+\\s-*"))
+  (let ((regexp-prefix "\\s-*[-._ [:alnum:]]+\\s-*"))
     (save-excursion
       (beginning-of-line)
       (or (looking-at (concat regexp-prefix "\\(=>?\\)"))
