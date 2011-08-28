@@ -84,14 +84,15 @@
 
 (defadvice ido-read-buffer (around ido-read-buffer-possibly-ignore activate)
   "Check to see if user wanted to avoid using ido"
-  (if (eq (get this-command 'ido) 'ignore)
+  (if (loop for command = this-command then (symbol-function command)
+            while (symbolp command)
+            thereis (eq (get command 'ido) 'ignore))
       (let ((read-buffer-function nil))
         (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
         (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
     ad-do-it))
 
 (put 'shell 'ido 'ignore)
-(put 'sh    'ido 'ignore)
 
 ;;
 ;;  Variables:
