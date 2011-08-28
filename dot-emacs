@@ -2,7 +2,7 @@
 
 (require 'cl)
 
-r(set-face-attribute 'default nil :font "Inconsolata" :height 140)
+(set-face-attribute 'default nil :font "Inconsolata" :height 140)
 ; (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 140)
 
 (push "/usr/local/bin" exec-path)
