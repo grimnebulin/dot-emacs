@@ -239,6 +239,7 @@
 (defalias 'c 'calendar)
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
+(defalias 'eb 'eval-buffer)
 
 (add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 (require 'color-theme)
