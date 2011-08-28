@@ -162,6 +162,7 @@
 (global-set-key [(shift meta s)] 'shell)
 (global-set-key [(shift super s)] 'swap-windows)
 (global-set-key [(shift super r)] 'rotate-windows)
+(global-set-key [(super g)] 'magit-status)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
