@@ -2,10 +2,11 @@
 
 (require 'cl)
 
-(set-face-attribute 'default nil :font "Inconsolata" :height 140)
+r(set-face-attribute 'default nil :font "Inconsolata" :height 140)
 ; (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 140)
 
 (push "/usr/local/bin" exec-path)
+(push (format "%s/bin" (getenv "HOME")) exec-path)
 
 (add-to-list 'load-path "~/emacs")
 (add-to-list 'load-path "~/emacs/emms-3.0")
@@ -38,11 +39,14 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-;; (require 'dtrt-indent)
-;; (dtrt-indent-mode 1)
+(require 'dtrt-indent)
+(dtrt-indent-mode 1)
 
 ;; (require 'yasnippet)
 ;; (yas/load-directory "~/emacs/snippets")
+
+(require 'remember)
+(global-set-key "\C-cr" 'remember)
 
 ;;
 ;; hippie-expand configuration
@@ -110,6 +114,7 @@
 (setq css-indent-offset 4)
 (setq-default c-basic-offset 4)
 (setq perl-indent-level 4)
+(setq dired-deletion-confirmer 'y-or-n-p)
 (setq dired-dwim-target t)
 (setq bookmark-save-flag 1)
 (setq line-move-visual nil)
@@ -117,6 +122,10 @@
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
+(setq browse-url-firefox-program "firefox")
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "conkeror")
 
 (load (setq custom-file "~/.emacs-custom.el"))
 
@@ -165,9 +174,6 @@
 ;; Hooks:
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-(add-hook 'perl-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'java-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'text-mode-hook (lambda () (local-set-key [(control m)] 'newline)))
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
@@ -176,13 +182,17 @@
 (add-hook 'message-mode-hook 'auto-fill-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
+(add-hook 'emacs-lisp-mode-hook 'show-trailing-whitespace)
 
-(add-hook 'find-file-hook 'its-all-text-longlines)
+(defun show-trailing-whitespace ()
+  (setq show-trailing-whitespace t))
 
-(defun its-all-text-longlines ()
-  (when (string-match "/itsalltext/" (buffer-file-name))
-    (auto-fill-mode -1)
-    (longlines-mode 1)))
+;; (add-hook 'find-file-hook 'its-all-text-longlines)
+
+;; (defun its-all-text-longlines ()
+;;   (when (string-match "/itsalltext/" (buffer-file-name))
+;;     (auto-fill-mode -1)
+;;     (longlines-mode 1)))
 
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
@@ -215,11 +225,11 @@
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
 
-;; (setq gnus-secondary-select-methods
-;;       '((nnimap "gmail"
+;; (add-to-list 'gnus-secondary-select-methods
+;;       '(nnimap "gmail"
 ;;                 (nnimap-address "imap.gmail.com")
 ;;                 (nnimap-server-port 993)
-;;                 (nnimap-stream ssl))))
+;;                 (nnimap-stream ssl)))
 
 ;; Misc:
 
