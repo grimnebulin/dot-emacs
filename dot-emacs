@@ -263,15 +263,6 @@ putting the current line this far down the window.")
 (defadvice ucs-insert (before use-ido-completing-read activate)
   (interactive (list (ido-read-char-by-name "Unicode (name or hex): "))))
 
-;;
-;; Erlang
-;;
-
-;; (add-to-list 'load-path "/opt/local/lib/erlang/lib/tools-2.6.6/emacs")
-;; (setq erlang-root-dir "/opt/local/lib/erlang")
-;; (add-to-list 'exec-path "/opt/local/lib/erlang/bin")
-;; (require 'erlang-start)
-
 ;; Automatically-added stuff:
 
 (put 'upcase-region 'disabled nil)
