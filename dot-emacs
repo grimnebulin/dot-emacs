@@ -42,8 +42,8 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(require 'dtrt-indent)
-(dtrt-indent-mode 1)
+(when (require 'dtrt-indent nil t)
+  (dtrt-indent-mode 1))
 
 ;; (require 'yasnippet)
 ;; (yas/load-directory "~/emacs/snippets")
