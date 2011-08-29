@@ -12,6 +12,8 @@
 (add-to-list 'load-path "~/emacs/emms-3.0")
 (add-to-list 'load-path "~/emacs/dtrt-indent")
 (add-to-list 'load-path "~/emacs/yasnippet")
+;; git clone https://github.com/kiwanami/emacs-calfw.git
+(add-to-list 'load-path "~/emacs/emacs-calfw")
 
 (setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
 (setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
@@ -22,6 +24,7 @@
 (load "laptop" t)
 (load "ace-jump-mode/ace-jump-mode.el")
 
+(require 'calfw)
 (transient-mark-mode 1)
 ;; (iswitchb-mode 1)
 (tool-bar-mode -1)
