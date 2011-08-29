@@ -24,6 +24,12 @@
 (load "laptop" t)
 (load "ace-jump-mode/ace-jump-mode.el")
 
+;; http://mumble.net/~campbell/emacs/paredit.el
+(load "paredit")
+
+;; http://autopair.googlecode.com/svn/trunk/autopair.el
+(load "autopair.el")
+
 (require 'calfw)
 (transient-mark-mode 1)
 ;; (iswitchb-mode 1)
@@ -187,6 +193,9 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 (add-hook 'emacs-lisp-mode-hook 'show-trailing-whitespace)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'perl-mode-hook 'autopair-mode)
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
