@@ -1,3 +1,5 @@
+(require 'thingatpt)
+
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
@@ -358,3 +360,22 @@ current when this command was invoked."
       (read input))
      (t
       (cdr (assoc-string input (ucs-names) t))))))
+
+;; Google search routines from Pascal Bourguignon on gnu.emacs.help.
+;; (As amended by Stefan Monnier.)
+
+(defun google-search (search-string)
+  "Search a string with Google."
+  (interactive "sGoogle Search: ")
+  (browse-url
+   (format "http://www.google.com/search?as_q=%s&num=50&hl=en&ie=ISO8869-1&btnG=Google+Search&as_epq=&as_oq=&as_eq=&lr=&as_ft=i&as_filetype=&as_qdr=all&as_nlo=&as_nhi=&as_occt=any&as_dt=i&as_sitesearch=&safe=images"
+           (url-hexify-string search-string))))
+
+(defun google-search-region (start end)
+  "Search the text in the region with Google."
+  (interactive "r")
+  (google-search (buffer-substring-no-properties start end)))
+
+(defun google-word-at-point ()
+  (interactive)
+  (google-search (word-at-point)))
