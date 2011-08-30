@@ -122,7 +122,7 @@
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
-(setq browse-url-firefox-program "firefox")
+(setq default-major-mode 'org-mode)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "conkeror")
@@ -184,6 +184,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 (add-hook 'emacs-lisp-mode-hook 'show-trailing-whitespace)
+(add-hook 'org-mode-hook 'show-trailing-whitespace)
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
