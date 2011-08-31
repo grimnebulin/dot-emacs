@@ -33,7 +33,7 @@
 ;; (iswitchb-mode 1)
 (tool-bar-mode -1)
 (random t)
-; (server-start)
+(server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
 
