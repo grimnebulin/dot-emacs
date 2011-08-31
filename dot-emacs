@@ -12,6 +12,8 @@
 (add-to-list 'load-path "~/emacs/emms-3.0")
 (add-to-list 'load-path "~/emacs/dtrt-indent")
 (add-to-list 'load-path "~/emacs/yasnippet")
+;; git clone https://github.com/kiwanami/emacs-calfw.git
+(add-to-list 'load-path "~/emacs/emacs-calfw")
 
 (add-to-list 'load-path "~/emacs/magit-1.0.0")
 (require 'magit)
@@ -29,6 +31,13 @@
 (load "laptop" t)
 (load "ace-jump-mode/ace-jump-mode.el")
 
+;; http://mumble.net/~campbell/emacs/paredit.el
+(load "paredit")
+
+;; http://autopair.googlecode.com/svn/trunk/autopair.el
+(load "autopair.el")
+
+(require 'calfw)
 (transient-mark-mode 1)
 ;; (iswitchb-mode 1)
 (tool-bar-mode -1)
@@ -46,8 +55,8 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(require 'dtrt-indent)
-(dtrt-indent-mode 1)
+(when (require 'dtrt-indent nil t)
+  (dtrt-indent-mode 1))
 
 ;; (require 'yasnippet)
 ;; (yas/load-directory "~/emacs/snippets")
@@ -190,6 +199,9 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 (add-hook 'emacs-lisp-mode-hook 'show-trailing-whitespace)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'perl-mode-hook 'autopair-mode)
 (add-hook 'org-mode-hook 'show-trailing-whitespace)
 
 (defun show-trailing-whitespace ()
