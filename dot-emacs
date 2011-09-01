@@ -227,6 +227,8 @@
 
 ;; Gnus:
 
+(setq gnus-select-method '(nntp "news.eternal-september.org"))
+
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
       gnus-sum-thread-tree-false-root ""
