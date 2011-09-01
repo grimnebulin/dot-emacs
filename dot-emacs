@@ -58,9 +58,6 @@
 (when (require 'dtrt-indent nil t)
   (dtrt-indent-mode 1))
 
-;; (require 'yasnippet)
-;; (yas/load-directory "~/emacs/snippets")
-
 (require 'remember)
 (global-set-key "\C-cr" 'remember)
 
