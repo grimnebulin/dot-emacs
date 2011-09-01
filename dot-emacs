@@ -35,7 +35,7 @@
 (load "paredit")
 
 ;; http://autopair.googlecode.com/svn/trunk/autopair.el
-(load "autopair.el")
+(load "autopair")
 
 (require 'calfw)
 (transient-mark-mode 1)
