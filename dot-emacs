@@ -113,6 +113,7 @@
     ad-do-it))
 
 (put 'shell 'ido 'ignore)
+(put 'dired-create-directory 'ido 'ignore)
 
 ;;
 ;;  Variables:
