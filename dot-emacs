@@ -201,6 +201,8 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'perl-mode-hook 'autopair-mode)
 (add-hook 'org-mode-hook 'show-trailing-whitespace)
+(add-hook 'java-mode-hook 'show-trailing-whitespace)
+(add-hook 'perl-mode-hook 'show-trailing-whitespace)
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
