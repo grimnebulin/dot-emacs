@@ -295,6 +295,9 @@ putting the current line this far down the window.")
 (defadvice ucs-insert (before use-ido-completing-read activate)
   (interactive (list (ido-read-char-by-name "Unicode (name or hex): "))))
 
+(defadvice gnus (after cd-to-home-dir activate)
+  (cd "~"))
+
 ;; Automatically-added stuff:
 
 (put 'upcase-region 'disabled nil)
