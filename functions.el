@@ -44,8 +44,8 @@ that module, if it exists."
 (defun perl-module-path (module)
   "Returns the path to the Perl file that implements the given module."
   (let ((path (concat (replace-regexp-in-string "::" "/" module) ".pm")))
-    (shell-command-to-string
-     (concat "perl -M" module " -e 'print $INC{ shift() }' " path))))
+    (format-shell-command-to-string
+     "perl -M%s -e 'print $INC{ shift() }' %s" module path)))
 
 ;;
 
