@@ -1,5 +1,3 @@
-(require 'thingatpt)
-
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
@@ -375,6 +373,8 @@ current when this command was invoked."
   "Search the text in the region with Google."
   (interactive "r")
   (google-search (buffer-substring-no-properties start end)))
+
+(require 'thingatpt)
 
 (defun google-word-at-point ()
   (interactive)
