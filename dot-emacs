@@ -59,8 +59,8 @@
 (when (require 'dtrt-indent nil t)
   (dtrt-indent-mode 1))
 
-(require 'remember)
-(global-set-key "\C-cr" 'remember)
+;; (require 'remember)
+;; (global-set-key "\C-cr" 'remember)
 
 ;;
 ;; hippie-expand configuration
