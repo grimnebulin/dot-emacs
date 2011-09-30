@@ -3,50 +3,30 @@
 (require 'cl)
 
 (set-face-attribute 'default nil :font "Inconsolata" :height 140)
-; (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 140)
+;; "DejaVu Sans Mono" also looks nice
 
-(push "/usr/local/bin" exec-path)
-(push (format "%s/bin" (getenv "HOME")) exec-path)
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
 
 (add-to-list 'load-path "~/emacs")
-(add-to-list 'load-path "~/emacs/emms-3.0")
-(add-to-list 'load-path "~/emacs/dtrt-indent")
-(add-to-list 'load-path "~/emacs/yasnippet")
-;; git clone https://github.com/kiwanami/emacs-calfw.git
-(add-to-list 'load-path "~/emacs/emacs-calfw")
 
-(add-to-list 'load-path "~/emacs/magit-1.0.0")
-(require 'magit)
-
-(add-to-list 'load-path "~/emacs/org-mode/lisp")
-(require 'org)
-(require 'org-capture)
-
-(setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
-(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
+(add-to-list 'initial-frame-alist '(top . 0))
+(add-to-list 'initial-frame-alist '(left . -100))
+(add-to-list 'default-frame-alist '(width . 90))
+(add-to-list 'default-frame-alist '(height . 50))
 
 (load "functions")
 (load "wrif" t)
 (load "akamai" t)
 (load "laptop" t)
-(load "ace-jump-mode/ace-jump-mode.el")
 
-;; http://mumble.net/~campbell/emacs/paredit.el
-(load "paredit")
-
-;; http://autopair.googlecode.com/svn/trunk/autopair.el
-(load "autopair")
-
-(require 'calfw)
 (transient-mark-mode 1)
-;; (iswitchb-mode 1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (random t)
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
-
 (windmove-default-keybindings)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
@@ -56,11 +36,44 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+;;
+;; Various extra packages:
+;;
+
+;; http://git.savannah.gnu.org/gitweb/?p=dtrt-indent.git;a=blob_plain;f=dtrt-indent.el
+(add-to-list 'load-path "~/emacs/dtrt-indent")
 (when (require 'dtrt-indent nil t)
   (dtrt-indent-mode 1))
 
-;; (require 'remember)
-;; (global-set-key "\C-cr" 'remember)
+;; http://code.google.com/p/yasnippet/
+(add-to-list 'load-path "~/emacs/yasnippet")
+
+;; git clone https://github.com/kiwanami/emacs-calfw.git
+(add-to-list 'load-path "~/emacs/emacs-calfw")
+(require 'calfw)
+
+;; http://philjackson.github.com/magit/
+(add-to-list 'load-path "~/emacs/magit-1.0.0")
+(require 'magit)
+
+;; http://mumble.net/~campbell/emacs/paredit.el
+(load "paredit")
+
+;; http://autopair.googlecode.com/svn/trunk/autopair.el
+(load "autopair")
+
+;; http://orgmode.org/
+(add-to-list 'load-path "~/emacs/org-mode/lisp")
+(require 'org)
+(require 'org-capture)
+
+(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
+(require 'color-theme)
+(require 'zenburn)
+(zenburn)
+
+;; http://www.emacswiki.org/emacs/AceJump
+(load "ace-jump-mode/ace-jump-mode.el")
 
 ;;
 ;; hippie-expand configuration
@@ -104,7 +117,7 @@
   "Check to see if user wanted to avoid using ido"
   (if (loop for command = this-command then (symbol-function command)
             while (symbolp command)
-            thereis (eq (get command 'ido) 'ignore))
+            thereis (eq 'ignore (get command 'ido)))
       (let ((read-buffer-function nil))
         (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
         (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
@@ -164,19 +177,20 @@
 (global-set-key "\C-x\C-u" 'upcase-region-or-characters)
 (global-set-key "\C-x\C-l" 'downcase-region-or-characters)
 (global-set-key [(shift control t)] 'toggle-case)
-(global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (global-set-key [(shift meta b)] 'bury-buffer)
 (global-set-key [(shift meta x)] 'clipboard-kill-region)
 (global-set-key [(shift meta c)] 'clipboard-kill-ring-save)
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
 (global-set-key [(super b)] 'browse-url-at-point)
 (global-set-key "\C-x5-" 'delete-frame-and-buffer)
-(global-set-key [(control super k)] 'kill-this-buffer)
 (global-set-key [(super j)] 'ace-jump-mode)
 (global-set-key [(shift meta s)] 'shell)
 (global-set-key [(shift super s)] 'swap-windows)
 (global-set-key [(shift super r)] 'rotate-windows)
 (global-set-key [(super g)] 'magit-status)
+
+(global-set-key [(control ?*)] 'my-isearch-word-at-point)
+(add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
 
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
@@ -185,25 +199,31 @@
   (global-unset-key "\C-z")
   (global-unset-key "\C-x\C-z"))
 
-
+;;
 ;; Hooks:
+;;
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-(add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'text-mode-hook (lambda () (local-set-key [(control m)] 'newline)))
-(add-hook 'html-mode-hook 'turn-off-auto-fill)
-(add-hook 'sgml-mode-hook 'turn-off-auto-fill)
-(add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
-(add-hook 'message-mode-hook 'auto-fill-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
-(add-hook 'emacs-lisp-mode-hook 'show-trailing-whitespace)
+
+(add-hook 'perl-mode-hook 'autopair-mode)
+(add-hook 'java-mode-hook 'autopair-mode)
+
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
-(add-hook 'perl-mode-hook 'autopair-mode)
+
+(add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'message-mode-hook 'auto-fill-mode)
+
+(add-hook 'html-mode-hook 'turn-off-auto-fill)
+(add-hook 'sgml-mode-hook 'turn-off-auto-fill)
+
 (add-hook 'org-mode-hook 'show-trailing-whitespace)
 (add-hook 'java-mode-hook 'show-trailing-whitespace)
 (add-hook 'perl-mode-hook 'show-trailing-whitespace)
+(add-hook 'emacs-lisp-mode-hook 'show-trailing-whitespace)
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
@@ -219,16 +239,23 @@
              'comint-postoutput-scroll-to-bottom)
 
 ;; EMMS:
+;; http://www.gnu.org/s/emms/
+
+(add-to-list 'load-path "~/emacs/emms-3.0")
 
 (require 'emms-setup)
-(require 'emms-player-mpg321-remote)
-(require 'emms-playing-time)
 (emms-standard)
 (emms-default-players)
-(push 'emms-player-mpg321-remote emms-player-list)
+
+(add-to-list 'emms-player-list 'emms-player-mpg321-remote)
+(require 'emms-player-mpg321-remote)
+
+(require 'emms-playing-time)
 (emms-playing-time 1)
 
-;; Gnus:
+;;
+;; Gnus configuration:
+;;
 
 (setq gnus-select-method '(nntp "news.eternal-september.org"))
 
@@ -260,7 +287,6 @@
   '(term-set-escape-char ?\C-x))
 
 (defalias 'perldoc 'cperl-perldoc "Convenient shorthand for cperl-perldoc.")
-; (defalias 'gof 'gnus-other-frame)
 (defalias 'tb 'comint-truncate-buffer)
 (defalias 'c\'mere 'send-last-shell-to-this-directory)
 (defalias 'mb 'rename-buffer)
@@ -273,11 +299,6 @@
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
 (defalias 'eb 'eval-buffer)
-
-(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
-(require 'color-theme)
-(require 'zenburn)
-(zenburn)
 
 (defadvice open-line (around vi-style-open-line activate)
   "Make open-line behave more like vi."
