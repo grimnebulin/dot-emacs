@@ -150,6 +150,7 @@
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
+(setq confirm-nonexistent-file-or-buffer nil)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "conkeror")
