@@ -189,6 +189,7 @@
 (global-set-key [(shift super s)] 'swap-windows)
 (global-set-key [(shift super r)] 'rotate-windows)
 (global-set-key [(super g)] 'magit-status)
+(global-set-key "\C-xr5b" 'bookmark-jump-other-frame)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
@@ -320,6 +321,12 @@ putting the current line this far down the window.")
 
 (defadvice gnus (after cd-to-home-dir activate)
   (cd "~"))
+
+(defadvice bookmark-jump (around spawn-shell-if-prefix activate)
+  "If a prefix argument is supplied, spawn a shell in the bookmark's directory instead."
+  (if current-prefix-arg
+      (shell-in-bookmark-directory (ad-get-arg 0))
+    ad-do-it))
 
 ;; Automatically-added stuff:
 
