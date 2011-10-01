@@ -1,5 +1,3 @@
-(require 'thingatpt)
-
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
@@ -44,8 +42,8 @@ that module, if it exists."
 (defun perl-module-path (module)
   "Returns the path to the Perl file that implements the given module."
   (let ((path (concat (replace-regexp-in-string "::" "/" module) ".pm")))
-    (shell-command-to-string
-     (concat "perl -M" module " -e 'print $INC{ shift() }' " path))))
+    (format-shell-command-to-string
+     "perl -M%s -e 'print $INC{ shift() }' %s" module path)))
 
 ;;
 
@@ -376,6 +374,32 @@ current when this command was invoked."
   (interactive "r")
   (google-search (buffer-substring-no-properties start end)))
 
+(require 'thingatpt)
+
 (defun google-word-at-point ()
   (interactive)
   (google-search (word-at-point)))
+
+(defun shell-in-directory (dir &optional suffix)
+  (setq dir (file-name-directory dir))
+  (or (loop for b being the buffers
+            if (and (is-interactive-shell-buffer b)
+                    (with-current-buffer b (string= dir default-directory)))
+            return (switch-to-buffer b))
+      (let ((default-directory dir))
+        (shell
+         (generate-new-buffer-name
+          (if suffix (format "*shell-%s*" suffix) "*shell*")))
+        (delete-other-windows))))
+
+(defun shell-in-bookmark-directory (bookmark)
+  (shell-in-directory
+   (cdr (assq 'filename (bookmark-get-bookmark-record bookmark)))
+   bookmark))
+
+(defun bookmark-jump-other-frame (bookmark)
+  (interactive (list (bookmark-completing-read "Jump to bookmark in other frame")))
+  (select-frame (make-frame))
+  (if current-prefix-arg
+      (shell-in-bookmark-directory bookmark)
+    (bookmark-jump bookmark)))
