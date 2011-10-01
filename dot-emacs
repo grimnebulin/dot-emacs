@@ -19,8 +19,8 @@
 (require 'magit)
 
 (add-to-list 'load-path "~/emacs/org-mode/lisp")
-(require 'org)
-(require 'org-capture)
+(require 'org nil t)
+(require 'org-capture nil t)
 
 (setq initial-frame-alist (append '((top . 0) (left . -100)) initial-frame-alist))
 (setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
@@ -201,6 +201,7 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'perl-mode-hook 'autopair-mode)
 (add-hook 'org-mode-hook 'show-trailing-whitespace)
+(add-hook 'js-mode-hook 'show-trailing-whitespace)
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
