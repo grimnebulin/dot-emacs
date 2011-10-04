@@ -403,3 +403,6 @@ current when this command was invoked."
   (if current-prefix-arg
       (shell-in-bookmark-directory bookmark)
     (bookmark-jump bookmark)))
+
+(defun add-to-hooks (func &rest hooks)
+  (dolist (hook hooks) (add-hook hook func)))
