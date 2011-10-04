@@ -17,7 +17,6 @@
 
 (load "functions")
 (load "wrif" t)
-(load "akamai" t)
 (load "laptop" t)
 
 (transient-mark-mode 1)
@@ -74,6 +73,8 @@
 
 ;; http://www.emacswiki.org/emacs/AceJump
 (load "ace-jump-mode/ace-jump-mode.el")
+
+(load "akamai" t)
 
 ;;
 ;; hippie-expand configuration
