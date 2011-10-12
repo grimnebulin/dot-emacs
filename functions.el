@@ -398,8 +398,31 @@ current when this command was invoked."
    bookmark))
 
 (defun bookmark-jump-other-frame (bookmark)
-  (interactive (list (bookmark-completing-read "Jump to bookmark in other frame")))
+  (interactive
+   (progn (require 'bookmark)  ; For bookmark-completing-read.
+          (list (bookmark-completing-read "Jump to bookmark in other frame"))))
   (select-frame (make-frame))
   (if current-prefix-arg
       (shell-in-bookmark-directory bookmark)
     (bookmark-jump bookmark)))
+
+(defun comment-copy-of-lines (prefix)
+  (interactive "p")
+  (let (start end)
+    (cond
+     ((use-region-p)
+      (setq start (save-excursion (goto-char (region-beginning))
+                                  (line-beginning-position))
+            end   (save-excursion (goto-char (region-end))
+                                  (line-end-position))))
+     ((>= prefix 0)
+      (setq start (line-beginning-position)
+            end   (line-end-position prefix)))
+     (t
+      (setq start (line-beginning-position (1+ prefix))
+            end   (line-end-position))))
+    (incf end)
+    (let ((text (buffer-substring start end)))
+      (goto-char end)
+      (comment-region start end)
+      (save-excursion (insert text)))))
