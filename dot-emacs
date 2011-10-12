@@ -162,6 +162,7 @@
 (setenv "NNTPSERVER" "news.eternal-september.org")
 (setenv "SHELL" "bash")
 
+(set-register ?\C-e "ಠ_ಠ")
 
 ;; Key bindings:
 
