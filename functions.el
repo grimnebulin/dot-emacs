@@ -408,6 +408,9 @@ current when this command was invoked."
       (shell-in-bookmark-directory bookmark)
     (bookmark-jump bookmark)))
 
+(defun add-to-hooks (func &rest hooks)
+  (dolist (hook hooks) (add-hook hook func)))
+
 (defun comment-copy-of-lines (prefix)
   (interactive "p")
   (let (start end)
@@ -428,3 +431,4 @@ current when this command was invoked."
       (goto-char end)
       (comment-region start end)
       (save-excursion (insert text)))))
+
