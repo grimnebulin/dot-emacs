@@ -369,6 +369,8 @@ current when this command was invoked."
    (format "http://www.google.com/search?as_q=%s&num=50&hl=en&ie=ISO8869-1&btnG=Google+Search&as_epq=&as_oq=&as_eq=&lr=&as_ft=i&as_filetype=&as_qdr=all&as_nlo=&as_nhi=&as_occt=any&as_dt=i&as_sitesearch=&safe=images"
            (url-hexify-string search-string))))
 
+(defalias 'g 'google-search)
+
 (defun google-search-region (start end)
   "Search the text in the region with Google."
   (interactive "r")
