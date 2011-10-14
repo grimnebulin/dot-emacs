@@ -346,6 +346,11 @@ putting the current line this far down the window.")
       (shell-in-bookmark-directory (ad-get-arg 0))
     ad-do-it))
 
+(defadvice insert-register (before invert-prefix-arg activate)
+  "Invert the sense of the prefix argument to insert-register."
+  (ad-set-arg 1 (not (ad-get-arg 1))))
+
+
 ;; Automatically-added stuff:
 
 (put 'upcase-region 'disabled nil)
