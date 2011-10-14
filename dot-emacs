@@ -66,6 +66,11 @@
 (require 'org nil t)
 (require 'org-capture nil t)
 
+;; http://www.emacswiki.org/emacs/download/iedit.el
+(when (require 'iedit nil t)
+  (define-key       global-map [(control ?\;)] 'iedit-mode)
+  (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
+
 (add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 (require 'color-theme)
 (require 'zenburn)
