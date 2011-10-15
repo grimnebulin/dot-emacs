@@ -50,21 +50,23 @@
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
 (add-to-list 'load-path "~/emacs/emacs-calfw")
 (require 'calfw)
+(require 'calfw-org)
 
 ;; http://philjackson.github.com/magit/
 (add-to-list 'load-path "~/emacs/magit-1.0.0")
 (require 'magit)
 
 ;; http://mumble.net/~campbell/emacs/paredit.el
-(load "paredit")
+(require 'paredit)
 
 ;; http://autopair.googlecode.com/svn/trunk/autopair.el
-(load "autopair")
+(require 'autopair)
 
 ;; http://orgmode.org/
 (add-to-list 'load-path "~/emacs/org-mode/lisp")
 (require 'org nil t)
 (require 'org-capture nil t)
+(global-set-key "\C-ca" 'org-agenda)
 
 ;; http://www.emacswiki.org/emacs/download/iedit.el
 (when (require 'iedit nil t)
@@ -324,6 +326,7 @@
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
 (defalias 'eb 'eval-buffer)
+(defalias 'wr 'write-region)
 
 (defadvice open-line (around vi-style-open-line activate)
   "Make open-line behave more like vi."
