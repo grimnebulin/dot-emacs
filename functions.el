@@ -432,3 +432,24 @@ current when this command was invoked."
       (comment-region start end)
       (save-excursion (insert text)))))
 
+(defmacro with-buffer-visiting-file (file &rest body)
+  (let ((fileval  (gensym))
+        (existing (gensym))
+        (buffer   (gensym)))
+    `(let* ((,fileval ,file)
+            (,existing (find-buffer-visiting ,fileval))
+            (,buffer (if ,existing
+                         (make-indirect-buffer
+                          ,existing
+                          (generate-new-buffer-name
+                           (buffer-name ,existing)))
+                       (find-file-noselect ,fileval t t))))
+       (unwind-protect
+           (with-current-buffer ,buffer
+             (widen)
+             (beginning-of-buffer)
+             ,@body)
+         (when (buffer-live-p ,buffer)
+           (with-current-buffer ,buffer
+             (or ,existing (set-buffer-modified-p nil))
+             (kill-buffer)))))))
