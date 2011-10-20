@@ -161,6 +161,7 @@
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
+(setq enable-recursive-minibuffers t)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "conkeror")
