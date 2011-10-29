@@ -304,6 +304,7 @@
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
       mm-text-html-renderer 'w3m
+      gnus-mime-display-multipart-as-mixed t
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
 
