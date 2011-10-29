@@ -242,7 +242,6 @@
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-;; (add-hook 'text-mode-hook (lambda () (local-set-key [(control m)] 'newline)))
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 
