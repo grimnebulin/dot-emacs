@@ -228,15 +228,10 @@
   'lisp-interaction-mode-hook
   )
 
-(add-to-hooks 'auto-fill-mode
+(add-to-hooks 'turn-on-auto-fill
    'message-mode-hook
-   ;; 'text-mode-hook
+   'text-mode-hook
    )
-
-;; (add-to-hooks 'turn-off-auto-fill
-;;    'html-mode-hook
-;;    'sgml-mode-hook
-;;    )
 
 (add-to-hooks 'show-trailing-whitespace
   'emacs-lisp-mode-hook
