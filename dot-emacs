@@ -75,8 +75,15 @@
 
 (add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 (require 'color-theme)
-(require 'zenburn)
-(zenburn)
+
+;; https://github.com/sellout/emacs-color-theme-solarized.git
+(add-to-list 'load-path "~/emacs/emacs-color-theme-solarized")
+
+(cond
+ ((require 'color-theme-solarized nil t)
+  (color-theme-solarized-dark))
+ ((require 'zenburn nil t)
+  (zenburn)))
 
 ;; http://www.emacswiki.org/emacs/AceJump
 (load "ace-jump-mode/ace-jump-mode.el")
