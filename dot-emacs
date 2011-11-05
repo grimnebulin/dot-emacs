@@ -51,6 +51,7 @@
 (add-to-list 'load-path "~/emacs/emacs-calfw")
 (require 'calfw)
 (require 'calfw-org)
+(defalias 'oc 'cfw:open-org-calendar)
 
 ;; http://philjackson.github.com/magit/
 (add-to-list 'load-path "~/emacs/magit-1.0.0")
