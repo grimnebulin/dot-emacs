@@ -350,6 +350,7 @@ current when this command was invoked."
          (completions (sort (delete-if (lambda (s) (= ?< (aref s 0)))
                                        (mapcar 'car (ucs-names)))
                             'ido-read-char-sort-predicate))
+         (ido-enable-flex-matching nil)
 	 (input (ido-completing-read prompt completions)))
     (cond
      ((string-match-p "^[0-9a-fA-F]+$" input)
