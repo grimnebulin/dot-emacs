@@ -233,8 +233,11 @@
 
 (add-to-hooks 'enable-paredit-mode
   'emacs-lisp-mode-hook
-  'lisp-interaction-mode-hook
   )
+
+(add-to-hooks 'paredit-for-lisp-interaction-mode
+   'lisp-interaction-mode-hook
+   )
 
 (add-to-hooks 'turn-on-auto-fill
    'message-mode-hook
@@ -261,6 +264,12 @@
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
+
+(defun paredit-for-lisp-interaction-mode ()
+  (paredit-mode 1)
+  (setq minor-mode-overriding-map-alist
+        `((paredit-mode ,@(remove (cons ?\C-j 'paredit-newline)
+                                  paredit-mode-map)))))
 
 ;; (add-hook 'find-file-hook 'its-all-text-longlines)
 
