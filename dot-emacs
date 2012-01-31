@@ -229,9 +229,12 @@
 ;; Hooks:
 ;;
 
+(add-hook 'dired-mode 'turn-on-gnus-dired-mode)
+
 (add-to-hooks 'autopair-mode
   'java-mode-hook
   'perl-mode-hook
+  'python-mode-hook
   )
 
 (add-to-hooks 'enable-paredit-mode
@@ -248,11 +251,13 @@
    )
 
 (add-to-hooks 'show-trailing-whitespace
+  'c++-mode-hook
   'emacs-lisp-mode-hook
   'java-mode-hook
   'js-mode-hook
   'org-mode-hook
   'perl-mode-hook
+  'sh-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
