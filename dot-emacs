@@ -247,6 +247,7 @@
    )
 
 (add-to-hooks 'show-trailing-whitespace
+  'c++-mode-hook
   'emacs-lisp-mode-hook
   'java-mode-hook
   'js-mode-hook
@@ -259,9 +260,11 @@
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
+  'c++-mode-hook
   'emacs-lisp-mode-hook
   'perl-mode-hook
   'java-mode-hook
+  'js-mode-hook
   )
 
 (defun show-trailing-whitespace ()
@@ -320,6 +323,8 @@
       gnus-mime-display-multipart-as-mixed t
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
+
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
 ;; (add-to-list 'gnus-secondary-select-methods
 ;;       '(nnimap "gmail"
