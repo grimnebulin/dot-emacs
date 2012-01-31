@@ -26,7 +26,6 @@
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
-(windmove-default-keybindings)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
@@ -79,6 +78,10 @@
 
 ;; https://github.com/sellout/emacs-color-theme-solarized.git
 (add-to-list 'load-path "~/emacs/emacs-color-theme-solarized")
+
+;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
+(when (require 'ack nil t)
+  (setq ack-command "ack"))
 
 (cond
  ((require 'color-theme-solarized nil t)
