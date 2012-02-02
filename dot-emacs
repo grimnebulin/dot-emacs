@@ -173,6 +173,7 @@
 (setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "conkeror")
@@ -234,6 +235,7 @@
 (add-to-hooks 'autopair-mode
   'java-mode-hook
   'perl-mode-hook
+  'c++-mode-hook
   'python-mode-hook
   )
 
@@ -269,7 +271,11 @@
   'emacs-lisp-mode-hook
   'perl-mode-hook
   'java-mode-hook
+<<<<<<< HEAD
   'sh-mode-hook
+=======
+  'js-mode-hook
+>>>>>>> 983094a9e2094cc5aecc0009bed63cb2387c3373
   )
 
 (defun show-trailing-whitespace ()
@@ -328,6 +334,8 @@
       gnus-mime-display-multipart-as-mixed t
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
+
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
 ;; (add-to-list 'gnus-secondary-select-methods
 ;;       '(nnimap "gmail"
