@@ -362,6 +362,8 @@
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
 (ad-activate 'insert-register)
+; (ad-activate 'shell-command)
+(ad-activate 'dired-do-flagged-delete)
 
 (setq *recenter-fraction* 0.333)
 

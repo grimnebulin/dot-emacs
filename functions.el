@@ -484,3 +484,15 @@ putting the current line this far down the window.")
 (defadvice insert-register (before invert-prefix-arg)
   "Invert the sense of the prefix argument to insert-register."
   (ad-set-arg 1 (not (ad-get-arg 1))))
+
+(defadvice shell-command (before allow-multiple-asynchronous-commands)
+  (when (and (string-match "&[ \t]*\\'" (ad-get-arg 0))
+             (not (ad-get-arg 1)))
+    (ad-set-arg 1 (generate-new-buffer-name "*Async Shell Command*"))))
+
+(defadvice dired-do-flagged-delete (around delete-recursively-if-prefix)
+  "Sets dired-recursive-deletes to 'always for the duration of this command
+if a prefix argument is present."
+  (let ((dired-recursive-deletes
+         (if current-prefix-arg 'always dired-recursive-deletes)))
+    ad-do-it))
