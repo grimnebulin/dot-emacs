@@ -265,9 +265,11 @@
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
+  'c++-mode-hook
   'emacs-lisp-mode-hook
   'perl-mode-hook
   'java-mode-hook
+  'sh-mode-hook
   )
 
 (defun show-trailing-whitespace ()
