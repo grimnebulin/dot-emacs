@@ -103,6 +103,7 @@
 (global-set-key "\M-/" 'hippie-expand)
 
 (setq hippie-expand-try-functions-list '(
+      try-complete-perl-package-name
       try-expand-dabbrev
       try-expand-dabbrev-all-buffers
       try-expand-dabbrev-from-kill

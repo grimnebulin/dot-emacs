@@ -455,6 +455,23 @@ current when this command was invoked."
              (or ,existing (set-buffer-modified-p nil))
              (kill-buffer)))))))
 
+(defun try-complete-perl-package-name (old)
+  (when (not old)
+    (he-init-string (save-excursion (skip-chars-backward ":[:alnum:]") (point)) (point))
+    (setq he-expand-list
+          (save-excursion
+            (goto-char (point-min))
+            (loop while (search-forward-regexp "[[:alpha:]][[:alnum:]]*\\(?:::[[:alpha:]][[:alnum:]]*\\)+" nil t)
+                  when (not (string= (match-string 0) he-search-string))
+                  collect (match-string 0)))))
+  (cond
+   (he-expand-list
+    (he-substitute-string (pop he-expand-list))
+    t)
+   (t
+    (when old (he-reset-string))
+    nil)))
+
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
   (beginning-of-line)
