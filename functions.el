@@ -455,7 +455,7 @@ current when this command was invoked."
              (or ,existing (set-buffer-modified-p nil))
              (kill-buffer)))))))
 
-(defconst +perl-package-regexp+ "[[:alpha:]][[:alnum:]]*\\(?:::[[:alpha:]][[:alnum:]]*\\)+")
+(defconst +perl-package-regexp+ "[[:upper:]][[:alnum:]]*\\(?:::[[:upper:]][[:alnum:]]*\\)+")
 
 (defun try-complete-perl-package-name (old)
   (when (not old)
@@ -463,8 +463,11 @@ current when this command was invoked."
     (setq he-expand-list
           (save-excursion
             (goto-char (point-min))
-            (loop while (search-forward-regexp +perl-package-regexp+ nil t)
-                  when (not (string= (match-string 0) he-search-string))
+            (loop with he-match-length = (length he-search-string)
+                  while (search-forward-regexp +perl-package-regexp+ nil t)
+                  when (and (> (length (match-string 0)) he-match-length)
+                            (string= he-search-string
+                                     (substring (match-string 0) 0 he-match-length)))
                   collect (match-string 0)))))
   (cond
    (he-expand-list
