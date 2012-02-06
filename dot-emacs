@@ -97,7 +97,8 @@
 ;; git clone git://github.com/hayamiz/twittering-mode.git
 (when (file-directory-p "~/emacs/twittering-mode")
   (add-to-list 'load-path "~/emacs/twittering-mode")
-  (require 'twittering-mode))
+  (require 'twittering-mode)
+  (setq twittering-use-master-password t))
 
 (load "akamai" t)
 
