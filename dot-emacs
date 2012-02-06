@@ -272,11 +272,8 @@
   'emacs-lisp-mode-hook
   'perl-mode-hook
   'java-mode-hook
-<<<<<<< HEAD
   'sh-mode-hook
-=======
   'js-mode-hook
->>>>>>> 983094a9e2094cc5aecc0009bed63cb2387c3373
   )
 
 (defun show-trailing-whitespace ()
