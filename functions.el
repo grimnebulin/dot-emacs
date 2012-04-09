@@ -1,3 +1,17 @@
+(defun listify (x)
+  (if (listp x)
+      x
+    (list x)))
+
+(defun flatten (x)
+  "Flattens the argument, if it is a list (proper or improper), or else
+returns it unchanged."
+  (if (atom x)
+      x
+    (append (listify (flatten (car x)))
+            (listify (flatten (cdr x)))
+            nil)))
+
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
