@@ -104,6 +104,9 @@
   (require 'twittering-mode)
   (setq twittering-use-master-password t))
 
+(when (require 'undo-tree nil t)
+  (global-undo-tree-mode))
+
 (load "akamai" t)
 
 ;;
