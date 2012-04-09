@@ -85,7 +85,7 @@
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
-  (setq ack-command "ack"))
+  (setq ack-command "ack -a"))
 
 (cond
  ((require 'color-theme-solarized nil t)
