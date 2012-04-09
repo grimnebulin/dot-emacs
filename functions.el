@@ -491,6 +491,13 @@ current when this command was invoked."
     (when old (he-reset-string))
     nil)))
 
+(defun clear-frame-recursive-edit ()
+  (interactive)
+  (save-window-excursion
+    (delete-other-windows)
+    (switch-to-buffer "*scratch*")
+    (recursive-edit)))
+
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
   (beginning-of-line)

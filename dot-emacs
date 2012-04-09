@@ -373,9 +373,9 @@
 (defalias 'c 'calendar)
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
-(defalias 'eb 'eval-buffer)
 (defalias 'wr 'write-region)
 (defalias 'jc 'jabber-connect)
+(defalias 'cf 'clear-frame-recursive-edit)
 
 (ad-activate 'open-line)
 (ad-activate 'recenter)
