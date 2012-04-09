@@ -104,6 +104,7 @@
   (require 'twittering-mode)
   (setq twittering-use-master-password t))
 
+;; http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode))
 
