@@ -189,6 +189,8 @@
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 
+(setq disabled-command-function nil)
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "conkeror")
 
@@ -385,12 +387,3 @@
 (ad-activate 'dired-do-flagged-delete)
 
 (setq *recenter-fraction* 0.333)
-
-;; Automatically-added stuff:
-
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
