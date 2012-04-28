@@ -323,6 +323,8 @@
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil)
 
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+
 ;; (add-to-list 'gnus-secondary-select-methods
 ;;       '(nnimap "gmail"
 ;;                 (nnimap-address "imap.gmail.com")
