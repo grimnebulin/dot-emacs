@@ -246,6 +246,7 @@
    )
 
 (add-to-hooks 'show-trailing-whitespace
+  'c++-mode-hook
   'emacs-lisp-mode-hook
   'java-mode-hook
   'js-mode-hook
