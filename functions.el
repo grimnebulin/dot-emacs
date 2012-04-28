@@ -1,3 +1,17 @@
+(defun listify (x)
+  (if (listp x)
+      x
+    (list x)))
+
+(defun flatten (x)
+  "Flattens the argument, if it is a list (proper or improper), or else
+returns it unchanged."
+  (if (atom x)
+      x
+    (append (listify (flatten (car x)))
+            (listify (flatten (cdr x)))
+            nil)))
+
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
@@ -455,6 +469,35 @@ current when this command was invoked."
              (or ,existing (set-buffer-modified-p nil))
              (kill-buffer)))))))
 
+(defconst +perl-package-regexp+ "[[:upper:]][[:alnum:]]*\\(?:::[[:upper:]][[:alnum:]]*\\)+")
+
+(defun try-complete-perl-package-name (old)
+  (when (not old)
+    (he-init-string (save-excursion (skip-chars-backward ":[:alnum:]") (point)) (point))
+    (setq he-expand-list
+          (save-excursion
+            (goto-char (point-min))
+            (loop with he-match-length = (length he-search-string)
+                  while (search-forward-regexp +perl-package-regexp+ nil t)
+                  when (and (> (length (match-string 0)) he-match-length)
+                            (string= he-search-string
+                                     (substring (match-string 0) 0 he-match-length)))
+                  collect (match-string 0)))))
+  (cond
+   (he-expand-list
+    (he-substitute-string (pop he-expand-list))
+    t)
+   (t
+    (when old (he-reset-string))
+    nil)))
+
+(defun clear-frame-recursive-edit ()
+  (interactive)
+  (save-window-excursion
+    (delete-other-windows)
+    (switch-to-buffer "*scratch*")
+    (recursive-edit)))
+
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
   (beginning-of-line)
@@ -488,3 +531,16 @@ putting the current line this far down the window.")
 (defmacro with-gensyms (names &rest body)
   `(let ,(loop for name in names collect (list name (gensym)))
      ,@body))
+
+(defadvice shell-command (before allow-multiple-asynchronous-commands)
+  (when (and (string-match "&[ \t]*\\'" (ad-get-arg 0))
+             (not (ad-get-arg 1)))
+    (ad-set-arg 1 (generate-new-buffer-name "*Async Shell Command*"))))
+
+(defadvice dired-do-flagged-delete (around delete-recursively-if-prefix)
+  "Sets dired-recursive-deletes to 'always for the duration of this command
+if a prefix argument is present."
+  (let ((dired-recursive-deletes
+         (if current-prefix-arg 'always dired-recursive-deletes)))
+    ad-do-it))
+
