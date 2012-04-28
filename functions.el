@@ -484,3 +484,7 @@ putting the current line this far down the window.")
 (defadvice insert-register (before invert-prefix-arg)
   "Invert the sense of the prefix argument to insert-register."
   (ad-set-arg 1 (not (ad-get-arg 1))))
+
+(defmacro with-gensyms (names &rest body)
+  `(let ,(loop for name in names collect (list name (gensym)))
+     ,@body))
