@@ -77,21 +77,23 @@
   (define-key       global-map [(control ?\;)] 'iedit-mode)
   (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
 
-(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
-(require 'color-theme)
+;; (add-to-list 'load-path "~/emacs/color-theme-6.6.0")
+;; (require 'color-theme)
 
-;; https://github.com/sellout/emacs-color-theme-solarized.git
-(add-to-list 'load-path "~/emacs/emacs-color-theme-solarized")
+;; ;; https://github.com/sellout/emacs-color-theme-solarized.git
+;; (add-to-list 'load-path "~/emacs/emacs-color-theme-solarized")
+
+;; (cond
+;;  ((require 'color-theme-solarized nil t)
+;;   (color-theme-solarized-dark))
+;;  ((require 'zenburn nil t)
+;;   (zenburn)))
+
+(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
   (setq ack-command "ack -a"))
-
-(cond
- ((require 'color-theme-solarized nil t)
-  (color-theme-solarized-dark))
- ((require 'zenburn nil t)
-  (zenburn)))
 
 ;; http://www.emacswiki.org/emacs/AceJump
 (load "ace-jump-mode/ace-jump-mode.el")
@@ -109,6 +111,8 @@
   (global-undo-tree-mode))
 
 (load "akamai" t)
+
+(when my-color-theme (funcall my-color-theme))
 
 ;;
 ;; hippie-expand configuration
