@@ -76,10 +76,23 @@
 (require 'twittering-mode)
 (setq twittering-use-master-password t)
 
+(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
+
+;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
+(when (require 'ack nil t)
+  (setq ack-command "ack -a"))
+
+;; http://www.emacswiki.org/emacs/AceJump
+(load "ace-jump-mode/ace-jump-mode.el")
+
+(add-to-list 'load-path "~/emacs/elnode")
+
 (require 'undo-tree)
 (global-undo-tree-mode)
 
 (load "akamai" t)
+
+(when my-color-theme (funcall my-color-theme))
 
 ;;
 ;; hippie-expand configuration
@@ -202,6 +215,7 @@
 (global-set-key [(super g)] 'magit-status)
 (global-set-key "\C-xr5b" 'bookmark-jump-other-frame)
 (global-set-key "\C-cc" 'comment-copy-of-lines)
+(global-set-key [(shift meta o)] 'other-frame)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
