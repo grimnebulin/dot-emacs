@@ -3,6 +3,9 @@
 (require 'cl)
 
 (set-face-attribute 'default nil :font "Inconsolata" :height 140)
+;; "Droid Sans Mono"
+;; "Monofur"
+;; "Inconsolata"
 ;; "DejaVu Sans Mono" also looks nice
 
 (add-to-list 'exec-path "/usr/local/bin")
@@ -34,20 +37,18 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(setq savehist-file "~/emacs/history")
-(savehist-mode 1)
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
 
 ;;
 ;; Various extra packages:
 ;;
 
-;; http://git.savannah.gnu.org/gitweb/?p=dtrt-indent.git;a=blob_plain;f=dtrt-indent.el
-(add-to-list 'load-path "~/emacs/dtrt-indent")
-(when (require 'dtrt-indent nil t)
-  (dtrt-indent-mode 1))
-
-;; http://code.google.com/p/yasnippet/
-(add-to-list 'load-path "~/emacs/yasnippet")
+;; ;; http://git.savannah.gnu.org/gitweb/?p=dtrt-indent.git;a=blob_plain;f=dtrt-indent.el
+;; (add-to-list 'load-path "~/emacs/dtrt-indent")
+;; (when (require 'dtrt-indent nil t)
+;;   (dtrt-indent-mode 1))
 
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
 (add-to-list 'load-path "~/emacs/emacs-calfw")
@@ -55,37 +56,16 @@
 (require 'calfw-org)
 (defalias 'oc 'cfw:open-org-calendar)
 
-;; http://philjackson.github.com/magit/
-(add-to-list 'load-path "~/emacs/magit-1.0.0")
 (require 'magit)
-(defalias 'ms 'magit-status)
-
-;; http://mumble.net/~campbell/emacs/paredit.el
 (require 'paredit)
-
-;; http://autopair.googlecode.com/svn/trunk/autopair.el
 (require 'autopair)
-
-;; http://orgmode.org/
-(add-to-list 'load-path "~/emacs/org-mode/lisp")
-(require 'org nil t)
-(require 'org-capture nil t)
-(global-set-key "\C-ca" 'org-agenda)
 
 ;; http://www.emacswiki.org/emacs/download/iedit.el
 (when (require 'iedit nil t)
   (define-key       global-map [(control ?\;)] 'iedit-mode)
   (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
 
-(add-to-list 'load-path "~/emacs/color-theme-6.6.0")
 (require 'color-theme)
-
-;; https://github.com/sellout/emacs-color-theme-solarized.git
-(add-to-list 'load-path "~/emacs/emacs-color-theme-solarized")
-
-;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
-(when (require 'ack nil t)
-  (setq ack-command "ack -a"))
 
 (cond
  ((require 'color-theme-solarized nil t)
@@ -93,20 +73,11 @@
  ((require 'zenburn nil t)
   (zenburn)))
 
-;; http://www.emacswiki.org/emacs/AceJump
-(load "ace-jump-mode/ace-jump-mode.el")
+(require 'twittering-mode)
+(setq twittering-use-master-password t)
 
-(add-to-list 'load-path "~/emacs/elnode")
-
-;; git clone git://github.com/hayamiz/twittering-mode.git
-(when (file-directory-p "~/emacs/twittering-mode")
-  (add-to-list 'load-path "~/emacs/twittering-mode")
-  (require 'twittering-mode)
-  (setq twittering-use-master-password t))
-
-;; http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
-(when (require 'undo-tree nil t)
-  (global-undo-tree-mode))
+(require 'undo-tree)
+(global-undo-tree-mode)
 
 (load "akamai" t)
 
@@ -117,7 +88,6 @@
 (global-set-key "\M-/" 'hippie-expand)
 
 (setq hippie-expand-try-functions-list '(
-      try-complete-perl-package-name
       try-expand-dabbrev
       try-expand-dabbrev-all-buffers
       try-expand-dabbrev-from-kill
@@ -187,10 +157,10 @@
 (setq line-number-display-limit-width 9999)
 (setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
+(setq org-startup-folded nil)
+
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
-
-(setq disabled-command-function nil)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "conkeror")
@@ -247,13 +217,10 @@
 ;; Hooks:
 ;;
 
-(add-hook 'dired-mode 'turn-on-gnus-dired-mode)
-
 (add-to-hooks 'autopair-mode
   'java-mode-hook
   'perl-mode-hook
   'c++-mode-hook
-  'python-mode-hook
   )
 
 (add-to-hooks 'enable-paredit-mode
@@ -276,7 +243,7 @@
   'js-mode-hook
   'org-mode-hook
   'perl-mode-hook
-  'sh-mode-hook
+  'octave-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -288,7 +255,6 @@
   'emacs-lisp-mode-hook
   'perl-mode-hook
   'java-mode-hook
-  'sh-mode-hook
   'js-mode-hook
   )
 
@@ -320,8 +286,8 @@
 (emms-standard)
 (emms-default-players)
 
-(add-to-list 'emms-player-list 'emms-player-mpg321-remote)
-(require 'emms-player-mpg321-remote)
+;; (add-to-list 'emms-player-list 'emms-player-mpg321-remote)
+;; (require 'emms-player-mpg321-remote)
 
 (require 'emms-playing-time)
 (emms-playing-time 1)
@@ -374,9 +340,9 @@
 (defalias 'c 'calendar)
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
+(defalias 'eb 'eval-buffer)
 (defalias 'wr 'write-region)
 (defalias 'jc 'jabber-connect)
-(defalias 'cf 'clear-frame-recursive-edit)
 
 (ad-activate 'open-line)
 (ad-activate 'recenter)
@@ -384,7 +350,16 @@
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
 (ad-activate 'insert-register)
-; (ad-activate 'shell-command)
-(ad-activate 'dired-do-flagged-delete)
 
 (setq *recenter-fraction* 0.333)
+
+;; Automatically-added stuff:
+
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
