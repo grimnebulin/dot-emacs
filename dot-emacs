@@ -37,9 +37,13 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(require 'package)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
+(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
+
+(load "akamai" t)
+
+(when (require 'package nil t)
+ (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+ (package-initialize))
 
 ;;
 ;; Various extra packages:
@@ -67,16 +71,14 @@
 
 (require 'color-theme)
 
-(cond
- ((require 'color-theme-solarized nil t)
-  (color-theme-solarized-dark))
- ((require 'zenburn nil t)
-  (zenburn)))
+;; (cond
+;;  ((require 'color-theme-solarized nil t)
+;;   (color-theme-solarized-dark))
+;;  ((require 'zenburn nil t)
+;;   (zenburn)))
 
-(require 'twittering-mode)
-(setq twittering-use-master-password t)
-
-(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
+(when (require 'twittering-mode nil t)
+  (setq twittering-use-master-password t))
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
@@ -89,8 +91,6 @@
 
 (require 'undo-tree)
 (global-undo-tree-mode)
-
-(load "akamai" t)
 
 (when my-color-theme (funcall my-color-theme))
 
