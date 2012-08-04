@@ -10,17 +10,13 @@
 
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
-
 (add-to-list 'load-path "~/emacs")
 
-(add-to-list 'initial-frame-alist '(top . 0))
-(add-to-list 'initial-frame-alist '(left . -100))
-(add-to-list 'default-frame-alist '(width . 90))
-(add-to-list 'default-frame-alist '(height . 50))
+(setq initial-frame-alist (append '((top . 0) (left 0)) initial-frame-alist))
+(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
 (load "functions")
 (load "wrif" t)
-(load "laptop" t)
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)
@@ -37,35 +33,22 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(require 'package)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
-
 ;;
 ;; Various extra packages:
 ;;
 
-;; ;; http://git.savannah.gnu.org/gitweb/?p=dtrt-indent.git;a=blob_plain;f=dtrt-indent.el
-;; (add-to-list 'load-path "~/emacs/dtrt-indent")
-;; (when (require 'dtrt-indent nil t)
-;;   (dtrt-indent-mode 1))
-
-;; git clone https://github.com/kiwanami/emacs-calfw.git
-(add-to-list 'load-path "~/emacs/emacs-calfw")
-(require 'calfw)
-(require 'calfw-org)
-(defalias 'oc 'cfw:open-org-calendar)
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
 
 (require 'magit)
 (require 'paredit)
 (require 'autopair)
-
-;; http://www.emacswiki.org/emacs/download/iedit.el
-(when (require 'iedit nil t)
-  (define-key       global-map [(control ?\;)] 'iedit-mode)
-  (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
-
 (require 'color-theme)
+(require 'twittering-mode)
+(require 'undo-tree)
+
+(global-undo-tree-mode)
 
 (cond
  ((require 'color-theme-solarized nil t)
@@ -73,8 +56,16 @@
  ((require 'zenburn nil t)
   (zenburn)))
 
-(require 'twittering-mode)
-(setq twittering-use-master-password t)
+;; git clone https://github.com/kiwanami/emacs-calfw.git
+(add-to-list 'load-path "~/emacs/emacs-calfw")
+(require 'calfw)
+(require 'calfw-org)
+(defalias 'oc 'cfw:open-org-calendar)
+
+;; http://www.emacswiki.org/emacs/download/iedit.el
+(when (require 'iedit nil t)
+  (define-key       global-map [(control ?\;)] 'iedit-mode)
+  (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
 
 (setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
 
@@ -82,14 +73,7 @@
 (when (require 'ack nil t)
   (setq ack-command "ack -a"))
 
-;; http://www.emacswiki.org/emacs/AceJump
-(load "ace-jump-mode/ace-jump-mode.el")
-
-(add-to-list 'load-path "~/emacs/elnode")
-
-(require 'undo-tree)
-(global-undo-tree-mode)
-
+(load "laptop" t)
 (load "akamai" t)
 
 (when my-color-theme (funcall my-color-theme))
@@ -171,6 +155,8 @@
 (setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq org-startup-folded nil)
+(setq twittering-use-master-password t)
+
 
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
@@ -258,6 +244,7 @@
   'org-mode-hook
   'perl-mode-hook
   'octave-mode-hook
+  'ruby-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -270,6 +257,7 @@
   'perl-mode-hook
   'java-mode-hook
   'js-mode-hook
+  'ruby-mode-hook
   )
 
 (defun show-trailing-whitespace ()
