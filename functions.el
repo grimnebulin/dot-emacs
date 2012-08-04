@@ -498,6 +498,17 @@ current when this command was invoked."
     (switch-to-buffer "*scratch*")
     (recursive-edit)))
 
+(defun absorb-other-frame (arg)
+  (interactive "p")
+  (when (> 2 (length (visible-frame-list)))
+    (error "Less than two visible frames"))
+  (let* ((frame (selected-frame))
+         (left (frame-parameter frame 'left))
+         (top  (frame-parameter frame 'top)))
+    (other-frame arg)
+    (delete-frame frame)
+    (modify-frame-parameters nil `((left . ,left) (top . ,top)))))
+
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
   (beginning-of-line)

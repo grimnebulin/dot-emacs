@@ -229,6 +229,7 @@
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
 (global-set-key [(super b)] 'browse-url-at-point)
 (global-set-key "\C-x5-" 'delete-frame-and-buffer)
+(global-set-key "\C-x5=" 'absorb-other-frame)
 (global-set-key [(super j)] 'ace-jump-mode)
 (global-set-key [(shift meta s)] 'shell)
 (global-set-key [(shift super s)] 'swap-windows)
