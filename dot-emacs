@@ -33,6 +33,14 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
+
+(load "akamai" t)
+
+(when (require 'package nil t)
+ (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+ (package-initialize))
+
 ;;
 ;; Various extra packages:
 ;;
@@ -50,11 +58,11 @@
 
 (global-undo-tree-mode)
 
-(cond
- ((require 'color-theme-solarized nil t)
-  (color-theme-solarized-dark))
- ((require 'zenburn nil t)
-  (zenburn)))
+;; (cond
+;;  ((require 'color-theme-solarized nil t)
+;;   (color-theme-solarized-dark))
+;;  ((require 'zenburn nil t)
+;;   (zenburn)))
 
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
 (add-to-list 'load-path "~/emacs/emacs-calfw")
@@ -75,6 +83,15 @@
 
 (load "laptop" t)
 (load "akamai" t)
+
+;; http://www.emacswiki.org/emacs/AceJump
+(load "ace-jump-mode/ace-jump-mode.el")
+
+(add-to-list 'load-path "~/emacs/elnode")
+
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 
 (when my-color-theme (funcall my-color-theme))
 
@@ -194,6 +211,7 @@
 (global-set-key [(shift meta v)] 'x-clipboard-yank)
 (global-set-key [(super b)] 'browse-url-at-point)
 (global-set-key "\C-x5-" 'delete-frame-and-buffer)
+(global-set-key "\C-x5=" 'absorb-other-frame)
 (global-set-key [(super j)] 'ace-jump-mode)
 (global-set-key [(shift meta s)] 'shell)
 (global-set-key [(shift super s)] 'swap-windows)
@@ -237,6 +255,7 @@
    )
 
 (add-to-hooks 'show-trailing-whitespace
+  'c-mode-hook
   'c++-mode-hook
   'emacs-lisp-mode-hook
   'java-mode-hook
@@ -252,6 +271,7 @@
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
 
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
+  'c-mode-hook
   'c++-mode-hook
   'emacs-lisp-mode-hook
   'perl-mode-hook
