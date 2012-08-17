@@ -142,8 +142,8 @@ of the buffer to the system clipboard."
   (let ((buffer (current-buffer))
         (file-name (buffer-file-name*)))
     (kill-buffer buffer)
-    (and (not (buffer-live-p buffer))
-         (delete-file file-name))))
+    (when (not (buffer-live-p buffer))
+      (delete-file file-name))))
 
 (defun upcase-region-or-characters (arg)
   (interactive "p")
