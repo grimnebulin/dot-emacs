@@ -305,8 +305,8 @@
 (emms-standard)
 (emms-default-players)
 
-;; (add-to-list 'emms-player-list 'emms-player-mpg321-remote)
-;; (require 'emms-player-mpg321-remote)
+(add-to-list 'emms-player-list 'emms-player-mpg321-remote)
+(require 'emms-player-mpg321-remote)
 
 (require 'emms-playing-time)
 (emms-playing-time 1)
