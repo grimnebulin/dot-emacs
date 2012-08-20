@@ -85,9 +85,6 @@
 (load "laptop" t)
 (load "akamai" t)
 
-;; http://www.emacswiki.org/emacs/AceJump
-(load "ace-jump-mode/ace-jump-mode.el")
-
 (add-to-list 'load-path "~/emacs/elnode")
 
 (require 'undo-tree)
