@@ -142,8 +142,8 @@ of the buffer to the system clipboard."
   (let ((buffer (current-buffer))
         (file-name (buffer-file-name*)))
     (kill-buffer buffer)
-    (and (not (buffer-live-p buffer))
-         (delete-file file-name))))
+    (when (not (buffer-live-p buffer))
+      (delete-file file-name))))
 
 (defun upcase-region-or-characters (arg)
   (interactive "p")
@@ -508,6 +508,16 @@ current when this command was invoked."
     (other-frame arg)
     (delete-frame frame)
     (modify-frame-parameters nil `((left . ,left) (top . ,top)))))
+
+;; Taken from post by Scott Frazer on gnu.emacs.help
+(defun my-isearch-word ()
+  "Surround current input with word/symbol delimiters and turn on regexp matching if necessary."
+  (interactive)
+  (unless isearch-regexp
+    (isearch-toggle-regexp))
+  (setq isearch-string (concat "\\_<" isearch-string "\\_>")
+        isearch-message (mapconcat 'isearch-text-char-description isearch-string ""))
+  (isearch-search-and-update))
 
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."

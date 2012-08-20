@@ -227,6 +227,8 @@
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
+(define-key isearch-mode-map [(meta w)] 'my-isearch-word)
+
 (when window-system
   (global-unset-key "\C-z")
   (global-unset-key "\C-x\C-z"))
@@ -308,8 +310,8 @@
 (emms-standard)
 (emms-default-players)
 
-;; (add-to-list 'emms-player-list 'emms-player-mpg321-remote)
-;; (require 'emms-player-mpg321-remote)
+(add-to-list 'emms-player-list 'emms-player-mpg321-remote)
+(require 'emms-player-mpg321-remote)
 
 (require 'emms-playing-time)
 (emms-playing-time 1)
