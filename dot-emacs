@@ -20,11 +20,12 @@
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)
-(menu-bar-mode -1)
 (random t)
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
+
+(menu-bar-mode (if (eq window-system 'ns) 1 -1))
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
