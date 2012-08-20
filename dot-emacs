@@ -34,13 +34,13 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
-
-(load "akamai" t)
-
 (when (require 'package nil t)
  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
  (package-initialize))
+
+(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
+
+(load "akamai" t)
 
 ;;
 ;; Various extra packages:
@@ -54,9 +54,11 @@
 (require 'paredit)
 (require 'autopair)
 (require 'color-theme)
-(require 'twittering-mode)
-(require 'undo-tree)
 
+(require 'twittering-mode)
+(fmakunbound 'twittering-update-lambda) ;; WTF is this?
+
+(require 'undo-tree)
 (global-undo-tree-mode)
 
 ;; (cond
