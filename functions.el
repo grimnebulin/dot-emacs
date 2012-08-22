@@ -519,6 +519,13 @@ current when this command was invoked."
         isearch-message (mapconcat 'isearch-text-char-description isearch-string ""))
   (isearch-search-and-update))
 
+(defun show-async-command (buffer process-name command &rest args)
+  (with-current-buffer buffer
+    (erase-buffer)
+    (setq mode-line-process '(":%s")))
+  (display-buffer buffer)
+  (apply #'start-process process-name buffer command args))
+
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
   (beginning-of-line)
