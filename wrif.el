@@ -1,8 +1,8 @@
-(defconst wrif-directory "~/WRIF")
+(defconst +wrif-directory+ "~/WRIF")
 
 (defun wrif-open-directory ()
   (interactive)
-  (dired wrif-directory)
+  (dired +wrif-directory+)
   (revert-buffer))
 
 (defun wrif-play-directory ()
