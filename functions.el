@@ -12,6 +12,10 @@ returns it unchanged."
             (listify (flatten (cdr x)))
             nil)))
 
+(defmacro aif (test then &rest else)
+  `(let ((it ,test))
+     (if it ,then ,@else)))
+
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
