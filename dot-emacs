@@ -2,7 +2,8 @@
 
 (require 'cl)
 
-(set-face-attribute 'default nil :font "Inconsolata" :height 140)
+(when window-system
+  (set-face-attribute 'default nil :font "Inconsolata" :height 140))
 ;; "Droid Sans Mono"
 ;; "Monofur"
 ;; "Inconsolata"
@@ -91,6 +92,7 @@
 
 (require 'undo-tree)
 (global-undo-tree-mode)
+(setq undo-tree-mode-lighter "")
 
 
 (when my-color-theme (funcall my-color-theme))
@@ -174,6 +176,13 @@
 (setq org-startup-folded nil)
 (setq twittering-use-master-password t)
 
+(setq auto-revert-interval 1)
+
+(eval-after-load 'term
+  '(term-set-escape-char ?\C-x))
+
+(eval-after-load 'autorevert
+  '(auto-revert-set-timer))
 
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
@@ -349,9 +358,6 @@
 
 ;; Misc:
 
-(eval-after-load 'term
-  '(term-set-escape-char ?\C-x))
-
 (defalias 'perldoc 'cperl-perldoc "Convenient shorthand for cperl-perldoc.")
 (defalias 'tb 'comint-truncate-buffer)
 (defalias 'c\'mere 'send-last-shell-to-this-directory)
@@ -367,6 +373,7 @@
 (defalias 'eb 'eval-buffer)
 (defalias 'wr 'write-region)
 (defalias 'jc 'jabber-connect)
+(defalias 'tail 'auto-revert-tail-mode)
 
 (ad-activate 'open-line)
 (ad-activate 'recenter)
