@@ -121,6 +121,7 @@
 ;;
 
 (setq ido-enable-flex-matching t
+      ido-use-virtual-buffers t
       ido-create-new-buffer 'always
       ido-decorations '(
           "\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
@@ -375,6 +376,7 @@
 (defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
 
+(load "my-advice")
 (ad-activate 'open-line)
 (ad-activate 'recenter)
 (ad-activate 'ucs-insert)
