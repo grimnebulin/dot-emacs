@@ -120,6 +120,7 @@
 ;;
 
 (setq ido-enable-flex-matching t
+      ido-use-virtual-buffers t
       ido-create-new-buffer 'always
       ido-decorations '(
           "\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
