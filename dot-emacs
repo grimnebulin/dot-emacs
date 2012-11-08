@@ -38,13 +38,15 @@
 (set-default-coding-systems 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+(when (require 'package nil t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (package-initialize))
+
+(require 'color-theme)
+
 (setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
 
 (load "akamai" t)
-
-(when (require 'package nil t)
- (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
- (package-initialize))
 
 ;;
 ;; Various extra packages:
@@ -69,14 +71,6 @@
 (when (require 'iedit nil t)
   (define-key       global-map [(control ?\;)] 'iedit-mode)
   (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
-
-(require 'color-theme)
-
-;; (cond
-;;  ((require 'color-theme-solarized nil t)
-;;   (color-theme-solarized-dark))
-;;  ((require 'zenburn nil t)
-;;   (zenburn)))
 
 (when (require 'twittering-mode nil t)
   (setq twittering-use-master-password t))
@@ -234,7 +228,7 @@
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
-(define-key isearch-mode-map [(meta w)] 'my-isearch-word)
+(define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
 
 (when window-system
   (global-unset-key "\C-z")
