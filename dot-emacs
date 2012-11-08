@@ -369,6 +369,7 @@
 (defalias 'wr 'write-region)
 (defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
+(defalias 'pe 'proced)
 
 (load "my-advice")
 (ad-activate 'open-line)
