@@ -159,7 +159,6 @@
 (setq user-full-name    "Sean McAfee"
       user-mail-address "eefacm@gmail.com")
 
-(setq iswitchb-prompt-newbuffer nil)
 (setq-default indent-tabs-mode nil)
 (setq backup-directory-alist '(("" . "~/.emacs_backups")))
 (setq eval-expression-print-length nil)
