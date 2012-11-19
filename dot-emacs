@@ -3,10 +3,10 @@
 (require 'cl)
 
 (when window-system
-  (set-face-attribute 'default nil :font "Inconsolata" :height 140))
+  (set-face-attribute 'default nil :font "Droid Sans Mono" :height 140))
+;; "Inconsolata"
 ;; "Droid Sans Mono"
 ;; "Monofur"
-;; "Inconsolata"
 ;; "DejaVu Sans Mono" also looks nice
 
 (add-to-list 'exec-path "/usr/local/bin")
