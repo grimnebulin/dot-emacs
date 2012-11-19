@@ -1,9 +1,12 @@
+(make-variable-buffer-local 'do-not-indent-after-open-line)
+
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
   (when called-interactively-p
     (beginning-of-line)
     ad-do-it
-    (indent-according-to-mode)))
+    (unless do-not-indent-after-open-line
+      (indent-according-to-mode))))
 
 (defvar *recenter-fraction* 0.5
   "*The recenter-proportionally advice will recenter the screen by

@@ -36,8 +36,10 @@
 (setq default-buffer-file-coding-system 'utf-8)
 
 (when (require 'package nil t)
- (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
- (package-initialize))
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (package-initialize))
+
+(require 'color-theme)
 
 (setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
 
@@ -77,6 +79,9 @@
 ;; (setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
 
 ;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
+
+(when (require 'twittering-mode nil t)
+  (setq twittering-use-master-password t))
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
@@ -236,7 +241,7 @@
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
-(define-key isearch-mode-map [(meta w)] 'my-isearch-word)
+(define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
 
 (when window-system
   (global-unset-key "\C-z")
@@ -293,6 +298,11 @@
   'ruby-mode-hook
   'scala-mode-hook
   )
+
+(add-to-hooks 'c-subword-mode
+  'java-mode-hook)
+
+(add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
@@ -362,6 +372,7 @@
 (defalias 'wr 'write-region)
 (defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
+(defalias 'pe 'proced)
 
 (load "my-advice")
 (ad-activate 'open-line)
