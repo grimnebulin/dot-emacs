@@ -311,21 +311,6 @@
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
 
-;; EMMS:
-;; http://www.gnu.org/s/emms/
-
-(add-to-list 'load-path "~/emacs/emms-3.0")
-
-(require 'emms-setup)
-(emms-standard)
-(emms-default-players)
-
-(add-to-list 'emms-player-list 'emms-player-mpg321-remote)
-(require 'emms-player-mpg321-remote)
-
-(require 'emms-playing-time)
-(emms-playing-time 1)
-
 ;;
 ;; Gnus configuration:
 ;;
