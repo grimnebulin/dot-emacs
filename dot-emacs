@@ -250,6 +250,7 @@
   'java-mode-hook
   'perl-mode-hook
   'c++-mode-hook
+  'scala-mode-hook
   )
 
 (add-to-hooks 'enable-paredit-mode
@@ -275,6 +276,7 @@
   'perl-mode-hook
   'octave-mode-hook
   'ruby-mode-hook
+  'scala-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
