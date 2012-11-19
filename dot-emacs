@@ -94,11 +94,14 @@
 (global-undo-tree-mode)
 (setq undo-tree-mode-lighter "")
 
-
 (when my-color-theme (funcall my-color-theme))
 
 ;; (add-to-list 'load-path "~/emacs/multiple-cursors")
 (require 'multiple-cursors)
+
+(add-to-list 'load-path "~/emacs/org-bullets")
+(when (require 'org-bullets nil t)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 ;;
 ;; hippie-expand configuration
