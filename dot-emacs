@@ -97,6 +97,9 @@
 
 (when my-color-theme (funcall my-color-theme))
 
+;; (add-to-list 'load-path "~/emacs/multiple-cursors")
+(require 'multiple-cursors)
+
 ;;
 ;; hippie-expand configuration
 ;;
