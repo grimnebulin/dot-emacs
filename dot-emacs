@@ -370,6 +370,7 @@
 (defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
 (defalias 'pe 'proced)
+(defalias 'll 'longlines-mode)
 
 (load "my-advice")
 (ad-activate 'open-line)
