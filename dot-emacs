@@ -3,33 +3,30 @@
 (require 'cl)
 
 (when window-system
-  (set-face-attribute 'default nil :font "Inconsolata" :height 140))
+  (set-face-attribute 'default nil :font "Droid Sans Mono" :height 140))
+;; "Inconsolata"
 ;; "Droid Sans Mono"
 ;; "Monofur"
-;; "Inconsolata"
 ;; "DejaVu Sans Mono" also looks nice
 
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
-
 (add-to-list 'load-path "~/emacs")
 
-(add-to-list 'initial-frame-alist '(top . 0))
-(add-to-list 'initial-frame-alist '(left . -100))
-(add-to-list 'default-frame-alist '(width . 90))
-(add-to-list 'default-frame-alist '(height . 50))
+(setq initial-frame-alist (append '((top . 0) (left 0)) initial-frame-alist))
+(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
 (load "functions")
 (load "wrif" t)
-(load "laptop" t)
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)
-(menu-bar-mode -1)
 (random t)
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
+
+(menu-bar-mode (if (eq window-system 'ns) 1 -1))
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
@@ -52,10 +49,26 @@
 ;; Various extra packages:
 ;;
 
-;; ;; http://git.savannah.gnu.org/gitweb/?p=dtrt-indent.git;a=blob_plain;f=dtrt-indent.el
-;; (add-to-list 'load-path "~/emacs/dtrt-indent")
-;; (when (require 'dtrt-indent nil t)
-;;   (dtrt-indent-mode 1))
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
+(require 'magit)
+(require 'paredit)
+(require 'autopair)
+(require 'color-theme)
+
+(require 'twittering-mode)
+(fmakunbound 'twittering-update-lambda) ;; WTF is this?
+
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+;; (cond
+;;  ((require 'color-theme-solarized nil t)
+;;   (color-theme-solarized-dark))
+;;  ((require 'zenburn nil t)
+;;   (zenburn)))
 
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
 (add-to-list 'load-path "~/emacs/emacs-calfw")
@@ -63,14 +76,9 @@
 (require 'calfw-org)
 (defalias 'oc 'cfw:open-org-calendar)
 
-(require 'magit)
-(require 'paredit)
-(require 'autopair)
+;; (setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
 
-;; http://www.emacswiki.org/emacs/download/iedit.el
-(when (require 'iedit nil t)
-  (define-key       global-map [(control ?\;)] 'iedit-mode)
-  (define-key isearch-mode-map [(control ?\;)] 'iedit-mode))
+;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
 
 (when (require 'twittering-mode nil t)
   (setq twittering-use-master-password t))
@@ -79,8 +87,8 @@
 (when (require 'ack nil t)
   (setq ack-command "ack -a"))
 
-;; http://www.emacswiki.org/emacs/AceJump
-(load "ace-jump-mode/ace-jump-mode.el")
+(load "laptop" t)
+(load "akamai" t)
 
 (add-to-list 'load-path "~/emacs/elnode")
 
@@ -89,6 +97,13 @@
 (setq undo-tree-mode-lighter "")
 
 (when my-color-theme (funcall my-color-theme))
+
+;; (add-to-list 'load-path "~/emacs/multiple-cursors")
+(require 'multiple-cursors)
+
+(add-to-list 'load-path "~/emacs/org-bullets")
+(when (require 'org-bullets nil t)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 ;;
 ;; hippie-expand configuration
@@ -149,7 +164,6 @@
 (setq user-full-name    "Sean McAfee"
       user-mail-address "eefacm@gmail.com")
 
-(setq iswitchb-prompt-newbuffer nil)
 (setq-default indent-tabs-mode nil)
 (setq backup-directory-alist '(("" . "~/.emacs_backups")))
 (setq eval-expression-print-length nil)
@@ -168,6 +182,8 @@
 (setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq org-startup-folded nil)
+(setq twittering-use-master-password t)
+
 (setq auto-revert-interval 1)
 
 (eval-after-load 'term
@@ -193,15 +209,12 @@
 ;; Key bindings:
 
 (global-set-key "\C-x\C-j" 'dired-jump)
-;; (global-set-key "\C-m" 'newline-and-indent)
-(global-set-key "\C-x\C-j" 'dired-jump)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-x\C-o" 'other-window-delete-rest)
 (global-set-key [(shift control n)] 'scroll-one-line-up)
 (global-set-key [(shift control p)] 'scroll-one-line-down)
-(global-set-key [(meta  p)] 'shell)
+(global-set-key [(meta p)] 'shell)
 (global-set-key [(super \\)] 'find-file-at-point)
-(global-set-key [(super ?!)] 'shell-command-with-?-expansion)
 (global-set-key "\C-x\M-k" 'kill-this-buffer-and-associated-file)
 (global-set-key "\C-x\C-u" 'upcase-region-or-characters)
 (global-set-key "\C-x\C-l" 'downcase-region-or-characters)
@@ -242,6 +255,7 @@
   'java-mode-hook
   'perl-mode-hook
   'c++-mode-hook
+  'scala-mode-hook
   )
 
 (add-to-hooks 'enable-paredit-mode
@@ -266,6 +280,8 @@
   'org-mode-hook
   'perl-mode-hook
   'octave-mode-hook
+  'ruby-mode-hook
+  'scala-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -279,6 +295,8 @@
   'perl-mode-hook
   'java-mode-hook
   'js-mode-hook
+  'ruby-mode-hook
+  'scala-mode-hook
   )
 
 (add-to-hooks 'c-subword-mode
@@ -304,21 +322,6 @@
 
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
-
-;; EMMS:
-;; http://www.gnu.org/s/emms/
-
-(add-to-list 'load-path "~/emacs/emms/lisp")
-
-(require 'emms-setup)
-(emms-standard)
-(emms-default-players)
-
-(add-to-list 'emms-player-list 'emms-player-mpg321-remote)
-(require 'emms-player-mpg321-remote)
-
-(require 'emms-playing-time)
-(emms-playing-time 1)
 
 ;;
 ;; Gnus configuration:

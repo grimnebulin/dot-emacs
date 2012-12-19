@@ -121,25 +121,8 @@ of the buffer to the system clipboard."
      (insert-buffer-substring-no-properties buffer begin end)
      (indent-rigidly (point-min) (point-max) 4))))
 
-(defvar shell-command-with-?-expansion-history nil)
-
 (defun buffer-file-name* ()
   (or (buffer-file-name) (error "Not visiting a file")))
-
-(defun shell-command-with-?-expansion (command &optional output-buffer)
-  (interactive
-   (progn
-     (buffer-file-name*)
-     (list (read-from-minibuffer
-            "Shell command (with ? expansion): "
-            nil nil nil 'shell-command-with-?-expansion-history)
-           current-prefix-arg)))
-  (shell-command
-   (let ((quoted-file-name (shell-quote-argument (buffer-file-name*))))
-     (while (string-match "\\(^\\|[ \t]\\)\\(\\?\\)\\([ \t]\\|$\\)" command)
-       (setq command (replace-match quoted-file-name t t command 2)))
-     command)
-   output-buffer))
 
 (defun kill-this-buffer-and-associated-file ()
   (interactive)
