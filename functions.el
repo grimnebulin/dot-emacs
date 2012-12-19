@@ -344,7 +344,8 @@ current when this command was invoked."
   (scroll-down 1))
 
 (defun shell-quote-format (string args)
-  (apply 'format string (mapcar 'shell-quote-argument args)))
+  (apply 'format string
+         (mapcar (lambda (x) (shell-quote-argument (format "%s" x))) args)))
 
 (defun format-shell-command (string &rest args)
   (shell-command (shell-quote-format string args)))
