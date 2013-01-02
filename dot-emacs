@@ -184,6 +184,7 @@
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq org-startup-folded nil)
 (setq twittering-use-master-password t)
+(setq tramp-auto-save-directory "/tmp")
 
 (setq auto-revert-interval 1)
 
