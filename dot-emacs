@@ -355,6 +355,13 @@
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
+(eval-after-load 'gnus
+  '(progn
+     (define-key gnus-summary-mode-map "n" 'gnus-summary-next-article)
+     (define-key gnus-summary-mode-map "p" 'gnus-summary-prev-article)
+     (define-key gnus-summary-mode-map "N" 'gnus-summary-next-unread-article)
+     (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article)))
+
 ;; (add-to-list 'gnus-secondary-select-methods
 ;;       '(nnimap "gmail"
 ;;                 (nnimap-address "imap.gmail.com")
