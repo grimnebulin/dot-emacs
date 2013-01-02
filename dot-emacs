@@ -352,7 +352,11 @@
       mm-text-html-renderer 'w3m
       gnus-mime-display-multipart-as-mixed t
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
-      gnus-save-newsrc-file nil)
+      gnus-save-newsrc-file nil
+      gnus-treat-date-local t
+      gnus-treat-date-lapsed t
+      gnus-article-date-lapsed-new-header t
+      gnus-treat-display-smileys nil)
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
@@ -388,6 +392,7 @@
 (defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
 (defalias 'pe 'proced)
+(defalias 'll 'longlines-mode)
 
 (load "my-advice")
 (ad-activate 'open-line)
