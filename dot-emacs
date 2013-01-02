@@ -197,8 +197,11 @@
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "conkeror")
+(setq browse-url-generic-program "conkeror")
+
+(setq browse-url-browser-function
+      (lambda (&rest args)
+        (apply (if current-prefix-arg 'browse-url-generic 'w3m-browse-url) args)))
 
 (load (setq custom-file "~/.emacs-custom.el"))
 
