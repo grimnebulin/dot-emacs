@@ -238,6 +238,7 @@
 (global-set-key "\C-xr5b" 'bookmark-jump-other-frame)
 (global-set-key "\C-cc" 'comment-copy-of-lines)
 (global-set-key [(shift meta o)] 'other-frame)
+(global-set-key "\C-ci" 'insert-image-at-point)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)

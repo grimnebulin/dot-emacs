@@ -513,3 +513,21 @@ current when this command was invoked."
       (setq mode-line-process '(":%s")))
     (display-buffer buffer)
     (apply #'start-process process-name buffer command args)))
+
+(defun download (url)
+  (let ((buffer (url-retrieve-synchronously url)))
+    (with-current-buffer buffer
+      (unwind-protect
+          (buffer-substring (or (search-forward "\n\n" nil t)
+                                (error "Unable to locate downloaded data"))
+                            (point-max))
+        (kill-buffer buffer)))))
+
+(defun insert-image-at-point ()
+  (interactive)
+  (let ((url (url-get-url-at-point))
+        (inhibit-read-only t))
+    (save-excursion
+      (move-beginning-of-line 2)
+      (insert-image (create-image (download url) nil t))
+      (insert "\n"))))
