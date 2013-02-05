@@ -532,9 +532,10 @@ current when this command was invoked."
 
 (defun insert-image-at-point ()
   (interactive)
-  (let ((url (url-get-url-at-point))
-        (inhibit-read-only t))
+  (let* ((url (thing-at-point-url-at-point))
+         (inhibit-read-only t)
+         (image (create-image (download url) nil t)))
     (save-excursion
       (move-beginning-of-line 2)
-      (insert-image (create-image (download url) nil t))
+      (insert-image image)
       (insert "\n"))))
