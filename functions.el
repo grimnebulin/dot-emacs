@@ -295,23 +295,29 @@ current when this command was invoked."
 
 (defun auto-align-regexp ()
   (interactive)
-  (let ((regexp-prefix "\\s-*[-._ [:alnum:]]+\\s-*"))
-    (save-excursion
-      (beginning-of-line)
-      (or (looking-at (concat regexp-prefix "\\(=>?\\)"))
-          (error "Invalid line"))
-      (let* ((delimiter (match-string 1))
-             (regexp (concat regexp-prefix delimiter))
-             (start (line-beginning-position))
-             (end (line-beginning-position 2)))
-        (save-excursion
-          (while (and (= 0 (forward-line -1))
-                      (looking-at regexp))
-            (setq start (line-beginning-position))))
-        (while (and (= 0 (forward-line 1))
-                    (looking-at regexp))
-          (setq end (line-beginning-position 2)))
-        (align-regexp start end (concat "\\(\\s-*\\)" delimiter) 1 1)))))
+  (let* ((delim (save-excursion
+                  (move-beginning-of-line 1)
+                  (or (search-forward-regexp "=>" (line-end-position) t)
+                      (search-forward-regexp "="  (line-end-position) t)
+                      (error "No auto-alignable strings found on current line"))
+                  (match-string 0)))
+         (start (save-excursion
+                  (while (and (/= (line-beginning-position 1)
+                                  (line-beginning-position 0))
+                              (save-excursion
+                                (move-beginning-of-line 0)
+                                (search-forward delim (line-end-position) t)))
+                    (forward-line -1))
+                  (line-beginning-position 1)))
+         (end (save-excursion
+                (while (and (/= (line-end-position 1)
+                                (line-end-position 2))
+                            (save-excursion
+                              (move-beginning-of-line 2)
+                              (search-forward delim (line-end-position) t)))
+                  (forward-line 1))
+                (line-end-position 1))))
+    (align-regexp start end (concat "\\(\\s-*\\)" (regexp-quote delim)) 1 1)))
 
 (defun no-process-query-on-exit ()
   (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))
