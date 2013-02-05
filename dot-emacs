@@ -13,11 +13,14 @@
 (add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
 (add-to-list 'load-path "~/emacs")
 
-(setq initial-frame-alist (append '((top . 0) (left 0)) initial-frame-alist))
-(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
-
 (load "functions")
 (load "wrif" t)
+
+(setq initial-frame-alist
+      (update-alist initial-frame-alist '(top . 0) '(left . 0)))
+
+(setq default-frame-alist
+      (update-alist default-frame-alist '(width . 90) '(height . 50)))
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)

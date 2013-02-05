@@ -539,3 +539,8 @@ current when this command was invoked."
       (move-beginning-of-line 2)
       (insert-image image)
       (insert "\n"))))
+
+(defun update-alist (alist &rest pairs)
+  (append (copy-sequence pairs)
+          (delete-if (lambda (x) (member* (car x) pairs :key #'car)) alist)))
+
