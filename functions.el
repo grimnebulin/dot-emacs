@@ -13,8 +13,14 @@ returns it unchanged."
             nil)))
 
 (defmacro aif (test then &rest else)
+  (declare (indent 2))
   `(let ((it ,test))
      (if it ,then ,@else)))
+
+(defmacro awhen (test &rest then)
+  (declare (indent defun))
+  `(let ((it ,test))
+     (when it ,@then)))
 
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
