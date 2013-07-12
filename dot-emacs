@@ -318,12 +318,6 @@
 
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
-      gnus-sum-thread-tree-false-root ""
-      gnus-sum-thread-tree-indent " "
-      gnus-sum-thread-tree-root ""
-      gnus-sum-thread-tree-leaf-with-other "├► "
-      gnus-sum-thread-tree-single-leaf "╰► "
-      gnus-sum-thread-tree-vertical "│"
       gnus-treat-hide-citation t
       gnus-cited-lines-visible '(0 . 5)
       gnus-large-newsgroup 10000
@@ -336,6 +330,14 @@
       gnus-treat-date-lapsed t
       gnus-article-date-lapsed-new-header t
       gnus-treat-display-smileys nil)
+
+(when (display-graphic-p)
+  (setq gnus-sum-thread-tree-false-root ""
+        gnus-sum-thread-tree-indent " "
+        gnus-sum-thread-tree-root ""
+        gnus-sum-thread-tree-leaf-with-other "├► "
+        gnus-sum-thread-tree-single-leaf "╰► "
+        gnus-sum-thread-tree-vertical "│"))
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
