@@ -161,6 +161,7 @@
 (setq tramp-auto-save-directory "/tmp")
 (setq dired-auto-revert-buffer t)
 (setq cperl-invalid-face 'off)
+(setq use-dialog-box nil)
 
 (setq auto-revert-interval 1)
 
