@@ -364,7 +364,6 @@
 (defalias 'ar 'align-regexp)
 (defalias 'nm 'normal-mode)
 (defalias 'rb 'revert-buffer)
-(defalias 'ru 'rename-uniquely)
 (defalias 'c 'calendar)
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
