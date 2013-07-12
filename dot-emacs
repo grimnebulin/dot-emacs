@@ -266,6 +266,7 @@
   'ruby-mode-hook
   'scala-mode-hook
   'js2-mode-hook
+  'html-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -282,6 +283,7 @@
   'js2-mode
   'ruby-mode-hook
   'scala-mode-hook
+  'html-mode-hook
   )
 
 (add-to-hooks 'c-subword-mode
