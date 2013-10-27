@@ -2,8 +2,9 @@
 
 (require 'cl)
 
-(when window-system
-  (set-face-attribute 'default nil :font "Droid Sans Mono" :height 140))
+;; (when window-system
+;;   (set-face-attribute 'default nil :font "Droid Sans Mono" ;; :height 140
+;;                       ))
 ;; "Inconsolata"
 ;; "Droid Sans Mono"
 ;; "Monofur"
@@ -20,7 +21,9 @@
       (update-alist initial-frame-alist '(top . 0) '(left . 0)))
 
 (setq default-frame-alist
-      (update-alist default-frame-alist '(width . 90) '(height . 50)))
+      (update-alist default-frame-alist ;; '(width . 90)
+                    '(height . 50)
+                    ))
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)
@@ -47,16 +50,16 @@
 ;; Various extra packages:
 ;;
 
-; (require 'package)
-; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-; (package-initialize)
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
 
 (require 'paredit)
 (require 'autopair)
 
-(require 'undo-tree)
-(global-undo-tree-mode 1)
-(setq undo-tree-mode-lighter "")
+;; (require 'undo-tree)
+;; (global-undo-tree-mode 1)
+;; (setq undo-tree-mode-lighter "")
 
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
 (add-to-list 'load-path "~/emacs/emacs-calfw")
@@ -129,8 +132,10 @@
         (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
     ad-do-it))
 
-(put 'shell 'ido 'ignore)
-(put 'dired-create-directory 'ido 'ignore)
+(put 'shell                   'ido 'ignore)
+(put 'dired-create-directory  'ido 'ignore)
+(put 'icalendar-import-buffer 'ido 'ignore)
+(put 'gnus-article-save-part  'ido 'ignore)  ;; does this actually work?
 
 ;;
 ;;  Variables:
@@ -280,13 +285,13 @@
   'perl-mode-hook
   'java-mode-hook
   ; 'js-mode-hook
-  'js2-mode
+  'js2-mode-hook
   'ruby-mode-hook
   'scala-mode-hook
   'html-mode-hook
   )
 
-(add-to-hooks 'c-subword-mode
+(add-to-hooks 'subword-mode
   'java-mode-hook)
 
 (add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
@@ -300,12 +305,12 @@
         `((paredit-mode ,@(remove (cons ?\C-j 'paredit-newline)
                                   paredit-mode-map)))))
 
-;; (add-hook 'find-file-hook 'its-all-text-longlines)
+(add-hook 'find-file-hook 'its-all-text-longlines)
 
-;; (defun its-all-text-longlines ()
-;;   (when (string-match "/itsalltext/" (buffer-file-name))
-;;     (auto-fill-mode -1)
-;;     (longlines-mode 1)))
+(defun its-all-text-longlines ()
+  (when (string-match "/itsalltext/" (buffer-file-name))
+    (auto-fill-mode -1)
+    (longlines-mode 1)))
 
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
@@ -323,7 +328,6 @@
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
       mm-text-html-renderer 'w3m
-      gnus-mime-display-multipart-as-mixed t
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil
       gnus-treat-date-local t
