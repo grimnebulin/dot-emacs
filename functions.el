@@ -536,3 +536,34 @@ current when this command was invoked."
       (move-beginning-of-line 2)
       (insert-image (create-image (download url) nil t))
       (insert "\n"))))
+
+(defun curl-url-at-point ()
+  (interactive)
+  (format-shell-command "curl -s %s" (url-get-url-at-point)))
+
+(defun pretty-print-xml-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode
+http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+this.  The function inserts linebreaks to separate tags that have
+nothing but whitespace between them.  It then indents the markup
+by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion
+    (nxml-mode)
+    (goto-char begin)
+    (while (search-forward-regexp ">\\([ \\t]*\\)<" nil t)
+      (replace-match "\n" nil nil nil 1))
+    (indent-region begin end)))
+
+(defun pretty-print-xml-buffer ()
+  (interactive)
+  (pretty-print-xml-region (point-min) (point-max)))
+
+(defun fetch-my-feed (name)
+  (interactive "sFeed name: ")
+  (format-shell-command "curl -s http://seanmcafee.name/rss/%s.pl" name))
+
+(defun dg ()
+  "Delete from point to end of buffer, like Vim's dG command."
+  (interactive)
+  (kill-region (line-beginning-position) (point-max)))
