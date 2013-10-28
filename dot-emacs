@@ -55,7 +55,10 @@
 (fmakunbound 'twittering-update-lambda) ;; WTF is this?
 
 (require 'undo-tree)
-(global-undo-tree-mode)
+(global-undo-tree-mode 1)
+
+;; (require 'git-gutter+)
+;; (global-git-gutter+-mode 1)
 
 ;; (cond
 ;;  ((require 'color-theme-solarized nil t)
@@ -76,7 +79,7 @@
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
-  (setq ack-command "ack -a"))
+  (setq ack-command "ack -a "))
 
 (load "laptop" t)
 (load "akamai" t)
@@ -158,6 +161,7 @@
 (setq-default indent-tabs-mode nil)
 (setq backup-directory-alist '(("" . "~/.emacs_backups")))
 (setq eval-expression-print-length nil)
+(setq eval-expression-print-level nil)
 (setq python-indent 4)
 (setq-default javascript-indent-level 4)
 (setq css-indent-offset 4)
@@ -191,7 +195,7 @@
 
 (setq browse-url-browser-function
       (lambda (&rest args)
-        (apply (if current-prefix-arg 'browse-url-generic 'w3m-browse-url) args)))
+        (apply (if current-prefix-arg 'w3m-browse-url 'browse-url-generic) args)))
 
 (load (setq custom-file "~/.emacs-custom.el"))
 
@@ -229,6 +233,7 @@
 (global-set-key "\C-cc" 'comment-copy-of-lines)
 (global-set-key [(shift meta o)] 'other-frame)
 (global-set-key "\C-ci" 'insert-image-at-point)
+(global-set-key [(control ?`)] (lambda () (interactive) (dired "~")))
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
