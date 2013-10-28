@@ -16,6 +16,10 @@ returns it unchanged."
   `(let ((it ,test))
      (if it ,then ,@else)))
 
+(defmacro awhen (test &rest body)
+  `(let ((it ,test))
+     (when it ,@body)))
+
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
 
