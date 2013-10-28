@@ -16,10 +16,15 @@
 (add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
 (add-to-list 'load-path "~/emacs")
 
-(setq initial-frame-alist (append '((top . 0) (left 0)) initial-frame-alist))
-(setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
-
 (load "functions")
+
+(setq initial-frame-alist
+      (update-alist initial-frame-alist '(top . 0) '(left . 0)))
+
+(setq default-frame-alist
+      (update-alist default-frame-alist ;; '(width . 90)
+                    '(height . 50)
+                    ))
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)
@@ -30,29 +35,27 @@
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+(setq w3m-use-cookies t)
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
 
 (when (require 'package nil t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
   (package-initialize))
 
-(load "akamai" t)
-
 ;;
 ;; Various extra packages:
 ;;
 
 (require 'magit)
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
 (require 'paredit)
 (require 'autopair)
-(require 'color-theme)
-
-(require 'twittering-mode)
-(fmakunbound 'twittering-update-lambda) ;; WTF is this?
 
 (require 'undo-tree)
 (global-undo-tree-mode 1)
@@ -75,14 +78,12 @@
 ;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
 
 (when (require 'twittering-mode nil t)
-  (setq twittering-use-master-password t))
+  (setq twittering-use-master-password t)
+  (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1))))
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
   (setq ack-command "ack -a "))
-
-(load "laptop" t)
-(load "akamai" t)
 
 (add-to-list 'load-path "~/emacs/elnode")
 
@@ -148,8 +149,10 @@
         (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
     ad-do-it))
 
-(put 'shell 'ido 'ignore)
-(put 'dired-create-directory 'ido 'ignore)
+(put 'shell                   'ido 'ignore)
+(put 'dired-create-directory  'ido 'ignore)
+(put 'icalendar-import-buffer 'ido 'ignore)
+(put 'gnus-article-save-part  'ido 'ignore)  ;; does this actually work?
 
 ;;
 ;;  Variables:
@@ -179,6 +182,9 @@
 (setq org-startup-folded nil)
 (setq twittering-use-master-password t)
 (setq tramp-auto-save-directory "/tmp")
+(setq dired-auto-revert-buffer t)
+(setq cperl-invalid-face 'off)
+(setq use-dialog-box nil)
 
 (setq auto-revert-interval 1)
 
@@ -281,6 +287,7 @@
   'scala-mode-hook
   'js2-mode-hook
   'sml-mode-hook
+  'html-mode-hook
   )
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -298,6 +305,7 @@
   'ruby-mode-hook
   'scala-mode-hook
   'sml-mode-hook
+  'html-mode-hook
   )
 
 (add-to-hooks 'subword-mode
@@ -314,12 +322,12 @@
         `((paredit-mode ,@(remove (cons ?\C-j 'paredit-newline)
                                   paredit-mode-map)))))
 
-;; (add-hook 'find-file-hook 'its-all-text-longlines)
+(add-hook 'find-file-hook 'its-all-text-longlines)
 
-;; (defun its-all-text-longlines ()
-;;   (when (string-match "/itsalltext/" (buffer-file-name))
-;;     (auto-fill-mode -1)
-;;     (longlines-mode 1)))
+(defun its-all-text-longlines ()
+  (when (string-match "/itsalltext/" (buffer-file-name))
+    (auto-fill-mode -1)
+    (longlines-mode 1)))
 
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
@@ -344,12 +352,6 @@
 
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
-      gnus-sum-thread-tree-false-root ""
-      gnus-sum-thread-tree-indent " "
-      gnus-sum-thread-tree-root ""
-      gnus-sum-thread-tree-leaf-with-other "├► "
-      gnus-sum-thread-tree-single-leaf "╰► "
-      gnus-sum-thread-tree-vertical "│"
       gnus-treat-hide-citation t
       gnus-cited-lines-visible '(0 . 5)
       gnus-large-newsgroup 10000
@@ -363,9 +365,17 @@
       gnus-article-date-lapsed-new-header t
       gnus-treat-display-smileys nil)
 
+(when (display-graphic-p)
+  (setq gnus-sum-thread-tree-false-root ""
+        gnus-sum-thread-tree-indent " "
+        gnus-sum-thread-tree-root ""
+        gnus-sum-thread-tree-leaf-with-other "├► "
+        gnus-sum-thread-tree-single-leaf "╰► "
+        gnus-sum-thread-tree-vertical "│"))
+
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
-(eval-after-load 'gnus
+(eval-after-load "gnus-sum.el.gz"
   '(progn
      (define-key gnus-summary-mode-map "n" 'gnus-summary-next-article)
      (define-key gnus-summary-mode-map "p" 'gnus-summary-prev-article)
@@ -388,7 +398,6 @@
 (defalias 'ar 'align-regexp)
 (defalias 'nm 'normal-mode)
 (defalias 'rb 'revert-buffer)
-(defalias 'ru 'rename-uniquely)
 (defalias 'c 'calendar)
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
@@ -400,6 +409,7 @@
 (defalias 'll 'longlines-mode)
 (defalias 'ppx 'pretty-print-xml-buffer)
 (defalias 'rf 'rename-file-and-buffer)
+(defalias 'tp 'show-twitpic)
 
 (load "my-advice")
 (ad-activate 'open-line)
@@ -432,3 +442,8 @@
 ;; (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 ;; (setq common-lisp-hyperspec-root "~/HyperSpec/")
 ;; (setq slime-startup-animation t)
+
+;; Local customizations:
+
+(load "laptop" t)
+(load "akamai" t)

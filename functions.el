@@ -13,12 +13,14 @@ returns it unchanged."
             nil)))
 
 (defmacro aif (test then &rest else)
+  (declare (indent 2))
   `(let ((it ,test))
      (if it ,then ,@else)))
 
-(defmacro awhen (test &rest body)
+(defmacro awhen (test &rest then)
+  (declare (indent defun))
   `(let ((it ,test))
-     (when it ,@body)))
+     (when it ,@then)))
 
 (defun nonempty-p (sequence)
   (and (< 0 (length sequence)) sequence))
@@ -144,11 +146,11 @@ of the buffer to the system clipboard."
   (interactive "p")
   (downcase-region (point) (if mark-active (mark) (+ arg (point)))))
 
-(defun killdir ()
-  (interactive)
-  (if (not default-directory)
-      (error "default-directory is nil")
-    (kill-new default-directory)))
+;; (defun killdir ()
+;;   (interactive)
+;;   (if (not default-directory)
+;;       (error "default-directory is nil")
+;;     (kill-new default-directory)))
 
 (defun is-interactive-shell-buffer (buffer)
   (and (with-current-buffer buffer (eq major-mode 'shell-mode))
@@ -299,23 +301,29 @@ current when this command was invoked."
 
 (defun auto-align-regexp ()
   (interactive)
-  (let ((regexp-prefix "\\s-*[-._ [:alnum:]]+\\s-*"))
-    (save-excursion
-      (beginning-of-line)
-      (or (looking-at (concat regexp-prefix "\\(=>?\\)"))
-          (error "Invalid line"))
-      (let* ((delimiter (match-string 1))
-             (regexp (concat regexp-prefix delimiter))
-             (start (line-beginning-position))
-             (end (line-beginning-position 2)))
-        (save-excursion
-          (while (and (= 0 (forward-line -1))
-                      (looking-at regexp))
-            (setq start (line-beginning-position))))
-        (while (and (= 0 (forward-line 1))
-                    (looking-at regexp))
-          (setq end (line-beginning-position 2)))
-        (align-regexp start end (concat "\\(\\s-*\\)" delimiter) 1 1)))))
+  (let* ((delim (save-excursion
+                  (move-beginning-of-line 1)
+                  (or (search-forward-regexp "=>" (line-end-position) t)
+                      (search-forward-regexp "="  (line-end-position) t)
+                      (error "No auto-alignable strings found on current line"))
+                  (match-string 0)))
+         (start (save-excursion
+                  (while (and (/= (line-beginning-position 1)
+                                  (line-beginning-position 0))
+                              (save-excursion
+                                (move-beginning-of-line 0)
+                                (search-forward delim (line-end-position) t)))
+                    (forward-line -1))
+                  (line-beginning-position 1)))
+         (end (save-excursion
+                (while (and (/= (line-end-position 1)
+                                (line-end-position 2))
+                            (save-excursion
+                              (move-beginning-of-line 2)
+                              (search-forward delim (line-end-position) t)))
+                  (forward-line 1))
+                (line-end-position 1))))
+    (align-regexp start end (concat "\\(\\s-*\\)" (regexp-quote delim)) 1 1)))
 
 (defun no-process-query-on-exit ()
   (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil))
@@ -530,11 +538,12 @@ current when this command was invoked."
 
 (defun insert-image-at-point ()
   (interactive)
-  (let ((url (url-get-url-at-point))
-        (inhibit-read-only t))
+  (let* ((url (thing-at-point-url-at-point))
+         (inhibit-read-only t)
+         (image (create-image (download url) nil t)))
     (save-excursion
       (move-beginning-of-line 2)
-      (insert-image (create-image (download url) nil t))
+      (insert-image image)
       (insert "\n"))))
 
 (defun curl-url-at-point ()
@@ -567,3 +576,23 @@ by using nxml's indentation rules."
   "Delete from point to end of buffer, like Vim's dG command."
   (interactive)
   (kill-region (line-beginning-position) (point-max)))
+
+(defun update-alist (alist &rest pairs)
+  (append (copy-sequence pairs)
+          (delete-if (lambda (x) (member* (car x) pairs :key #'car)) alist)))
+
+(defun show-twitpic ()
+  (interactive)
+  (let* ((url (or (url-get-url-at-point)
+                  (error "No URL at point")))
+         (buffer (generate-new-buffer "twitpic")))
+    (with-current-buffer buffer
+      (when (/= 0 (let ((coding-system-for-read 'no-conversion))
+                    (call-process "twitpic.pl" nil t nil url)))
+        (let ((message (buffer-string)))
+          (kill-buffer buffer)
+          (error "%s" message)))
+      (image-mode)
+      (pop-to-buffer buffer)
+      (delete-other-windows))))
+
