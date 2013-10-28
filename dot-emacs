@@ -3,7 +3,10 @@
 (require 'cl)
 
 (when window-system
-  (set-face-attribute 'default nil :font "Droid Sans Mono" :height 140))
+  (set-face-attribute 'default nil :font "DroidSansMono" :height 110)
+  (global-unset-key "\C-z")
+  (global-unset-key "\C-x\C-z"))
+
 ;; "Inconsolata"
 ;; "Droid Sans Mono"
 ;; "Monofur"
@@ -240,10 +243,6 @@
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
 (define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
-
-(when window-system
-  (global-unset-key "\C-z")
-  (global-unset-key "\C-x\C-z"))
 
 ;;
 ;; Hooks:
