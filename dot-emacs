@@ -328,7 +328,19 @@
 ;; Gnus configuration:
 ;;
 
-(setq gnus-select-method '(nntp "news.eternal-september.org"))
+;; (setq gnus-select-method '(nntp "news.eternal-september.org"))
+
+(setq gnus-select-method
+      '(nnimap "gator3189.hostgator.com"
+               (nnimap-server-port 993)
+               (nnimap-stream tls)))
+
+;; (setq gnus-secondary-select-methods
+;;       '((nnimap "gator3189.hostgator.com"
+;;                 (nnimap-server-port 993)
+;;                 (nnimap-stream tls))))
+
+;; outgoing: same host, SNMP port 465
 
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
@@ -409,3 +421,14 @@
 (put 'narrow-to-page 'disabled nil)
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+
+;; (setq inferior-lisp-program "/usr/bin/sbcl")
+;; (add-to-list 'load-path "~/slime/")
+;; (require 'slime)
+;; (slime-setup)
+;; (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+;; (setq lisp-indent-function 'common-lisp-indent-function)
+;; (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+;; (setq common-lisp-hyperspec-root "~/HyperSpec/")
+;; (setq slime-startup-animation t)
