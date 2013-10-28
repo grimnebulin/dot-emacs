@@ -343,7 +343,7 @@
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
       mm-text-html-renderer 'w3m
-      gnus-mime-display-multipart-as-mixed t
+      w3m-use-form nil
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil
       gnus-treat-date-local t
@@ -386,6 +386,8 @@
 (defalias 'tail 'auto-revert-tail-mode)
 (defalias 'pe 'proced)
 (defalias 'll 'longlines-mode)
+(defalias 'ppx 'pretty-print-xml-buffer)
+(defalias 'rf 'rename-file-and-buffer)
 
 (load "my-advice")
 (ad-activate 'open-line)
