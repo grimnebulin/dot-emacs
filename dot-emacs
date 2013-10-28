@@ -40,19 +40,11 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
   (package-initialize))
 
-(require 'color-theme)
-
-(setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
-
 (load "akamai" t)
 
 ;;
 ;; Various extra packages:
 ;;
-
-(require 'package)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
 
 (require 'magit)
 (require 'paredit)
