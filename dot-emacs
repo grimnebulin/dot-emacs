@@ -17,7 +17,6 @@
 (setq default-frame-alist (append '((width . 90) (height . 50)) default-frame-alist))
 
 (load "functions")
-(load "wrif" t)
 
 (transient-mark-mode 1)
 (tool-bar-mode -1)
@@ -25,8 +24,6 @@
 (server-start)
 (desktop-save-mode 1)
 (quietly-read-abbrev-file)
-
-(menu-bar-mode (if (eq window-system 'ns) 1 -1))
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
@@ -77,8 +74,6 @@
 (require 'calfw-org)
 (defalias 'oc 'cfw:open-org-calendar)
 
-;; (setq my-color-theme (and (require 'zenburn nil t) 'zenburn))
-
 ;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
 
 (when (require 'twittering-mode nil t)
@@ -96,8 +91,6 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 (setq undo-tree-mode-lighter "")
-
-(when my-color-theme (funcall my-color-theme))
 
 ;; (add-to-list 'load-path "~/emacs/multiple-cursors")
 (require 'multiple-cursors)
