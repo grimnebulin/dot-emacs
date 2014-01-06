@@ -19,7 +19,7 @@
 (load "functions")
 
 (setq initial-frame-alist
-      (update-alist initial-frame-alist '(top . 0) '(left . 0)))
+      (update-alist initial-frame-alist '(top . 0) '(right . 0)))
 
 (setq default-frame-alist
       (update-alist default-frame-alist ;; '(width . 90)
@@ -57,9 +57,6 @@
 (require 'paredit)
 (require 'autopair)
 
-(require 'undo-tree)
-(global-undo-tree-mode 1)
-
 ;; (require 'git-gutter+)
 ;; (global-git-gutter+-mode 1)
 
@@ -88,7 +85,7 @@
 (add-to-list 'load-path "~/emacs/elnode")
 
 (require 'undo-tree)
-(global-undo-tree-mode)
+(global-undo-tree-mode 1)
 (setq undo-tree-mode-lighter "")
 
 ;; (add-to-list 'load-path "~/emacs/multiple-cursors")
@@ -234,12 +231,14 @@
 (global-set-key [(shift meta s)] 'shell)
 (global-set-key [(shift super s)] 'swap-windows)
 (global-set-key [(shift super r)] 'rotate-windows)
-(global-set-key [(super g)] 'magit-status)
 (global-set-key "\C-xr5b" 'bookmark-jump-other-frame)
-(global-set-key "\C-cc" 'comment-copy-of-lines)
+; (global-set-key "\C-cc" 'comment-copy-of-lines)
 (global-set-key [(shift meta o)] 'other-frame)
 (global-set-key "\C-ci" 'insert-image-at-point)
 (global-set-key [(control ?`)] (lambda () (interactive) (dired "~")))
+(global-set-key "\C-cm" 'magit-status)
+(global-set-key "\C-cc" 'compile)
+(global-set-key "\C-cr" 'recompile)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
@@ -263,6 +262,7 @@
 
 (add-to-hooks 'enable-paredit-mode
   'emacs-lisp-mode-hook
+  'scheme-mode-hook
   )
 
 (add-to-hooks 'paredit-for-lisp-interaction-mode
@@ -306,6 +306,7 @@
   'scala-mode-hook
   'sml-mode-hook
   'html-mode-hook
+  'scheme-mode-hook
   )
 
 (add-to-hooks 'subword-mode
@@ -357,6 +358,7 @@
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
       mm-text-html-renderer 'w3m
+      mm-discouraged-alternatives '("text/html")
       w3m-use-form nil
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil
