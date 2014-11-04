@@ -92,9 +92,8 @@
 ;; (add-to-list 'load-path "~/emacs/multiple-cursors")
 (require 'multiple-cursors)
 
-(add-to-list 'load-path "~/emacs/org-bullets")
-(when (require 'org-bullets nil t)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;;
 ;; hippie-expand configuration
