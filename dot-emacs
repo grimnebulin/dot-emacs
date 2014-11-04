@@ -95,6 +95,13 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
+(require 'change-inner)
+
+(require 'anchored-transpose)
+(global-set-key "\C-xt" 'anchored-transpose)
+
+(require 'dired-details+)
+
 ;;
 ;; hippie-expand configuration
 ;;
