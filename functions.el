@@ -596,3 +596,22 @@ by using nxml's indentation rules."
       (pop-to-buffer buffer)
       (delete-other-windows))))
 
+(defun perl-module-init ()
+  (interactive)
+  (let* ((case-fold-search nil)
+         (bfn (or (buffer-file-name)
+                  (error "Buffer not visiting a file")))
+         (path (--take-while (string-match-p "\\`[[:upper:]]"
+                                             (substring it 0 1))
+                             (nreverse (split-string bfn "/" t)))))
+    (insert
+     "package "
+     (s-join "::" (nreverse
+                   (cons
+                    (replace-regexp-in-string "\\.pm\\'" "" (first path) t t)
+                    (rest path))))
+     ";\n\n")
+    (save-excursion (insert "use strict;\n\n\n\n1;\n"))))
+
+
+nil
