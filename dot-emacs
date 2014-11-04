@@ -35,6 +35,7 @@
 (random t)
 (server-start)
 (desktop-save-mode 1)
+(savehist-mode 1)
 (quietly-read-abbrev-file)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
