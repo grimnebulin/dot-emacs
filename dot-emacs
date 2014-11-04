@@ -419,14 +419,16 @@
      (define-key gnus-summary-mode-map "N" 'gnus-summary-next-unread-article)
      (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article)))
 
-;; (add-to-list 'gnus-secondary-select-methods
-;;       '(nnimap "gmail"
-;;                 (nnimap-address "imap.gmail.com")
-;;                 (nnimap-server-port 993)
-;;                 (nnimap-stream ssl)))
 (defadvice message-insert-citation-line (after remove-extra-newline activate)
   (delete-backward-char 1))
 
+(require 'gnus)
+
+(add-to-list 'gnus-secondary-select-methods
+      '(nnimap "gmail"
+                (nnimap-address "imap.gmail.com")
+                (nnimap-server-port 993)
+                (nnimap-stream ssl)))
 
 ;; Misc:
 
