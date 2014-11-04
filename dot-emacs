@@ -54,11 +54,6 @@
 ;; Various extra packages:
 ;;
 
-(require 'magit)
-(require 'package)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
-
 (require 'paredit)
 (require 'autopair)
 
