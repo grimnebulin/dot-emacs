@@ -80,7 +80,8 @@
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
 (when (require 'ack nil t)
-  (setq ack-command "ack -a "))
+  ;(setq ack-command "ack -a ")
+  )
 
 (add-to-list 'load-path "~/emacs/elnode")
 
