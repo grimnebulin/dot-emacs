@@ -26,7 +26,7 @@
       (update-alist initial-frame-alist '(top . 0) '(right . 0)))
 
 (setq default-frame-alist
-      (update-alist default-frame-alist ;; '(width . 90)
+      (update-alist default-frame-alist '(width . 80)
                     '(height . 50)
                     ))
 
