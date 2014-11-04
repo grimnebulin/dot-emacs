@@ -16,7 +16,7 @@ putting the current line this far down the window.")
   (or (ad-get-arg 0)
       (ad-set-arg 0 (truncate (* *recenter-fraction* (window-body-height))))))
 
-(defadvice ucs-insert (before use-ido-completing-read)
+(defadvice insert-char (before use-ido-completing-read)
   (interactive (list (ido-read-char-by-name "Unicode (name or hex): "))))
 
 (defadvice gnus (after cd-to-home-dir)

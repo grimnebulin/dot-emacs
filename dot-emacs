@@ -457,7 +457,7 @@
 (load "my-advice")
 (ad-activate 'open-line)
 (ad-activate 'recenter)
-(ad-activate 'ucs-insert)
+(ad-activate 'insert-char)
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
 (ad-activate 'insert-register)
