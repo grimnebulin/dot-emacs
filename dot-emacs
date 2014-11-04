@@ -490,3 +490,33 @@
 
 (load "laptop" t)
 (load "akamai" t)
+
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(require 'auto-complete-config)
+(ac-config-default)
+
+(require 'expand-region)
+(global-set-key [(control ?=)] 'er/expand-region)
+
+(global-flycheck-mode 1)
+
+(global-anzu-mode 1)
+
+(setq-default dired-listing-switches "-alhv")
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
+
+;; (setq sml/theme 'respectful)
+;; (require 'smart-mode-line)
+;; (sml/setup)
+
+(require 'google-this)
+(google-this-mode 1)
+
+(require 'diminish)
+(eval-after-load 'google-this '(diminish 'google-this-mode))
+(eval-after-load 'anzu '(diminish 'anzu-mode))
+(eval-after-load 'projectile '(diminish 'projectile-mode "Proj"))
+
+nil
