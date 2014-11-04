@@ -433,8 +433,9 @@
 ;; Misc:
 
 (defalias 'perldoc 'cperl-perldoc "Convenient shorthand for cperl-perldoc.")
+(defalias 'pd 'cperl-perldoc)
+(defalias 'pm 'perlmod)
 (defalias 'tb 'comint-truncate-buffer)
-(defalias 'c\'mere 'send-last-shell-to-this-directory)
 (defalias 'mb 'rename-buffer)
 (defalias 'ru 'rename-uniquely)
 (defalias 'ar 'align-regexp)
