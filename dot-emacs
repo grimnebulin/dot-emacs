@@ -365,13 +365,6 @@
         `((paredit-mode ,@(remove (cons ?\C-j 'paredit-newline)
                                   paredit-mode-map)))))
 
-(add-hook 'find-file-hook 'its-all-text-longlines)
-
-(defun its-all-text-longlines ()
-  (when (string-match "/itsalltext/" (buffer-file-name))
-    (auto-fill-mode -1)
-    (longlines-mode 1)))
-
 (remove-hook 'comint-output-filter-functions
              'comint-postoutput-scroll-to-bottom)
 
