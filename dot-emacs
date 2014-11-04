@@ -214,7 +214,11 @@
 
 (setq browse-url-browser-function
       (lambda (&rest args)
-        (apply (if current-prefix-arg 'w3m-browse-url 'browse-url-generic) args)))
+        (apply (if (eq (not (eq major-mode 'lisp-mode))
+                       (not current-prefix-arg))
+                   #'browse-url-generic
+                 #'w3m-browse-url)
+               args)))
 
 (load (setq custom-file "~/.emacs-custom.el"))
 
