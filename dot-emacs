@@ -424,6 +424,9 @@
 ;;                 (nnimap-address "imap.gmail.com")
 ;;                 (nnimap-server-port 993)
 ;;                 (nnimap-stream ssl)))
+(defadvice message-insert-citation-line (after remove-extra-newline activate)
+  (delete-backward-char 1))
+
 
 ;; Misc:
 
