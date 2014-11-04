@@ -259,6 +259,9 @@
 (global-set-key "\C-cm" 'magit-status)
 (global-set-key "\C-cc" 'compile)
 (global-set-key "\C-cr" 'recompile)
+(global-set-key "\C-cp" 'windmove-up)
+(global-set-key "\C-cn" 'windmove-down)
+(global-set-key [(control kp-end)] (lambda () (interactive) (kill-buffer)))
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
