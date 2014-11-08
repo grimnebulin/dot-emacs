@@ -25,11 +25,6 @@
 (setq initial-frame-alist
       (update-alist initial-frame-alist '(top . 0) '(right . 0)))
 
-(setq default-frame-alist
-      (update-alist default-frame-alist '(width . 80)
-                    '(height . 50)
-                    ))
-
 (transient-mark-mode 1)
 (tool-bar-mode -1)
 (random t)
