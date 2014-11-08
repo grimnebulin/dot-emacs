@@ -101,6 +101,7 @@
 (global-set-key "\C-xt" 'anchored-transpose)
 
 (require 'dired-details+)
+(setq dired-details-hide-link-targets nil)
 
 ;;
 ;; hippie-expand configuration
