@@ -60,12 +60,6 @@
 ;; (require 'git-gutter+)
 ;; (global-git-gutter+-mode 1)
 
-;; (cond
-;;  ((require 'color-theme-solarized nil t)
-;;   (color-theme-solarized-dark))
-;;  ((require 'zenburn nil t)
-;;   (zenburn)))
-
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
 (add-to-list 'load-path "~/emacs/emacs-calfw")
 (require 'calfw)
