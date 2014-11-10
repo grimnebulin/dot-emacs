@@ -477,8 +477,8 @@
 (load "frontrow" t)
 
 ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(require 'auto-complete-config)
-(ac-config-default)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
 
 (require 'expand-region)
 (global-set-key [(control ?=)] 'er/expand-region)
