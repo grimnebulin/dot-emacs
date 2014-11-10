@@ -502,6 +502,5 @@
 (require 'diminish)
 (eval-after-load 'google-this '(diminish 'google-this-mode))
 (eval-after-load 'anzu '(diminish 'anzu-mode))
-(eval-after-load 'projectile '(diminish 'projectile-mode "Proj"))
 
 nil
