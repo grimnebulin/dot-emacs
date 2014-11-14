@@ -336,11 +336,6 @@
 (add-to-hooks 'subword-mode
   'java-mode-hook)
 
-;; (add-to-hooks 'show-paren-mode
-;;   'lisp-mode-hook
-;;   'emacs-lisp-mode-hook
-;;   'clojure-mode-hook)
-
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 ;; haskell-simple-indent-mode, haskell-indentation-mode, haskell-indent-mode
 
@@ -485,8 +480,8 @@
 (load "frontrow" t)
 
 ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(require 'auto-complete-config)
-(ac-config-default)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
 
 (require 'expand-region)
 (global-set-key [(control ?=)] 'er/expand-region)
@@ -510,6 +505,5 @@
 (require 'diminish)
 (eval-after-load 'google-this '(diminish 'google-this-mode))
 (eval-after-load 'anzu '(diminish 'anzu-mode))
-(eval-after-load 'projectile '(diminish 'projectile-mode "Proj"))
 
 nil
