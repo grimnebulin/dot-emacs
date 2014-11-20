@@ -503,5 +503,6 @@
 (require 'diminish)
 (eval-after-load 'google-this '(diminish 'google-this-mode))
 (eval-after-load 'anzu '(diminish 'anzu-mode))
+(eval-after-load 'magit '(diminish 'magit-auto-revert-mode))
 
 nil
