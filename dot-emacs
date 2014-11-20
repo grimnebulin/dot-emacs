@@ -338,7 +338,9 @@
 (add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
 
 (eval-after-load 'clojure-mode
-  '(define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square))
+  '(progn
+     (define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square)
+     (define-key clojure-mode-map [(super \{)] #'paredit-wrap-curly)))
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
