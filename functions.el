@@ -613,5 +613,9 @@ by using nxml's indentation rules."
      ";\n\n")
     (save-excursion (insert "use strict;\n\n\n\n1;\n"))))
 
+(defun multi-occur-in-all-buffers (regexp &optional allbufs)
+  (interactive (occur-read-primary-args))
+  (multi-occur-in-matching-buffers ".*" regexp))
+
 
 nil

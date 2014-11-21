@@ -443,6 +443,7 @@
 (defalias 'ppx 'pretty-print-xml-buffer)
 (defalias 'rf 'rename-file-and-buffer)
 (defalias 'tp 'show-twitpic)
+(defalias 'moab 'multi-occur-in-all-buffers)
 
 (load "my-advice")
 (ad-activate 'open-line)
