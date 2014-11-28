@@ -615,7 +615,7 @@ by using nxml's indentation rules."
 
 (defun multi-occur-in-all-buffers (regexp &optional allbufs)
   (interactive (occur-read-primary-args))
-  (multi-occur-in-matching-buffers ".*" regexp))
+  (multi-occur-in-matching-buffers "" regexp))
 
 
 nil
