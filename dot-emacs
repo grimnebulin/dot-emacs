@@ -48,48 +48,61 @@
 ;; Various extra packages:
 ;;
 
-(require 'paredit)
-(require 'autopair)
+(require 'use-package)
+
+(use-package paredit
+  :ensure t)
+
+(use-package autopair
+  :ensure t)
 
 ;; (require 'git-gutter+)
 ;; (global-git-gutter+-mode 1)
 
 ;; git clone https://github.com/kiwanami/emacs-calfw.git
-(add-to-list 'load-path "~/emacs/emacs-calfw")
-(require 'calfw)
-(require 'calfw-org)
-(defalias 'oc 'cfw:open-org-calendar)
+;; (add-to-list 'load-path "~/emacs/emacs-calfw")
+;; (require 'calfw)
+;; (require 'calfw-org)
+;; (defalias 'oc 'cfw:open-org-calendar)
 
 ;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
 
-(when (require 'twittering-mode nil t)
-  (setq twittering-use-master-password t)
-  (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1))))
+(use-package twittering-mode
+  :config
+  (progn
+    (setq twittering-use-master-password t)
+    (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1)))))
 
 ;; http://www.assembla.com/code/vitaliel-emacs-config/git/nodes/ack.el
-(when (require 'ack nil t)
-  ;(setq ack-command "ack -a ")
-  )
+(use-package ack
+  :ensure t)
 
 (add-to-list 'load-path "~/emacs/elnode")
 
-(require 'undo-tree)
-(global-undo-tree-mode 1)
-(setq undo-tree-mode-lighter "")
+(use-package undo-tree
+  :ensure t
+  :config
+  (progn
+    (global-undo-tree-mode 1)
+    (setq undo-tree-mode-lighter "")))
 
-;; (add-to-list 'load-path "~/emacs/multiple-cursors")
-(require 'multiple-cursors)
+(use-package multiple-cursors
+  :ensure t)
 
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(use-package org-bullets
+  :ensure t
+  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(require 'change-inner)
+(use-package change-inner
+  :ensure t)
 
-(require 'anchored-transpose)
-(global-set-key "\C-xt" 'anchored-transpose)
+(use-package anchored-transpose
+  :ensure t
+  :config (global-set-key "\C-xt" 'anchored-transpose))
 
-(require 'dired-details+)
-(setq dired-details-hide-link-targets nil)
+(use-package dired-details+
+  :ensure t
+  :config (setq dired-details-hide-link-targets nil))
 
 (eval-after-load "eww"
   '(progn (define-key eww-mode-map "f" 'eww-lnum-follow)
@@ -412,13 +425,13 @@
 (defadvice message-insert-citation-line (after remove-extra-newline activate)
   (delete-backward-char 1))
 
-(require 'gnus)
-
-(add-to-list 'gnus-secondary-select-methods
-      '(nnimap "gmail"
-                (nnimap-address "imap.gmail.com")
-                (nnimap-server-port 993)
-                (nnimap-stream ssl)))
+(use-package gnus
+  :config
+  (add-to-list 'gnus-secondary-select-methods
+               '(nnimap "gmail"
+                        (nnimap-address "imap.gmail.com")
+                        (nnimap-server-port 993)
+                        (nnimap-stream ssl))))
 
 ;; Misc:
 
@@ -439,7 +452,6 @@
 (defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
 (defalias 'pe 'proced)
-(defalias 'll 'longlines-mode)
 (defalias 'ppx 'pretty-print-xml-buffer)
 (defalias 'rf 'rename-file-and-buffer)
 (defalias 'tp 'show-twitpic)
@@ -468,13 +480,13 @@
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (add-to-list 'load-path "~/slime/")
-(require 'slime)
+;; (require 'slime)
 ;; (slime-setup)
 ;; (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
 ;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 ;; (setq lisp-indent-function 'common-lisp-indent-function)
 ;; (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-(setq common-lisp-hyperspec-root "file:///home/mcafee/HyperSpec/")
+;; (setq common-lisp-hyperspec-root "file:///home/mcafee/HyperSpec/")
 ;; (setq slime-startup-animation t)
 
 ;; Local customizations:
@@ -486,28 +498,32 @@
 ;; (require 'auto-complete-config)
 ;; (ac-config-default)
 
-(require 'expand-region)
-(global-set-key [(control ?=)] 'er/expand-region)
+(use-package expand-region
+  :ensure t
+  :config (global-set-key [(control ?=)] 'er/expand-region))
 
 (global-flycheck-mode 1)
 
-(global-anzu-mode 1)
-
 (setq-default dired-listing-switches "-alhv")
 
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
 ;; (setq sml/theme 'respectful)
 ;; (require 'smart-mode-line)
 ;; (sml/setup)
 
-(require 'google-this)
-(google-this-mode 1)
+(use-package google-this
+  :ensure t
+  :config (google-this-mode 1)
+  :diminish google-this-mode)
 
-(require 'diminish)
-(eval-after-load 'google-this '(diminish 'google-this-mode))
-(eval-after-load 'anzu '(diminish 'anzu-mode))
-(eval-after-load 'magit '(diminish 'magit-auto-revert-mode))
+(use-package magit
+  :ensure t
+  :diminish 'magit-auto-revert-mode)
+
+(use-package anzu
+  :ensure t
+  :diminish anzu-mode
+  :config (global-anzu-mode))
 
 nil
