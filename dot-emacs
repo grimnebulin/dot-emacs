@@ -529,4 +529,8 @@
   :load-path "~/purescript-mode"
   :config (add-to-list 'Info-default-directory-list "~/purescript-mode"))
 
+(use-package ace-window
+  :ensure t
+  :bind ("C-." . ace-window))
+
 nil
