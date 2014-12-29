@@ -53,8 +53,7 @@
 (use-package paredit
   :ensure t)
 
-(use-package autopair
-  :ensure t)
+(electric-pair-mode)
 
 ;; (require 'git-gutter+)
 ;; (global-git-gutter+-mode 1)
@@ -281,7 +280,7 @@
 ;; Hooks:
 ;;
 
-(add-to-hooks 'autopair-mode
+(add-to-hooks 'electric-pair-mode
   'java-mode-hook
   'perl-mode-hook
   'c++-mode-hook
