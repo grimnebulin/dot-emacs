@@ -455,6 +455,7 @@
 (defalias 'rf 'rename-file-and-buffer)
 (defalias 'tp 'show-twitpic)
 (defalias 'moab 'multi-occur-in-all-buffers)
+(defalias 'ci 'change-inner)
 
 (load "my-advice")
 (ad-activate 'open-line)
