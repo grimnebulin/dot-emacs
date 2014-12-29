@@ -85,7 +85,9 @@
             (setq undo-tree-mode-lighter "")))
 
 (use-package multiple-cursors
-  :ensure t)
+  :ensure t
+  :config (progn
+            (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)))
 
 (use-package org-bullets
   :ensure t
