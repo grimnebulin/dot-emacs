@@ -2,10 +2,13 @@
 
 (require 'cl)
 
-(when window-system
+(cond
+ ((display-graphic-p)
   (set-face-attribute 'default nil :font "DroidSansMono" :height 110)
   (global-unset-key "\C-z")
   (global-unset-key "\C-x\C-z"))
+ (t
+  (menu-bar-mode -1)))
 
 ;; "Inconsolata"
 ;; "Droid Sans Mono"
