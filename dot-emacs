@@ -528,8 +528,8 @@
   :config (global-anzu-mode))
 
 (use-package purescript-mode-autoloads
-  :load-path "~/purescript-mode"
-  :config (add-to-list 'Info-default-directory-list "~/purescript-mode"))
+  :load-path "~/purescript-mode/"
+  :config (add-to-list 'Info-default-directory-list "~/purescript-mode/"))
 
 (use-package ace-window
   :ensure t
