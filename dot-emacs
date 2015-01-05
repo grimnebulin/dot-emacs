@@ -494,8 +494,9 @@
   :diminish google-this-mode)
 
 (use-package magit
-  :ensure t
-  :diminish 'magit-auto-revert-mode)
+  :ensure t)
+
+(diminish 'magit-auto-revert-mode)
 
 (use-package anzu
   :ensure t
