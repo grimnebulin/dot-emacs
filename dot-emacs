@@ -324,8 +324,13 @@
 (add-to-hooks 'subword-mode
   'java-mode-hook)
 
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;; haskell-simple-indent-mode, haskell-indentation-mode, haskell-indent-mode
+(custom-set-variables
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t))
 
 (add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
 
