@@ -501,7 +501,7 @@
 (use-package magit
   :ensure t
   :diminish 'magit-auto-revert-mode
-  :config (setq magit-status-buffer-switch-function 'switch-to-buffer))
+  :config (setq magit-status-buffer-switch-function 'switch-to-buffer)
   :ensure t)
 
 (diminish 'magit-auto-revert-mode)
