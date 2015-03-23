@@ -464,6 +464,7 @@
 (put 'narrow-to-page 'disabled nil)
 
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+(add-to-list 'auto-mode-alist '("\\.scala\\'" . scala-mode))
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (add-to-list 'load-path "~/slime/")
