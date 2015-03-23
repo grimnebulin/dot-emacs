@@ -530,4 +530,8 @@
   :ensure t
   :config (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode))
 
+(use-package projectile
+  :ensure t
+  :config (projectile-global-mode))
+
 nil
