@@ -273,6 +273,11 @@
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
 
+(define-key 'help-command "\C-l" 'find-library)
+(define-key 'help-command "\C-f" 'find-function)
+(define-key 'help-command "\C-k" 'find-function-on-key)
+(define-key 'help-command "\C-v" 'find-variable)
+
 (global-unset-key "\C-x\C-d")  ;; list-directory
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
