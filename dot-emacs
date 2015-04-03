@@ -452,6 +452,7 @@
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
 (ad-activate 'insert-register)
+(ad-activate 'magit-key-mode-popup-logging)
 
 (setq *recenter-fraction* 0.333)
 
