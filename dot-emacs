@@ -482,7 +482,7 @@
 ;; Local customizations:
 
 (load "laptop" t)
-(load "frontrow" t)
+(load "sungevity" t)
 
 ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ;; (require 'auto-complete-config)
