@@ -71,11 +71,11 @@
 
 ;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
 
-(use-package twittering-mode
-  :config
-  (progn
-    (setq twittering-use-master-password t)
-    (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1)))))
+;; (use-package twittering-mode
+;;   :config
+;;   (progn
+;;     (setq twittering-use-master-password t)
+;;     (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1)))))
 
 (use-package ack
   :ensure t)
