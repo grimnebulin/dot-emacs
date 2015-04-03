@@ -199,6 +199,7 @@
 (setq use-dialog-box nil)
 (setq history-length 1000)
 (setq initial-scratch-message nil)
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
 
 (setq auto-revert-interval 1)
 
