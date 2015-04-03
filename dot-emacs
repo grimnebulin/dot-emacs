@@ -335,7 +335,6 @@
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;; haskell-simple-indent-mode, haskell-indentation-mode, haskell-indent-mode
-(custom-set-variables
 
 (add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
 
