@@ -441,6 +441,7 @@
 (defalias 'tp 'show-twitpic)
 (defalias 'moab 'multi-occur-in-all-buffers)
 (defalias 'ci 'change-inner)
+(defalias 'lp 'list-packages)
 
 (load "my-advice")
 (ad-activate 'open-line)
