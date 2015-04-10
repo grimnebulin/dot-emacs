@@ -538,7 +538,10 @@
             (projectile-global-mode)
             (setq projectile-mode-line
                   '(:eval
-                    (if (projectile-project-root)
+                    (if (let ((projectile-require-project-root t))
+                          (condition-case nil
+                              (projectile-project-root)
+                            (error nil)))
                         (format " Projectile[%s]"
                                 (projectile-project-name))
                       "")))))
