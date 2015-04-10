@@ -442,6 +442,7 @@
 (defalias 'moab 'multi-occur-in-all-buffers)
 (defalias 'ci 'change-inner)
 (defalias 'lp 'list-packages)
+(defalias 'vl 'visual-line-mode)
 
 (load "my-advice")
 (ad-activate 'open-line)
