@@ -1,3 +1,5 @@
+(eval-when-compile (require 'cl))
+
 (defun listify (x)
   (if (listp x)
       x
@@ -35,7 +37,7 @@ returns it unchanged."
   value)
 
 (defmacro string-or (&rest exprs)
-  (let ((x (gensym)))
+  (let ((x (cl-gensym)))
     `(loop for ,x in ',exprs
            thereis (pipe ,x 'eval 'princ-to-string 'nonempty-p)
            finally return "")))
@@ -229,11 +231,11 @@ current when this command was invoked."
                           (error "No appropriate delimiters"))))
     (save-excursion
       (goto-char end)
-      (delete-backward-char 1)
+      (delete-char -1)
       (insert (substring next-quotes -1))
       (goto-char start)
       (delete-char 1)
-      (delete-backward-char (- (length these-quotes) 2))
+      (delete-char (- 2 (length these-quotes)))
       (insert (substring next-quotes 0 -1)))))
 
 (require 'perl-mode)
@@ -241,9 +243,9 @@ current when this command was invoked."
 
 (defun* rotate-windows (&optional backwards (windows (window-list)))
   (interactive "P")
-  (flet ((get-meta (w) (cons (window-buffer w) (window-start w)))
-         (set-meta (w m) (setf (window-buffer w) (car m)
-                               (window-start  w) (cdr m))))
+  (cl-flet ((get-meta (w) (cons (window-buffer w) (window-start w)))
+            (set-meta (w m) (setf (window-buffer w) (car m)
+                                  (window-start  w) (cdr m))))
     (when backwards (setq windows (reverse windows)))
     (loop with first-meta = (and windows (get-meta (first windows)))
           for (this next) on windows
@@ -330,12 +332,12 @@ current when this command was invoked."
 
 (defun scroll-one-line-up ()
   (interactive)
-  (next-line)
+  (forward-line)
   (scroll-up 1))
 
 (defun scroll-one-line-down ()
   (interactive)
-  (previous-line)
+  (forward-line -1)
   (scroll-down 1))
 
 (defun shell-quote-format (string args)
@@ -361,8 +363,8 @@ current when this command was invoked."
 (defun ido-read-char-by-name (prompt)
   "Replacement for read-char-by-name that uses ido to read character names."
   (let* ((completion-ignore-case t)
-         (completions (sort (delete-if (lambda (s) (= ?< (aref s 0)))
-                                       (mapcar 'car (ucs-names)))
+         (completions (sort (cl-delete-if (lambda (s) (= ?< (aref s 0)))
+                                          (mapcar 'car (ucs-names)))
                             'ido-read-char-sort-predicate))
          (ido-enable-flex-matching nil)
 	 (input (ido-completing-read prompt completions)))
@@ -448,9 +450,9 @@ current when this command was invoked."
       (save-excursion (insert text)))))
 
 (defmacro with-buffer-visiting-file (file &rest body)
-  (let ((fileval  (gensym))
-        (existing (gensym))
-        (buffer   (gensym)))
+  (let ((fileval  (cl-gensym))
+        (existing (cl-gensym))
+        (buffer   (cl-gensym)))
     `(let* ((,fileval ,file)
             (,existing (find-buffer-visiting ,fileval))
             (,buffer (if ,existing
@@ -470,6 +472,8 @@ current when this command was invoked."
              (kill-buffer)))))))
 
 (defconst +perl-package-regexp+ "[[:upper:]][[:alnum:]]*\\(?:::[[:upper:]][[:alnum:]]*\\)+")
+
+(require 'hippie-exp)
 
 (defun try-complete-perl-package-name (old)
   (when (not old)
@@ -579,7 +583,7 @@ by using nxml's indentation rules."
 
 (defun update-alist (alist &rest pairs)
   (append (copy-sequence pairs)
-          (delete-if (lambda (x) (member* (car x) pairs :key #'car)) alist)))
+          (cl-delete-if (lambda (x) (cl-member (car x) pairs :key #'car)) alist)))
 
 (defun show-twitpic ()
   (interactive)
@@ -617,5 +621,6 @@ by using nxml's indentation rules."
   (interactive (occur-read-primary-args))
   (multi-occur-in-matching-buffers "" regexp))
 
-
-nil
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars unresolved)
+;; End:

@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; -*-
 
-(require 'cl)
+(eval-when-compile (require 'cl))
 
 (cond
  ((display-graphic-p)
@@ -132,6 +132,8 @@
 ;;
 ;; ido configuration
 ;;
+
+(require 'ido)
 
 (setq ido-enable-flex-matching t
       ido-use-virtual-buffers t
@@ -467,8 +469,8 @@
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.scala\\'" . scala-mode))
 
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(add-to-list 'load-path "~/slime/")
+;; (setq inferior-lisp-program "/usr/bin/sbcl")
+;; (add-to-list 'load-path "~/slime/")
 ;; (require 'slime)
 ;; (slime-setup)
 ;; (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
@@ -493,7 +495,9 @@
 
 (use-package flycheck
   :ensure t
-  :config (global-flycheck-mode 1))
+  :config (progn
+            (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+            (global-flycheck-mode 1)))
 
 (setq-default dired-listing-switches "-alhv")
 
@@ -550,4 +554,6 @@
   :ensure t
   :config (dtrt-indent-mode 1))
 
-nil
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars unresolved)
+;; End:
