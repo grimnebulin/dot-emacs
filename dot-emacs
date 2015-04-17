@@ -542,7 +542,7 @@
                           (condition-case nil
                               (projectile-project-root)
                             (error nil)))
-                        (format " Projectile[%s]"
+                        (format " Project[%s]"
                                 (projectile-project-name))
                       "")))))
 
