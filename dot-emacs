@@ -546,4 +546,8 @@
                                 (projectile-project-name))
                       "")))))
 
+(use-package dtrt-indent
+  :ensure t
+  :config (dtrt-indent-mode 1))
+
 nil
