@@ -191,7 +191,6 @@
 (setq vc-follow-symlinks t)
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
-(setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq org-startup-folded nil)
 (setq twittering-use-master-password t)
