@@ -544,11 +544,8 @@
             (setq projectile-mode-line
                   '(:eval
                     (if (let ((projectile-require-project-root t))
-                          (condition-case nil
-                              (projectile-project-root)
-                            (error nil)))
-                        (format " Project[%s]"
-                                (projectile-project-name))
+                          (ignore-errors (projectile-project-root)))
+                        (format " Project[%s]" (projectile-project-name))
                       "")))))
 
 (use-package dtrt-indent
