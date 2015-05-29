@@ -552,6 +552,12 @@
   :ensure t
   :config (dtrt-indent-mode 1))
 
+(use-package define-word
+  :ensure t
+  :config '(progn
+             (global-set-key "\C-cd" #'define-word-at-point)
+             (global-set-key "\C-cD" #'define-word)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
