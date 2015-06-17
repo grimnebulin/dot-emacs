@@ -191,7 +191,6 @@
 (setq vc-follow-symlinks t)
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
-(setq longlines-show-hard-newlines t)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq org-startup-folded nil)
 (setq twittering-use-master-password t)
@@ -202,6 +201,7 @@
 (setq history-length 1000)
 (setq initial-scratch-message nil)
 (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+(setq shr-color-visible-luminance-min 70)
 
 (setq auto-revert-interval 1)
 
@@ -520,7 +520,6 @@
   :diminish magit-auto-revert-mode
   :config (setq magit-status-buffer-switch-function 'switch-to-buffer))
 
-(diminish 'magit-auto-revert-mode)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
 (use-package anzu
@@ -547,16 +546,19 @@
             (setq projectile-mode-line
                   '(:eval
                     (if (let ((projectile-require-project-root t))
-                          (condition-case nil
-                              (projectile-project-root)
-                            (error nil)))
-                        (format " Project[%s]"
-                                (projectile-project-name))
+                          (ignore-errors (projectile-project-root)))
+                        (format " Project[%s]" (projectile-project-name))
                       "")))))
 
 (use-package dtrt-indent
   :ensure t
   :config (dtrt-indent-mode 1))
+
+(use-package define-word
+  :ensure t
+  :config '(progn
+             (global-set-key "\C-cd" #'define-word-at-point)
+             (global-set-key "\C-cD" #'define-word)))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)

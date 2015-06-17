@@ -340,15 +340,15 @@ current when this command was invoked."
   (forward-line -1)
   (scroll-down 1))
 
-(defun shell-quote-format (string args)
+(defun shell-quote-format (string &rest args)
   (apply 'format string
          (mapcar (lambda (x) (shell-quote-argument (format "%s" x))) args)))
 
 (defun format-shell-command (string &rest args)
-  (shell-command (shell-quote-format string args)))
+  (shell-command (apply #'shell-quote-format string args)))
 
 (defun format-shell-command-to-string (string &rest args)
-  (shell-command-to-string (shell-quote-format string args)))
+  (shell-command-to-string (apply #'shell-quote-format string args)))
 
 (defun delete-frame-and-buffer ()
   (interactive)
