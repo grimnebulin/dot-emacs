@@ -384,8 +384,8 @@
       gnus-cited-lines-visible '(0 . 5)
       gnus-large-newsgroup 10000
       gnus-user-date-format-alist '((t . "%m-%d-%Y %H:%M"))
-      mm-text-html-renderer 'w3m
-      mm-discouraged-alternatives '("text/html")
+      mm-text-html-renderer 'shr
+      mm-discouraged-alternatives nil
       w3m-use-form nil
       gnus-group-line-format "%M%S%p%P%5y:%B%(%C%)%O\n"
       gnus-save-newsrc-file nil
