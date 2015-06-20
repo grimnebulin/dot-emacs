@@ -2,7 +2,8 @@
 
 (defadvice open-line (around vi-style-open-line)
   "Make open-line behave more like vi."
-  (when (called-interactively-p 'any)
+  (if (not (called-interactively-p 'any))
+      ad-do-it
     (beginning-of-line)
     ad-do-it
     (unless do-not-indent-after-open-line
