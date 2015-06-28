@@ -412,7 +412,7 @@
      (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article)))
 
 (defadvice message-insert-citation-line (after remove-extra-newline activate)
-  (delete-backward-char 1))
+  (delete-char -1))
 
 (use-package gnus
   :config
