@@ -358,9 +358,6 @@
         `((paredit-mode ,@(remove (cons ?\C-j 'paredit-newline)
                                   paredit-mode-map)))))
 
-(remove-hook 'comint-output-filter-functions
-             'comint-postoutput-scroll-to-bottom)
-
 ;;
 ;; Gnus configuration:
 ;;
