@@ -410,7 +410,7 @@
      (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article)))
 
 (defadvice message-insert-citation-line (after remove-extra-newline activate)
-  (delete-backward-char 1))
+  (delete-char -1))
 
 (use-package gnus
   :config
@@ -514,7 +514,6 @@
 
 (use-package magit
   :ensure t
-  :diminish magit-auto-revert-mode
   :config (setq magit-status-buffer-switch-function 'switch-to-buffer))
 
 (setq magit-last-seen-setup-instructions "1.4.0")
