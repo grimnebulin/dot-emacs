@@ -486,7 +486,6 @@
 ;; Local customizations:
 
 (load "laptop" t)
-(load "sungevity" t)
 
 ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ;; (require 'auto-complete-config)
@@ -559,6 +558,8 @@
   :config '(progn
              (global-set-key "\C-cd" #'define-word-at-point)
              (global-set-key "\C-cD" #'define-word)))
+
+(load "sungevity" t)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
