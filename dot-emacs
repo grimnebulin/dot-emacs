@@ -36,6 +36,7 @@
 (quietly-read-abbrev-file)
 (electric-pair-mode)
 (show-paren-mode)
+(horizontal-scroll-bar-mode -1)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
