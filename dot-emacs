@@ -339,6 +339,10 @@
   'java-mode-hook
   'scala-mode-hook)
 
+(add-to-hooks 'eldoc-mode
+              'lisp-interaction-mode-hook
+              'emacs-lisp-mode-hook)
+
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;; haskell-simple-indent-mode, haskell-indentation-mode, haskell-indent-mode
