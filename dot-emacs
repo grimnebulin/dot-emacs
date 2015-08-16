@@ -563,6 +563,10 @@
              (global-set-key "\C-cd" #'define-word-at-point)
              (global-set-key "\C-cD" #'define-word)))
 
+(use-package ocodo-svg-modelines
+  :ensure t)
+;; smt/set-theme to change themes
+
 (load "sungevity" t)
 
 ;; Local Variables:
