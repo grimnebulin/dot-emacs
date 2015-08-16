@@ -291,6 +291,7 @@
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
 (define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
+(define-key isearch-mode-map (kbd "<backspace>") #'isearch-delete-something)
 
 ;;
 ;; Hooks:
