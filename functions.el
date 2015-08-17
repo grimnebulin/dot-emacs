@@ -621,6 +621,25 @@ by using nxml's indentation rules."
   (interactive (occur-read-primary-args))
   (multi-occur-in-matching-buffers "" regexp))
 
+;; An attempt at this Emacs SX question:
+;; https://emacs.stackexchange.com/questions/10359/delete-portion-of-isearch-string-that-does-not-match-or-last-char-if-complete-m
+(defun isearch-delete-something ()
+  "Delete non-matching text or the last character."
+  ;; Mostly copied from `isearch-del-char' and Drew's answer on the page above
+  (interactive)
+  (if (zerop (length isearch-string))
+      (ding)
+    (setq isearch-string
+          (substring isearch-string
+                     0
+                     (or (isearch-fail-pos) (1- (length isearch-string)))))
+    (setq isearch-message
+          (mapconcat #'isearch-text-char-description isearch-string "")))
+  (when isearch-other-end (goto-char isearch-other-end))
+  (isearch-search)
+  (isearch-push-state)
+  (isearch-update))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

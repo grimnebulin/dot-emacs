@@ -4,7 +4,7 @@
 
 (cond
  ((display-graphic-p)
-  (set-face-attribute 'default nil :font "DroidSansMono" :height 110)
+  (set-face-attribute 'default nil :font "SourceCodePro" :height 110)
   (global-unset-key "\C-z")
   (global-unset-key "\C-x\C-z"))
  (t
@@ -36,6 +36,7 @@
 (quietly-read-abbrev-file)
 (electric-pair-mode)
 (show-paren-mode)
+(horizontal-scroll-bar-mode -1)
 
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
@@ -207,6 +208,7 @@
 (setq compilation-scroll-output t)
 (setq comint-scroll-show-maximum-output nil)
 (setq async-shell-command-buffer 'new-buffer)
+(setq scroll-preserve-screen-position 'always)
 
 (eval-after-load 'term
   '(term-set-escape-char ?\C-x))
@@ -291,6 +293,7 @@
 (global-unset-key "\C-x\C-n")  ;; set-goal-column
 
 (define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
+(define-key isearch-mode-map (kbd "<backspace>") #'isearch-delete-something)
 
 ;;
 ;; Hooks:
@@ -339,6 +342,10 @@
 (add-to-hooks 'subword-mode
   'java-mode-hook
   'scala-mode-hook)
+
+(add-to-hooks 'eldoc-mode
+              'lisp-interaction-mode-hook
+              'emacs-lisp-mode-hook)
 
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
@@ -557,6 +564,10 @@
   :config '(progn
              (global-set-key "\C-cd" #'define-word-at-point)
              (global-set-key "\C-cD" #'define-word)))
+
+(use-package ocodo-svg-modelines
+  :ensure t)
+;; smt/set-theme to change themes
 
 (load "sungevity" t)
 
