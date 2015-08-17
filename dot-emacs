@@ -566,8 +566,10 @@
              (global-set-key "\C-cD" #'define-word)))
 
 (use-package ocodo-svg-modelines
-  :ensure t)
-;; smt/set-theme to change themes
+  :ensure t
+  :config
+  (ocodo-svg-modelines-init)
+  (smt/set-theme 'ocodo-geometry-flakes-smt))
 
 (load "sungevity" t)
 
