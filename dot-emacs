@@ -4,7 +4,7 @@
 
 (cond
  ((display-graphic-p)
-  (set-face-attribute 'default nil :font "DroidSansMono" :height 110)
+  (set-face-attribute 'default nil :font "SourceCodePro" :height 110)
   (global-unset-key "\C-z")
   (global-unset-key "\C-x\C-z"))
  (t
