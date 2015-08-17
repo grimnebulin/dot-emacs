@@ -89,7 +89,8 @@
 (use-package multiple-cursors
   :ensure t
   :config (progn
-            (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)))
+            (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+            (global-set-key (kbd "C-S-c C-S-v") 'mc/mark-next-like-this)))
 
 (use-package org-bullets
   :ensure t
