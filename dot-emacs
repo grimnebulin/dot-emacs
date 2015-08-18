@@ -546,14 +546,14 @@
 
 (use-package projectile
   :ensure t
-  :config (progn
-            (projectile-global-mode)
-            (setq projectile-mode-line
-                  '(:eval
-                    (if (let ((projectile-require-project-root t))
-                          (ignore-errors (projectile-project-root)))
-                        (format " Project[%s]" (projectile-project-name))
-                      "")))))
+  :config
+  (projectile-global-mode)
+  (setq projectile-mode-line
+        '(:eval
+          (if (let ((projectile-require-project-root t))
+                (ignore-errors (projectile-project-root)))
+              (format " Project[%s]" (projectile-project-name))
+            ""))))
 
 (use-package dtrt-indent
   :ensure t
