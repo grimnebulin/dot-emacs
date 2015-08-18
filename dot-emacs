@@ -529,7 +529,10 @@
 (use-package anzu
   :ensure t
   :diminish anzu-mode
-  :config (global-anzu-mode))
+  :config
+  (global-anzu-mode)
+  (global-set-key (kbd "M-%") #'anzu-query-replace)
+  (global-set-key (kbd "C-M-%") #'anzu-query-replace-regexp))
 
 ;; (use-package purescript-mode-autoloads
 ;;   :load-path "~/purescript-mode/"
