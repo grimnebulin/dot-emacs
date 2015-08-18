@@ -571,6 +571,9 @@
   :ensure t)
 ;; smt/set-theme to change themes
 
+(use-package hydra
+  :ensure t)
+
 (load "sungevity" t)
 
 ;; Local Variables:
