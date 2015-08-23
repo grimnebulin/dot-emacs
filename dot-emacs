@@ -74,24 +74,23 @@
 
 ;; (use-package twittering-mode
 ;;   :config
-;;   (progn
-;;     (setq twittering-use-master-password t)
-;;     (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1)))))
+;;   (setq twittering-use-master-password t)
+;;   (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1))))
 
 (use-package ack
   :ensure t)
 
 (use-package undo-tree
   :ensure t
-  :config (progn
-            (global-undo-tree-mode 1)
-            (setq undo-tree-mode-lighter "")))
+  :config
+  (global-undo-tree-mode 1)
+  (setq undo-tree-mode-lighter ""))
 
 (use-package multiple-cursors
   :ensure t
-  :config (progn
-            (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-            (global-set-key (kbd "C-S-c C-S-v") 'mc/mark-next-like-this)))
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C-S-c C-S-v") 'mc/mark-next-like-this))
 
 (use-package org-bullets
   :ensure t
@@ -504,9 +503,9 @@
 
 (use-package flycheck
   :ensure t
-  :config (progn
-            (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-            (global-flycheck-mode 1)))
+  :config
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (global-flycheck-mode 1))
 
 (setq-default dired-listing-switches "-alhv")
 
@@ -549,14 +548,14 @@
 
 (use-package projectile
   :ensure t
-  :config (progn
-            (projectile-global-mode)
-            (setq projectile-mode-line
-                  '(:eval
-                    (if (let ((projectile-require-project-root t))
-                          (ignore-errors (projectile-project-root)))
-                        (format " Project[%s]" (projectile-project-name))
-                      "")))))
+  :config
+  (projectile-global-mode)
+  (setq projectile-mode-line
+        '(:eval
+          (if (let ((projectile-require-project-root t))
+                (ignore-errors (projectile-project-root)))
+              (format " Project[%s]" (projectile-project-name))
+            ""))))
 
 (use-package dtrt-indent
   :ensure t
@@ -564,9 +563,9 @@
 
 (use-package define-word
   :ensure t
-  :config '(progn
-             (global-set-key "\C-cd" #'define-word-at-point)
-             (global-set-key "\C-cD" #'define-word)))
+  :config
+  (global-set-key "\C-cd" #'define-word-at-point)
+  (global-set-key "\C-cD" #'define-word))
 
 (use-package ocodo-svg-modelines
   :ensure t
