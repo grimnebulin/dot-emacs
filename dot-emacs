@@ -577,6 +577,13 @@
 (use-package hydra
   :ensure t)
 
+(eval-after-load "sgml-mode"
+  '(use-package tagedit
+     :ensure t
+     :config
+     (tagedit-add-paredit-like-keybindings)
+     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+
 (load "sungevity" t)
 
 ;; Local Variables:
