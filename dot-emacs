@@ -38,7 +38,6 @@
 (show-paren-mode)
 (horizontal-scroll-bar-mode -1)
 
-(autoload 'ibuffer "ibuffer" "List buffers." t)
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
 ;; (setq w3m-use-cookies t)
 
@@ -57,6 +56,9 @@
 ;;
 
 (require 'use-package)
+
+(use-package ibuffer
+  :bind ("C-x C-b" . ibuffer))
 
 (use-package paredit
   :ensure t)
@@ -249,7 +251,6 @@
 ;; Key bindings:
 
 (global-set-key "\C-x\C-j" 'dired-jump)
-(global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-x\C-o" 'other-window-delete-rest)
 (global-set-key [(shift control n)] 'scroll-one-line-up)
 (global-set-key [(shift control p)] 'scroll-one-line-down)
