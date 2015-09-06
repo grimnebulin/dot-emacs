@@ -227,6 +227,10 @@
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 
+(setq electric-pair-inhibit-predicate
+      (lambda (c) (or (string-match-p "\\` \\*Minibuf-[0-9]+" (buffer-name))
+                      (electric-pair-default-inhibit c))))
+
 (setq browse-url-generic-program "conkeror")
 
 (setq browse-url-browser-function
