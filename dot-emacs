@@ -231,6 +231,8 @@
       (lambda (c) (or (string-match-p "\\` \\*Minibuf-[0-9]+" (buffer-name))
                       (electric-pair-default-inhibit c))))
 
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+
 (setq browse-url-generic-program "conkeror")
 
 (setq browse-url-browser-function
