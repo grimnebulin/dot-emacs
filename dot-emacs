@@ -90,9 +90,8 @@
 
 (use-package multiple-cursors
   :ensure t
-  :config
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C-S-c C-S-v") 'mc/mark-next-like-this))
+  :bind ("C-S-c C-S-c" . mc/edit-lines)
+        ("C-S-c C-S-v" . mc/mark-next-like-this))
 
 (use-package org-bullets
   :ensure t
@@ -103,7 +102,7 @@
 
 (use-package anchored-transpose
   :ensure t
-  :config (global-set-key "\C-xt" 'anchored-transpose))
+  :bind ("C-x t" . anchored-transpose))
 
 (use-package dired-details+
   :ensure t
@@ -505,7 +504,7 @@
 
 (use-package expand-region
   :ensure t
-  :config (global-set-key [(control ?=)] 'er/expand-region))
+  :bind ("C-=" . er/expand-region))
 
 (use-package flycheck
   :ensure t
@@ -535,10 +534,9 @@
 (use-package anzu
   :ensure t
   :diminish anzu-mode
-  :config
-  (global-anzu-mode)
-  (global-set-key (kbd "M-%") #'anzu-query-replace)
-  (global-set-key (kbd "C-M-%") #'anzu-query-replace-regexp))
+  :bind ("M-%"   . anzu-query-replace)
+        ("C-M-%" . anzu-query-replace-regexp)
+  :config (global-anzu-mode))
 
 ;; (use-package purescript-mode-autoloads
 ;;   :load-path "~/purescript-mode/"
@@ -569,9 +567,8 @@
 
 (use-package define-word
   :ensure t
-  :config
-  (global-set-key "\C-cd" #'define-word-at-point)
-  (global-set-key "\C-cD" #'define-word))
+  :bind ("\C-cd" . define-word-at-point)
+        ("\C-cD" . define-word))
 
 (use-package ocodo-svg-modelines
   :ensure t
