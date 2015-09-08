@@ -245,12 +245,6 @@
 
 (load (setq custom-file "~/.emacs-custom.el"))
 
-(setenv "BASH_ENV" (concat (getenv "HOME") "/.bash_profile"))
-(setenv "NNTPSERVER" "news.eternal-september.org")
-(setenv "SHELL" "bash")
-
-(set-register ?\C-e "ಠ_ಠ")
-
 ;; Key bindings:
 
 (global-set-key "\C-x\C-j" 'dired-jump)
