@@ -581,7 +581,7 @@
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
         if (file-exists-p file)
-        do (load file t)))
+        do (with-demoted-errors (load file t))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
