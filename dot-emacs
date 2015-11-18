@@ -562,11 +562,11 @@
   :bind ("\C-cd" . define-word-at-point)
         ("\C-cD" . define-word))
 
-(use-package ocodo-svg-modelines
-  :ensure t
-  :config
-  (ocodo-svg-modelines-init)
-  (smt/set-theme 'ocodo-geometry-flakes-smt))
+;; (use-package ocodo-svg-modelines
+;;   :ensure t
+;;   :config
+;;   (ocodo-svg-modelines-init)
+;;   (smt/set-theme 'ocodo-geometry-flakes-smt))
 
 (use-package hydra
   :ensure t)
