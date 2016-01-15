@@ -332,12 +332,10 @@ current when this command was invoked."
 
 (defun scroll-one-line-up ()
   (interactive)
-  (forward-line)
   (scroll-up 1))
 
 (defun scroll-one-line-down ()
   (interactive)
-  (forward-line -1)
   (scroll-down 1))
 
 (defun shell-quote-format (string &rest args)
