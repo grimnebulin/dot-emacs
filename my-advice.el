@@ -44,9 +44,4 @@ if a prefix argument is present."
            (if current-prefix-arg 'always dired-recursive-deletes)))
       ad-do-it)))
 
-(defadvice magit-key-mode-popup-logging (after show-all-by-default)
-  "Turn on the --all logging option by default."
-  (add-to-list 'magit-key-mode-current-options "--all")
-  (magit-key-mode-redraw 'logging))
-
 nil
