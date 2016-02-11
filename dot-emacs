@@ -591,9 +591,7 @@
 (eval-after-load "sgml-mode"
   '(use-package tagedit
      :ensure t
-     :config
-     (tagedit-add-paredit-like-keybindings)
-     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+     :config (tagedit-add-paredit-like-keybindings)))
 
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
