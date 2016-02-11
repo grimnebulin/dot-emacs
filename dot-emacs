@@ -283,7 +283,7 @@
 (global-set-key "\C-ci" 'insert-image-at-point)
 (global-set-key "\C-cm" 'magit-status)
 (global-set-key "\C-cc" 'compile)
-(global-set-key "\C-cr" 'recompile)
+(global-set-key "\C-cr" #'my-recompile)
 (global-set-key "\C-cp" 'windmove-up)
 (global-set-key "\C-cn" 'windmove-down)
 (global-set-key [(control kp-end)] (lambda () (interactive) (kill-buffer)))

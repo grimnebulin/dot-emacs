@@ -638,6 +638,14 @@ by using nxml's indentation rules."
   (isearch-push-state)
   (isearch-update))
 
+(defun my-recompile ()
+  (interactive)
+  (aif (get-buffer "*compilation*")
+      (progn
+        (pop-to-buffer it)
+        (recompile))
+    (message "No old compilation buffer present")))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
