@@ -530,8 +530,7 @@
 
 (use-package magit
   :ensure t
-  :config
-  (setq magit-display-buffer-function 'my-magit-display-buffer))
+  :config (setq magit-display-buffer-function 'my-magit-display-buffer))
 
 (defun my-magit-display-buffer (buffer)
   (if (eq 'magit-status-mode (with-current-buffer buffer major-mode))
