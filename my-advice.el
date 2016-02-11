@@ -31,11 +31,6 @@ putting the current line this far down the window.")
         (shell-in-bookmark-directory (ad-get-arg 0))
       ad-do-it)))
 
-(defadvice insert-register (before invert-prefix-arg)
-  "Invert the sense of the prefix argument to insert-register."
-  (when (called-interactively-p 'any)
-    (ad-set-arg 1 (not (ad-get-arg 1)))))
-
 (defadvice dired-do-flagged-delete (around delete-recursively-if-prefix)
   "Sets dired-recursive-deletes to 'always for the duration of this command
 if a prefix argument is present."

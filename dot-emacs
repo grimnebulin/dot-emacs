@@ -474,7 +474,6 @@
 (ad-activate 'insert-char)
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
-(ad-activate 'insert-register)
 
 (setq *recenter-fraction* 0.333)
 
