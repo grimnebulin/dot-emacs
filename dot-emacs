@@ -37,6 +37,9 @@
 (electric-pair-mode)
 (show-paren-mode)
 (horizontal-scroll-bar-mode -1)
+;; http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html
+(global-prettify-symbols-mode 1)
+(setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
 ;; (setq w3m-use-cookies t)
@@ -202,7 +205,6 @@
 (setq term-term-name "vt100")
 (setq line-number-display-limit-width 9999)
 (setq confirm-nonexistent-file-or-buffer nil)
-(setq org-startup-folded nil)
 (setq twittering-use-master-password t)
 (setq tramp-auto-save-directory "/tmp")
 (setq dired-auto-revert-buffer t)
