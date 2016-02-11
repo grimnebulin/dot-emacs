@@ -532,14 +532,14 @@
 
 (use-package magit
   :ensure t
-  :config (setq magit-display-buffer-function 'my-magit-display-buffer))
+  :config
+  (setq magit-display-buffer-function 'my-magit-display-buffer)
+  (setq magit-last-seen-setup-instructions "1.4.0"))
 
 (defun my-magit-display-buffer (buffer)
   (if (eq 'magit-status-mode (with-current-buffer buffer major-mode))
       (display-buffer buffer '(display-buffer-same-window))
     (magit-display-buffer-traditional buffer)))
-
-(setq magit-last-seen-setup-instructions "1.4.0")
 
 (use-package anzu
   :ensure t
