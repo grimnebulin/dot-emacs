@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (eval-when-compile (require 'cl))
 
 (defun listify (x)
@@ -354,16 +356,22 @@ current when this command was invoked."
 
 (defun ido-read-char-sort-predicate (a b)
   "Order character names first by increasing length, then by lexicographic order."
-  (or (< (length a) (length b))
-      (and (= (length a) (length b))
-           (string-lessp a b))))
+  (let ((alen (length a))
+        (blen (length b)))
+    (or (< alen blen) (and (= alen blen) (string-lessp a b)))))
+
+(let (completions)
+  (defun ido-read-char-completions ()
+    (or completions
+        (setq completions
+              (sort (cl-delete-if (lambda (s) (= ?< (aref s 0)))
+                                  (mapcar 'car (ucs-names)))
+                    'ido-read-char-sort-predicate)))))
 
 (defun ido-read-char-by-name (prompt)
   "Replacement for read-char-by-name that uses ido to read character names."
   (let* ((completion-ignore-case t)
-         (completions (sort (cl-delete-if (lambda (s) (= ?< (aref s 0)))
-                                          (mapcar 'car (ucs-names)))
-                            'ido-read-char-sort-predicate))
+         (completions (ido-read-char-completions))
          (ido-enable-flex-matching nil)
 	 (input (ido-completing-read prompt completions)))
     (cond
