@@ -594,6 +594,9 @@
      :ensure t
      :config (tagedit-add-paredit-like-keybindings)))
 
+(use-package iedit
+  :ensure t)
+
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
         if (file-exists-p file)
