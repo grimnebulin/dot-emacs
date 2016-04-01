@@ -288,6 +288,7 @@
 (global-set-key "\C-cp" 'windmove-up)
 (global-set-key "\C-cn" 'windmove-down)
 (global-set-key [(control kp-end)] (lambda () (interactive) (kill-buffer)))
+(global-set-key (kbd "<C-M-backspace>") 'backward-kill-sexp)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
