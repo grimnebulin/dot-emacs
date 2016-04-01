@@ -474,6 +474,7 @@
 (defalias 'ci 'change-inner)
 (defalias 'lp 'list-packages)
 (defalias 'vl 'visual-line-mode)
+(defalias 'mff 'magit-find-file)
 
 (load "my-advice")
 (ad-activate 'open-line)
