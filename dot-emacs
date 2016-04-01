@@ -304,6 +304,9 @@
 (define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
 (define-key isearch-mode-map (kbd "<backspace>") #'isearch-delete-something)
 
+(require 'misc)
+(global-set-key "\M-z" 'zap-up-to-char)
+
 ;;
 ;; Hooks:
 ;;
