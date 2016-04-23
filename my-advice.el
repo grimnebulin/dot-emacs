@@ -39,4 +39,9 @@ if a prefix argument is present."
            (if current-prefix-arg 'always dired-recursive-deletes)))
       ad-do-it)))
 
+(defadvice backward-up-list (before push-mark)
+  (when (called-interactively-p 'any)
+    (push-mark)))
+
+
 nil
