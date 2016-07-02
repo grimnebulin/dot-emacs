@@ -618,6 +618,17 @@
 (use-package iedit
   :ensure t)
 
+(use-package volatile-highlights
+  :ensure t
+  :config (volatile-highlights-mode t))
+
+;; (use-package git-timemachine
+;;   :ensure t)
+
+(use-package pdf-tools
+  :ensure t
+  :mode ("\\.pdf\\'" . pdf-view-mode))
+
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
         if (file-exists-p file)
