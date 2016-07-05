@@ -352,6 +352,9 @@
 
 (add-hook 'find-file-hook 'auto-insert)
 
+(require 'autoinsert)
+(setq auto-insert-query nil)
+
 (add-to-list
  'auto-insert-alist
  '(("\\.pl\\'" . "Perl program")
