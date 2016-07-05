@@ -617,7 +617,8 @@
 
 (use-package volatile-highlights
   :ensure t
-  :config (volatile-highlights-mode t))
+  :config (volatile-highlights-mode t)
+  :diminish volatile-highlights-mode)
 
 ;; (use-package git-timemachine
 ;;   :ensure t)
