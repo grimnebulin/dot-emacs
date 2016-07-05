@@ -479,6 +479,7 @@
 (defalias 'vl 'visual-line-mode)
 (defalias 'mff 'magit-find-file)
 (defalias 'eb 'erase-buffer)
+(defalias 'man 'woman)
 
 (load "my-advice")
 (ad-activate 'open-line)
