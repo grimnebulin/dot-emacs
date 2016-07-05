@@ -285,10 +285,9 @@
 (global-set-key "\C-cm" 'magit-status)
 (global-set-key "\C-cc" 'compile)
 (global-set-key "\C-cr" #'my-recompile)
-(global-set-key "\C-cp" 'windmove-up)
-(global-set-key "\C-cn" 'windmove-down)
 (global-set-key [(control kp-end)] (lambda () (interactive) (kill-buffer)))
 (global-set-key (kbd "<C-M-backspace>") 'backward-kill-sexp)
+(global-set-key (kbd "C-.") 'next-multiframe-window)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
@@ -573,10 +572,6 @@
 ;; (use-package purescript-mode-autoloads
 ;;   :load-path "~/purescript-mode/"
 ;;   :config (add-to-list 'Info-default-directory-list "~/purescript-mode/"))
-
-(use-package ace-window
-  :ensure t
-  :bind ("C-." . ace-window))
 
 (use-package elisp-slime-nav
   :ensure t
