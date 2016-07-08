@@ -340,6 +340,9 @@
    'html-mode-hook
    )
 
+(defun show-trailing-whitespace ()
+  (setq show-trailing-whitespace t))
+
 (add-to-hooks 'show-trailing-whitespace
   'prog-mode-hook
   'org-mode-hook
@@ -406,9 +409,6 @@
   '(progn
      (define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square)
      (define-key clojure-mode-map [(super \{)] #'paredit-wrap-curly)))
-
-(defun show-trailing-whitespace ()
-  (setq show-trailing-whitespace t))
 
 (defun paredit-for-lisp-interaction-mode ()
   (paredit-mode 1)
