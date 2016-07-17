@@ -221,6 +221,8 @@
 (setq async-shell-command-buffer 'new-buffer)
 (setq scroll-preserve-screen-position 'always)
 
+(setenv "GPG_AGENT_INFO" nil)  ;; don't use pinentry program
+
 (eval-after-load 'term
   '(term-set-escape-char ?\C-x))
 
