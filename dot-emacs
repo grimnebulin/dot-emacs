@@ -633,8 +633,8 @@
 ;;   (ocodo-svg-modelines-init)
 ;;   (smt/set-theme 'ocodo-geometry-flakes-smt))
 
-(use-package hydra
-  :ensure t)
+;; (use-package hydra
+;;   :ensure t)
 
 (eval-after-load "sgml-mode"
   '(use-package tagedit
