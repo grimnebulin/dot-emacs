@@ -510,6 +510,8 @@
 (defalias 'eb 'erase-buffer)
 (defalias 'man 'woman)
 
+(add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
+
 (load "my-advice")
 (ad-activate 'open-line)
 (ad-activate 'recenter)
