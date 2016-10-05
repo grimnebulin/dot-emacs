@@ -663,8 +663,11 @@
 
 (use-package helm
   :ensure t
-  :bind (("\C-xb" . helm-buffers-list)
-         ("\M-i" . helm-swoop)))
+  :bind ("C-x b" . helm-buffers-list))
+
+(use-package helm-swoop
+  :ensure t
+  :bind ("M-i" . helm-swoop))
 
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
