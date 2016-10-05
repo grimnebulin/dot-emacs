@@ -658,6 +658,10 @@
   :ensure t
   :mode ("\\.pdf\\'" . pdf-view-mode))
 
+(use-package helm
+  :ensure t
+  :bind ("\C-xb" . helm-buffers-list))
+
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
         if (file-exists-p file)
