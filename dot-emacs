@@ -223,6 +223,8 @@
 (setq async-shell-command-buffer 'new-buffer)
 (setq scroll-preserve-screen-position 'always)
 
+(setenv "GPG_AGENT_INFO" nil)  ;; don't use pinentry program
+
 (eval-after-load 'term
   '(term-set-escape-char ?\C-x))
 
@@ -511,6 +513,8 @@
 (defalias 'man 'woman)
 (defalias 'cn 'column-number-mode)
 
+(add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
+
 (load "my-advice")
 (ad-activate 'open-line)
 (ad-activate 'recenter)
@@ -634,8 +638,8 @@
 ;;   (ocodo-svg-modelines-init)
 ;;   (smt/set-theme 'ocodo-geometry-flakes-smt))
 
-(use-package hydra
-  :ensure t)
+;; (use-package hydra
+;;   :ensure t)
 
 (eval-after-load "sgml-mode"
   '(use-package tagedit
@@ -656,6 +660,11 @@
 (use-package pdf-tools
   :ensure t
   :mode ("\\.pdf\\'" . pdf-view-mode))
+
+(use-package helm
+  :ensure t
+  :bind (("\C-xb" . helm-buffers-list)
+         ("\M-i" . helm-swoop)))
 
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
