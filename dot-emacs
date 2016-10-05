@@ -509,6 +509,7 @@
 (defalias 'mff 'magit-find-file)
 (defalias 'eb 'erase-buffer)
 (defalias 'man 'woman)
+(defalias 'cn 'column-number-mode)
 
 (load "my-advice")
 (ad-activate 'open-line)
