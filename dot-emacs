@@ -26,8 +26,8 @@
  '(("aif" . font-lock-keyword-face)
    ("awhen" . font-lock-keyword-face)))
 
-(setq initial-frame-alist
-      (update-alist initial-frame-alist '(top . 0) '(right . 0)))
+(add-to-list 'initial-frame-alist '(top . 0))
+(add-to-list 'initial-frame-alist '(right . 0))
 
 (tool-bar-mode -1)
 (random t)

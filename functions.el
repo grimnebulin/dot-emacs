@@ -582,47 +582,6 @@ by using nxml's indentation rules."
   (interactive "sFeed name: ")
   (format-shell-command "curl -s http://seanmcafee.name/rss/%s.pl" name))
 
-(defun dg ()
-  "Delete from point to end of buffer, like Vim's dG command."
-  (interactive)
-  (kill-region (line-beginning-position) (point-max)))
-
-(defun update-alist (alist &rest pairs)
-  (append (copy-sequence pairs)
-          (cl-delete-if (lambda (x) (cl-member (car x) pairs :key #'car)) alist)))
-
-(defun show-twitpic ()
-  (interactive)
-  (let* ((url (or (url-get-url-at-point)
-                  (error "No URL at point")))
-         (buffer (generate-new-buffer "twitpic")))
-    (with-current-buffer buffer
-      (when (/= 0 (let ((coding-system-for-read 'no-conversion))
-                    (call-process "twitpic.pl" nil t nil url)))
-        (let ((message (buffer-string)))
-          (kill-buffer buffer)
-          (error "%s" message)))
-      (image-mode)
-      (pop-to-buffer buffer)
-      (delete-other-windows))))
-
-(defun perl-module-init ()
-  (interactive)
-  (let* ((case-fold-search nil)
-         (bfn (or (buffer-file-name)
-                  (error "Buffer not visiting a file")))
-         (path (--take-while (string-match-p "\\`[[:upper:]]"
-                                             (substring it 0 1))
-                             (nreverse (split-string bfn "/" t)))))
-    (insert
-     "package "
-     (s-join "::" (nreverse
-                   (cons
-                    (replace-regexp-in-string "\\.pm\\'" "" (first path) t t)
-                    (rest path))))
-     ";\n\n")
-    (save-excursion (insert "use strict;\n\n\n\n1;\n"))))
-
 (defun multi-occur-in-all-buffers (regexp &optional allbufs)
   (interactive (occur-read-primary-args))
   (multi-occur-in-matching-buffers "" regexp))
