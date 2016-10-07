@@ -654,6 +654,11 @@ by using nxml's indentation rules."
         (recompile))
     (message "No old compilation buffer present")))
 
+(defun multi-switch-buffers (prefix)
+  "With no prefix argument, call ido-switch-buffer; otherwise call helm-buffers-list."
+  (interactive "P")
+  (if prefix (helm-buffers-list) (ido-switch-buffer)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

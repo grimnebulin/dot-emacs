@@ -292,6 +292,7 @@
 (global-set-key [(control kp-end)] (lambda () (interactive) (kill-buffer)))
 (global-set-key (kbd "<C-M-backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "C-.") 'next-multiframe-window)
+(global-set-key (kbd "C-x b") #'multi-switch-buffers)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
@@ -663,7 +664,7 @@
 
 (use-package helm
   :ensure t
-  :bind ("C-x b" . helm-buffers-list))
+  :commands (helm-buffers-list))
 
 (use-package helm-swoop
   :ensure t
