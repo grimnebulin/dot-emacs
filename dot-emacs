@@ -40,9 +40,6 @@
 (global-prettify-symbols-mode 1)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
-(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-;; (setq w3m-use-cookies t)
-
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 
