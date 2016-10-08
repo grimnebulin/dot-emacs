@@ -15,8 +15,6 @@
 ;; "Monofur"
 ;; "DejaVu Sans Mono" also looks nice
 
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
 (add-to-list 'load-path "~/emacs/")
 
 (load "functions")
