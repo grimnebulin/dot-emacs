@@ -513,6 +513,7 @@
 (defalias 'eb 'erase-buffer)
 (defalias 'man 'woman)
 (defalias 'cn 'column-number-mode)
+(defalias 'jpp 'json-pretty-print)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 
