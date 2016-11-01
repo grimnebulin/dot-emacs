@@ -15,8 +15,6 @@
 ;; "Monofur"
 ;; "DejaVu Sans Mono" also looks nice
 
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path (format "%s/bin" (getenv "HOME")))
 (add-to-list 'load-path "~/emacs/")
 
 (load "functions")
@@ -41,9 +39,6 @@
 ;; http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html
 (global-prettify-symbols-mode 1)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
-
-(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-;; (setq w3m-use-cookies t)
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -393,10 +388,6 @@
 (add-to-hooks 'subword-mode
   'java-mode-hook
   'scala-mode-hook)
-
-(add-to-hooks 'eldoc-mode
-              'lisp-interaction-mode-hook
-              'emacs-lisp-mode-hook)
 
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
