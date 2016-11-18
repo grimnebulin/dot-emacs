@@ -568,6 +568,7 @@
   :ensure t
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (setq flycheck-standard-error-navigation nil)
   (global-flycheck-mode 1))
 
 (setq-default dired-listing-switches "-alhv")
