@@ -654,6 +654,11 @@
   :ensure t
   :mode ("\\.pdf\\'" . pdf-view-mode))
 
+(use-package visual-regexp-steroids
+  :ensure t
+  :config (setq vr/engine 'pcre2el)
+  :bind (("\C-cq" . vr/query-replace)))
+
 (use-package helm
   :ensure t
   :commands (helm-buffers-list))
