@@ -234,6 +234,10 @@
 
 (global-set-key [(super j) (control c)] 'jabber-connect-all)
 
+;; No completion in code comment blocks:
+(eval-after-load "company"
+  '(setq company-backends (delq 'company-dabbrev company-backends)))
+
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 
@@ -505,6 +509,7 @@
 (defalias 'eb 'erase-buffer)
 (defalias 'man 'woman)
 (defalias 'cn 'column-number-mode)
+(defalias 'jpp 'json-pretty-print)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 
@@ -564,6 +569,7 @@
   :ensure t
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (setq flycheck-standard-error-navigation nil)
   (global-flycheck-mode 1))
 
 (setq-default dired-listing-switches "-alhv")
