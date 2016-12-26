@@ -218,6 +218,7 @@
 (setq async-shell-command-buffer 'new-buffer)
 (setq scroll-preserve-screen-position 'always)
 (setq extended-command-suggest-shorter nil)
+(setq comint-input-autoexpand nil)
 
 (setenv "GPG_AGENT_INFO" nil)  ;; don't use pinentry program
 
