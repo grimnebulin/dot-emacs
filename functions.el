@@ -618,6 +618,10 @@ by using nxml's indentation rules."
   (interactive "P")
   (if prefix (helm-buffers-list) (ido-switch-buffer)))
 
+(defun count-region-bytes (start end)
+  (interactive "r")
+  (message "Region contains %d bytes" (string-bytes (buffer-substring-no-properties start end))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
