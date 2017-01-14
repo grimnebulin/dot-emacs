@@ -100,7 +100,8 @@
 (use-package multiple-cursors
   :ensure t
   :bind ("C-S-c C-S-c" . mc/edit-lines)
-        ("C-S-c C-S-v" . mc/mark-next-like-this))
+        ("C-S-c C-S-v" . mc/mark-next-like-this)
+        ("C-S-c C-S-m" . mc/mark-pop))
 
 (use-package org-bullets
   :ensure t
