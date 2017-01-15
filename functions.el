@@ -622,6 +622,10 @@ by using nxml's indentation rules."
   (interactive "r")
   (message "Region contains %d bytes" (string-bytes (buffer-substring-no-properties start end))))
 
+(defun isearch-yank-symbol ()
+  (interactive)
+  (isearch-yank-internal (lambda () (skip-syntax-forward "w_") (point))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

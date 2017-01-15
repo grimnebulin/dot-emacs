@@ -309,6 +309,7 @@
 
 (define-key isearch-mode-map [(shift meta w)] 'my-isearch-word)
 (define-key isearch-mode-map (kbd "<backspace>") #'isearch-delete-something)
+(define-key isearch-mode-map (kbd "C-M-w") #'isearch-yank-symbol)
 
 (require 'misc)
 (global-set-key "\M-z" 'zap-up-to-char)
