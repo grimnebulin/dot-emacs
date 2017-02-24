@@ -66,11 +66,12 @@
 
 (require 'use-package)
 
+(setq use-package-always-ensure t)
+
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
-(use-package paredit
-  :ensure t)
+(use-package paredit)
 
 ;; (require 'git-gutter+)
 ;; (global-git-gutter+-mode 1)
@@ -88,34 +89,27 @@
 ;;   (setq twittering-use-master-password t)
 ;;   (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1))))
 
-(use-package ack
-  :ensure t)
+(use-package ack)
 
 (use-package undo-tree
-  :ensure t
   :config
   (global-undo-tree-mode 1)
   (setq undo-tree-mode-lighter ""))
 
 (use-package multiple-cursors
-  :ensure t
   :bind ("C-S-c C-S-c" . mc/edit-lines)
         ("C-S-c C-S-v" . mc/mark-next-like-this)
         ("C-S-c C-S-m" . mc/mark-pop))
 
 (use-package org-bullets
-  :ensure t
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package change-inner
-  :ensure t)
+(use-package change-inner)
 
 (use-package anchored-transpose
-  :ensure t
   :bind ("C-x t" . anchored-transpose))
 
 (use-package dired-details+
-  :ensure t
   :config (setq dired-details-hide-link-targets nil))
 
 (eval-after-load "eww"
@@ -566,11 +560,9 @@
 ;; (ac-config-default)
 
 (use-package expand-region
-  :ensure t
   :bind ("C-=" . er/expand-region))
 
 (use-package flycheck
-  :ensure t
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (setq flycheck-standard-error-navigation nil)
@@ -585,12 +577,10 @@
 ;; (sml/setup)
 
 (use-package google-this
-  :ensure t
   :config (google-this-mode 1)
   :diminish google-this-mode)
 
 (use-package magit
-  :ensure t
   :config
   (setq magit-display-buffer-function 'my-magit-display-buffer)
   (setq magit-last-seen-setup-instructions "1.4.0"))
@@ -601,7 +591,6 @@
     (magit-display-buffer-traditional buffer)))
 
 (use-package anzu
-  :ensure t
   :diminish anzu-mode
   :bind ("M-%"   . anzu-query-replace)
         ("C-M-%" . anzu-query-replace-regexp)
@@ -612,11 +601,9 @@
 ;;   :config (add-to-list 'Info-default-directory-list "~/purescript-mode/"))
 
 (use-package elisp-slime-nav
-  :ensure t
   :config (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode))
 
 (use-package projectile
-  :ensure t
   :config
   (projectile-global-mode)
   (setq projectile-mode-line
@@ -627,54 +614,42 @@
             ""))))
 
 (use-package dtrt-indent
-  :ensure t
   :config (dtrt-indent-mode 1))
 
 (use-package define-word
-  :ensure t
   :bind ("\C-cd" . define-word-at-point)
         ("\C-cD" . define-word))
 
 ;; (use-package ocodo-svg-modelines
-;;   :ensure t
 ;;   :config
 ;;   (ocodo-svg-modelines-init)
 ;;   (smt/set-theme 'ocodo-geometry-flakes-smt))
 
-;; (use-package hydra
-;;   :ensure t)
+;; (use-package hydra)
 
 (eval-after-load "sgml-mode"
   '(use-package tagedit
-     :ensure t
      :config (tagedit-add-paredit-like-keybindings)))
 
-(use-package iedit
-  :ensure t)
+(use-package iedit)
 
 (use-package volatile-highlights
-  :ensure t
   :config (volatile-highlights-mode t)
   :diminish volatile-highlights-mode)
 
-;; (use-package git-timemachine
-;;   :ensure t)
+;; (use-package git-timemachine)
 
 (use-package pdf-tools
-  :ensure t
   :mode ("\\.pdf\\'" . pdf-view-mode))
 
 (use-package visual-regexp-steroids
-  :ensure t
   :config (setq vr/engine 'pcre2el)
   :bind (("\C-cq" . vr/query-replace)))
 
 (use-package helm
-  :ensure t
   :commands (helm-buffers-list))
 
 (use-package helm-swoop
-  :ensure t
   :bind ("M-i" . helm-swoop))
 
 (awhen (getenv "EMACS_EXTRA_INIT")
