@@ -626,6 +626,15 @@ by using nxml's indentation rules."
   (interactive)
   (isearch-yank-internal (lambda () (skip-syntax-forward "w_") (point))))
 
+(defun my-dired-jump (prefix)
+  (interactive "P")
+  (let* ((buffer (current-buffer))
+         (name (buffer-name buffer)))
+    (dired-jump)
+    (when (and prefix (not (string= name (buffer-name (current-buffer)))))
+      (when (kill-buffer buffer)
+        (message "Killed buffer %s" name)))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

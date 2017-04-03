@@ -258,7 +258,7 @@
 
 ;; Key bindings:
 
-(global-set-key "\C-x\C-j" 'dired-jump)
+(global-set-key "\C-x\C-j" 'my-dired-jump)
 (global-set-key "\C-x\C-o" 'other-window-delete-rest)
 (global-set-key [(shift control n)] 'scroll-one-line-up)
 (global-set-key [(shift control p)] 'scroll-one-line-down)
