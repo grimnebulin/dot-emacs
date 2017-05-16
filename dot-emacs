@@ -559,6 +559,8 @@
 ;; (require 'auto-complete-config)
 ;; (ac-config-default)
 
+(use-package diminish)
+
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
