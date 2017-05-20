@@ -519,6 +519,11 @@
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 
+(with-eval-after-load 'python
+  (setq python--prettify-symbols-alist
+        (-remove (lambda (x) (member (car x) '("and" "or")))
+                 python--prettify-symbols-alist)))
+
 (load "my-advice")
 (ad-activate 'open-line)
 (ad-activate 'recenter)
