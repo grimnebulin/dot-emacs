@@ -134,42 +134,12 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-;;
-;; ido configuration
-;;
-
-(require 'ido)
-
-(setq ido-enable-flex-matching t
-      ido-use-virtual-buffers t
-      ido-create-new-buffer 'always
-      ido-max-directory-size 60000
-      ido-auto-merge-work-directories-length -1
-      ido-decorations
-      '("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
-        " [Not readable]" " [Too big]" " [Confirm]"))
-
-(ido-mode 1)
-(ido-everywhere 1)
-
-(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
-
-(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
-
-(defadvice ido-read-buffer (around ido-read-buffer-possibly-ignore activate)
-  "Check to see if user wanted to avoid using ido"
-  (if (loop for command = this-command then (symbol-function command)
-            while (symbolp command)
-            thereis (eq 'ignore (get command 'ido)))
-      (let ((read-buffer-function nil))
-        (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
-        (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
-    ad-do-it))
-
-(put 'shell                   'ido 'ignore)
-(put 'dired-create-directory  'ido 'ignore)
-(put 'icalendar-import-buffer 'ido 'ignore)
-(put 'gnus-article-save-part  'ido 'ignore)  ;; does this actually work?
+(use-package ivy
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "(%d/%d) ")
+  (global-set-key "\C-s" 'swiper))
 
 ;;
 ;;  Variables:
