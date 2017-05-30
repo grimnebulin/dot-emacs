@@ -635,6 +635,17 @@ by using nxml's indentation rules."
       (when (kill-buffer buffer)
         (message "Killed buffer %s" name)))))
 
+(defmacro with-synchronous-download (url &rest body)
+  (declare (indent defun))
+  (let ((buffer (make-symbol "buffer")))
+    `(let ((,buffer (url-retrieve-synchronously ,url t t)))
+       (unwind-protect
+           (with-current-buffer ,buffer
+             (goto-char (point-min))
+             (search-forward "\n\n")
+             ,@body)
+         (kill-buffer ,buffer)))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
