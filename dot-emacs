@@ -522,6 +522,13 @@
         (-remove (lambda (x) (member (car x) '("and" "or")))
                  python--prettify-symbols-alist)))
 
+(with-eval-after-load 'json
+  (defun encode-json-array-on-one-line (encode array)
+    (let* ((json-encoding-pretty-print (loop for x being the elements of array thereis (not (numberp x))))
+           (json-encoding-separator (if json-encoding-pretty-print "," ", ")))
+      (funcall encode array)))
+  (advice-add 'json-encode-array :around #'encode-json-array-on-one-line))
+
 (load "my-advice")
 (ad-activate 'open-line)
 (ad-activate 'recenter)
