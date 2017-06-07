@@ -670,6 +670,9 @@
 (use-package helm-swoop
   :bind ("M-i" . helm-swoop))
 
+(use-package restclient
+  :mode ("\\.rest\\'" . restclient-mode))
+
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
         if (file-exists-p file)
