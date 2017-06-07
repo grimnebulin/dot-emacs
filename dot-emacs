@@ -67,6 +67,8 @@
 
 (setq use-package-always-ensure t)
 
+(use-package dash)
+
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
