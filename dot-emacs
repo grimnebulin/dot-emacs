@@ -358,6 +358,9 @@
 (require 'autoinsert)
 (setq auto-insert-query nil)
 
+(setq auto-insert-alist
+      (-remove (lambda (x) (pcase x (`((,_ . "Emacs Lisp header") . ,_) t))) auto-insert-alist))
+
 (add-to-list
  'auto-insert-alist
  '(("\\.pl\\'" . "Perl program")
