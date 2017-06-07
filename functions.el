@@ -644,7 +644,7 @@ by using nxml's indentation rules."
              (goto-char (point-min))
              (search-forward "\n\n")
              ,@body)
-         (kill-buffer ,buffer)))))
+         (when (buffer-live-p ,buffer) (kill-buffer ,buffer))))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
