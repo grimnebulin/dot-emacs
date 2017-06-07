@@ -365,7 +365,7 @@
 
 (add-to-list
  'auto-insert-alist
- '(("\\.pl\\'" . "Perl program")
+ `((,(rx ".pl" eos) . "Perl program")
    nil
    "#!"
    (shell-command-to-string "which perl")
@@ -373,7 +373,7 @@
 
 (add-to-list
  'auto-insert-alist
- '(("\\.pm\\'" . "Perl module")
+ `((,(rx ".pm" eos) . "Perl module")
    nil
    "package "
    (let* ((case-fold-search nil)
@@ -387,7 +387,7 @@
 
 (add-to-list
  'auto-insert-alist
- '(("\\.p6\\'" . "Perl 6 program")
+ `((,(rx ".p6" eos) . "Perl 6 program")
    nil
    "#!"
    (shell-command-to-string "which perl6")
@@ -552,8 +552,8 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 
-(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
-(add-to-list 'auto-mode-alist '("\\.scala\\'" . scala-mode))
+(add-to-list 'auto-mode-alist `(,(rx ".m" eos) . octave-mode))
+(add-to-list 'auto-mode-alist `(,(rx ".scala" eos) . scala-mode))
 
 (define-key isearch-mode-map [(control return)] #'isearch-exit-other-end)
 
@@ -663,7 +663,7 @@
 ;; (use-package git-timemachine)
 
 (use-package pdf-tools
-  :mode ("\\.pdf\\'" . pdf-view-mode))
+  :mode ((rx ".pdf" eos) . pdf-view-mode))
 
 (use-package visual-regexp-steroids
   :config (setq vr/engine 'pcre2el)
@@ -676,7 +676,7 @@
   :bind ("M-i" . helm-swoop))
 
 (use-package restclient
-  :mode ("\\.rest\\'" . restclient-mode))
+  :mode ((rx ".rest" eos) . restclient-mode))
 
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
