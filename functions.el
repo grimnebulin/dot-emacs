@@ -646,6 +646,22 @@ by using nxml's indentation rules."
              ,@body)
          (when (buffer-live-p ,buffer) (kill-buffer ,buffer))))))
 
+(cl-defun term* (buffer-name &optional (program "/bin/bash"))
+  (when (get-buffer buffer-name)
+    (error "Buffer %s already in use" buffer-name))
+  (aif (get-buffer "*terminal*")
+      (let ((temp-name (generate-new-buffer-name "temp-terminal")))
+        (with-current-buffer it
+          (unwind-protect
+              (progn
+                (rename-buffer temp-name)
+                (term program)
+                (rename-buffer buffer-name))
+            (with-current-buffer it
+              (rename-buffer "*terminal*")))))
+    (term program)
+    (rename-buffer buffer-name)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
