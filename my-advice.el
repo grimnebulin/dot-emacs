@@ -43,5 +43,12 @@ if a prefix argument is present."
   (when (called-interactively-p 'any)
     (push-mark)))
 
+(defun maybe-kill-other-buffers (func &rest args)
+  "With a prefix argument, kill the buffers that were hidden."
+  (if current-prefix-arg
+      (let ((buffers (mapcar #'window-buffer (window-list))))
+        (apply func args)
+        (mapc (lambda (buffer) (unless (get-buffer-window buffer) (kill-buffer buffer))) buffers))
+    (apply func args)))
 
 nil

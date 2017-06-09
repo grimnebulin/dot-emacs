@@ -540,6 +540,7 @@
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
 (ad-activate 'backward-up-list)
+(advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
 
 (setq *recenter-fraction* 0.333)
 
