@@ -642,7 +642,7 @@ by using nxml's indentation rules."
        (unwind-protect
            (with-current-buffer ,buffer
              (goto-char (point-min))
-             (search-forward "\n\n")
+             (or (search-forward "\n\n" nil t) (error "Download failed"))
              ,@body)
          (when (buffer-live-p ,buffer) (kill-buffer ,buffer))))))
 
