@@ -62,16 +62,35 @@ buffer first."
 that module, if it exists."
   (interactive "sPerl module: ")
   (let ((path (perl-module-path module)))
-    (if (not (and (string< "" path) (file-exists-p path)))
-        (error "Could not locate module file")
-      (find-file path)
-      (message "%s" path))))
+    (find-file path)
+    (message "%s" path)))
 
 (defun perl-module-path (module)
   "Returns the path to the Perl file that implements the given module."
-  (let ((path (concat (replace-regexp-in-string "::" "/" module) ".pm")))
-    (format-shell-command-to-string
-     "perl -M%s -e 'print $INC{ shift() }' %s" module path)))
+  (with-temp-buffer
+    (let* ((path (concat (replace-regexp-in-string "::" "/" module) ".pm"))
+           (status (call-process "perl" nil t nil (concat "-M" module) "-e" "print $INC{ shift() }" path))
+           (output (buffer-substring (point-min) (point-max))))
+      (if (zerop status)
+          output
+        (error "%s" output)))))
+
+(defun pymod (module)
+  "Reads the name of a Python module, then loads the file that implements
+that module, if it exists."
+  (interactive "sPython module: ")
+  (let ((path (python-module-path module)))
+    (find-file path)
+    (message "%s" path)))
+
+(defun python-module-path (module)
+  "Returns the path to the Python file that implements the given module."
+  (with-temp-buffer
+    (let* ((status (call-process "python" nil t nil "-c" "import importlib, sys\ntry:\n sys.stdout.write(importlib.import_module(sys.argv[1]).__file__)\nexcept ImportError, e:\n sys.stderr.write(e.message)\n sys.exit(1)" module))
+           (output (buffer-substring (point-min) (point-max))))
+      (if (zerop status)
+          (replace-regexp-in-string (rx ".pyc" eos) ".py" output)
+        (error "%s" output)))))
 
 ;;
 
