@@ -400,7 +400,8 @@
 
 (add-to-hooks 'subword-mode
   'java-mode-hook
-  'scala-mode-hook)
+  'scala-mode-hook
+  'ruby-mode-hook)
 
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
