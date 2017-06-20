@@ -662,6 +662,14 @@ by using nxml's indentation rules."
     (term program)
     (rename-buffer buffer-name)))
 
+(defun call-program (program &rest args)
+  (with-temp-buffer
+    (let* ((status (apply 'call-process program nil t nil args))
+           (output (buffer-substring (point-min) (point-max))))
+      (if (zerop status)
+          output
+        (error "%s" output)))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
