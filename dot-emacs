@@ -314,15 +314,6 @@
 ;; Hooks:
 ;;
 
-(add-to-hooks 'electric-pair-mode
-  'java-mode-hook
-  'perl-mode-hook
-  'c++-mode-hook
-  'scala-mode-hook
-  'js-mode-hook
-  'js2-mode-hook
-  )
-
 (add-to-hooks 'enable-paredit-mode
   'emacs-lisp-mode-hook
   'scheme-mode-hook
