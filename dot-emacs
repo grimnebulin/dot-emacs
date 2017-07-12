@@ -37,6 +37,7 @@
 ;; http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html
 (global-prettify-symbols-mode 1)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
+(winner-mode 1)
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
