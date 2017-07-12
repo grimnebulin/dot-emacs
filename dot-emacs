@@ -356,7 +356,7 @@
  `((,(rx ".pl" eos) . "Perl program")
    nil
    "#!"
-   (shell-command-to-string "which perl")
+   (call-program "which" "perl")
    "\nuse strict;\n"))
 
 (add-to-list
@@ -378,7 +378,7 @@
  `((,(rx ".p6" eos) . "Perl 6 program")
    nil
    "#!"
-   (shell-command-to-string "which perl6")
+   (call-program "which" "perl6")
    "\n"))
 
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
