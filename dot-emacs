@@ -229,8 +229,6 @@
      (global-set-key [(super j)] jabber-global-keymap)
      (global-set-key "\C-x\C-j" 'dired-jump)))
 
-(global-set-key [(super j) (control c)] 'jabber-connect-all)
-
 ;; No completion in code comment blocks:
 (eval-after-load "company"
   '(setq company-backends (delq 'company-dabbrev company-backends)))
