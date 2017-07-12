@@ -328,21 +328,17 @@
   'scheme-mode-hook
   'lisp-mode-hook
   'clojure-mode-hook
-  'eval-expression-minibuffer-setup-hook
-  )
+  'eval-expression-minibuffer-setup-hook)
 
 (add-to-hooks 'paredit-for-lisp-interaction-mode
-   'lisp-interaction-mode-hook
-   )
+   'lisp-interaction-mode-hook)
 
 (add-to-hooks 'turn-on-auto-fill
    'message-mode-hook
-   'text-mode-hook
-   )
+   'text-mode-hook)
 
 (add-to-hooks 'turn-off-auto-fill
-   'html-mode-hook
-   )
+   'html-mode-hook)
 
 (defun show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
@@ -350,8 +346,7 @@
 (add-to-hooks 'show-trailing-whitespace
   'prog-mode-hook
   'org-mode-hook
-  'html-mode-hook
-  )
+  'html-mode-hook)
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
