@@ -661,7 +661,7 @@ by using nxml's indentation rules."
        (unwind-protect
            (with-current-buffer ,buffer
              (goto-char (point-min))
-             (search-forward "\n\n")
+             (or (search-forward "\n\n" nil t) (error "Download failed"))
              ,@body)
          (when (buffer-live-p ,buffer) (kill-buffer ,buffer))))))
 
@@ -680,6 +680,14 @@ by using nxml's indentation rules."
               (rename-buffer "*terminal*")))))
     (term program)
     (rename-buffer buffer-name)))
+
+(defun call-program (program &rest args)
+  (with-temp-buffer
+    (let* ((status (apply 'call-process program nil t nil args))
+           (output (buffer-substring (point-min) (point-max))))
+      (if (zerop status)
+          output
+        (error "%s" output)))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
