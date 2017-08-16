@@ -663,6 +663,9 @@
 (use-package restclient
   :mode ((rx ".rest" eos) . restclient-mode))
 
+(use-package beginend
+  :config (add-hook 'dired-mode-hook (lambda () (beginend-dired-mode 1))))
+
 (awhen (getenv "EMACS_EXTRA_INIT")
   (loop for file in (split-string it ":")
         if (file-exists-p file)
