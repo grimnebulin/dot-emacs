@@ -5,9 +5,11 @@
   (if (not (called-interactively-p 'any))
       ad-do-it
     (beginning-of-line)
-    ad-do-it
-    (unless do-not-indent-after-open-line
-      (indent-according-to-mode))))
+    (if (equal current-prefix-arg '(4))
+        (open-line 1)
+      ad-do-it
+      (unless do-not-indent-after-open-line
+        (indent-according-to-mode)))))
 
 (defvar *recenter-fraction* 0.5
   "*The recenter-proportionally advice will recenter the screen by
