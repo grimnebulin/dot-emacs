@@ -289,6 +289,8 @@
 (global-set-key (kbd "C-.") 'next-multiframe-window)
 (global-set-key (kbd "C-x b") #'multi-switch-buffers)
 (global-set-key (kbd "C-M-=") #'count-region-bytes)
+(global-set-key (kbd "<kp-home>") #'beginning-of-buffer)
+(global-set-key (kbd "<kp-end>") #'end-of-buffer)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
