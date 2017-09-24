@@ -2,20 +2,6 @@
 
 (eval-when-compile (require 'cl))
 
-(defun listify (x)
-  (if (listp x)
-      x
-    (list x)))
-
-(defun flatten (x)
-  "Flattens the argument, if it is a list (proper or improper), or else
-returns it unchanged."
-  (if (atom x)
-      x
-    (append (listify (flatten (car x)))
-            (listify (flatten (cdr x)))
-            nil)))
-
 (defmacro aif (test then &rest else)
   (declare (indent 2))
   `(let ((it ,test))
@@ -26,23 +12,8 @@ returns it unchanged."
   `(let ((it ,test))
      (when it ,@then)))
 
-(defun nonempty-p (sequence)
-  (and (< 0 (length sequence)) sequence))
-
 (defun princ-to-string (x)
   (format "%s" x))
-
-(defun pipe (value &rest funcs)
-  (while (and value funcs)
-    (setq value (funcall (car funcs) value)
-          funcs (cdr funcs)))
-  value)
-
-(defmacro string-or (&rest exprs)
-  (let ((x (cl-gensym)))
-    `(loop for ,x in ',exprs
-           thereis (pipe ,x 'eval 'princ-to-string 'nonempty-p)
-           finally return "")))
 
 ;;
 
@@ -93,25 +64,6 @@ that module, if it exists."
         (error "%s" output)))))
 
 ;;
-
-(defmacro ascend-directories-until (&rest body)
-  "Steps upwards from default-directory to the root directory.
-
-At each step, the local variables dirname and filename are set to the
-current path and current directory, respectively, and \"body\" is
-evaluated as the body of a cond statement; if the statement returns
-true, the loop halts."
-  (let ((done (make-symbol "done"))
-        (dir  (make-symbol "dir"))
-        (dfn  (make-symbol "dfn")))
-    `(let (,done (,dir (expand-file-name default-directory)))
-       (while (not (or ,done (equal ,dir "/")))
-         (let* ((,dfn (directory-file-name ,dir))
-                (dirname (file-name-directory ,dfn))
-                (filename (file-name-nondirectory ,dfn)))
-           (setq ,done (cond ,@body)
-                 ,dir (file-name-as-directory dirname))))
-       (or ,done (message "ascend-directories-until: nothing happened")))))
 
 (defun my-isearch-word-at-point ()
   (interactive)
@@ -169,37 +121,10 @@ of the buffer to the system clipboard."
   (interactive "p")
   (downcase-region (point) (if mark-active (mark) (+ arg (point)))))
 
-;; (defun killdir ()
-;;   (interactive)
-;;   (if (not default-directory)
-;;       (error "default-directory is nil")
-;;     (kill-new default-directory)))
-
 (defun is-interactive-shell-buffer (buffer)
   (and (with-current-buffer buffer (eq major-mode 'shell-mode))
        (let ((proc (get-buffer-process buffer)))
          (and proc (not (process-sentinel proc))))))
-
-(defun send-last-shell-to-this-directory (prefix)
-  "Switch to the most recently visited shell buffer, and issue a \"cd\"
-command to move it to the default directory of the buffer which was
-current when this command was invoked."
-  (interactive "p")
-  (let* ((buffer (or (loop for buffer being the buffers
-                           if (is-interactive-shell-buffer buffer)
-                           return buffer)
-                     (error "No shell buffer available")))
-         (proc (get-buffer-process buffer))
-         (dir default-directory)
-         (command (concat "cd " dir "\n")))
-    (or prefix (kill-buffer nil))
-    (switch-to-buffer buffer)
-    (unless comint-process-echoes
-      (insert command))
-    (sit-for 0) ; perform redisplay
-    (comint-send-string proc command)
-    (set-marker (process-mark proc) (point))
-    (cd dir)))
 
 (defun crontab ()
   (interactive)
@@ -401,28 +326,7 @@ current when this command was invoked."
      (t
       (cdr (assoc-string input (ucs-names) t))))))
 
-;; Google search routines from Pascal Bourguignon on gnu.emacs.help.
-;; (As amended by Stefan Monnier.)
-
-(defun google-search (search-string)
-  "Search a string with Google."
-  (interactive "sGoogle Search: ")
-  (browse-url
-   (format "http://www.google.com/search?as_q=%s&num=50&hl=en&ie=ISO8869-1&btnG=Google+Search&as_epq=&as_oq=&as_eq=&lr=&as_ft=i&as_filetype=&as_qdr=all&as_nlo=&as_nhi=&as_occt=any&as_dt=i&as_sitesearch=&safe=images"
-           (url-hexify-string search-string))))
-
-(defalias 'g 'google-search)
-
-(defun google-search-region (start end)
-  "Search the text in the region with Google."
-  (interactive "r")
-  (google-search (buffer-substring-no-properties start end)))
-
 (require 'thingatpt)
-
-(defun google-word-at-point ()
-  (interactive)
-  (google-search (word-at-point)))
 
 (defun shell-in-directory (dir &optional suffix)
   (setq dir (file-name-directory dir))
@@ -556,25 +460,6 @@ current when this command was invoked."
     (display-buffer buffer)
     (apply #'start-process process-name buffer command args)))
 
-(defun download (url)
-  (let ((buffer (url-retrieve-synchronously url)))
-    (with-current-buffer buffer
-      (unwind-protect
-          (buffer-substring (or (search-forward "\n\n" nil t)
-                                (error "Unable to locate downloaded data"))
-                            (point-max))
-        (kill-buffer buffer)))))
-
-(defun insert-image-at-point ()
-  (interactive)
-  (let* ((url (thing-at-point-url-at-point))
-         (inhibit-read-only t)
-         (image (create-image (download url) nil t)))
-    (save-excursion
-      (move-beginning-of-line 2)
-      (insert-image image)
-      (insert "\n"))))
-
 (defun curl-url-at-point ()
   (interactive)
   (format-shell-command "curl -s %s" (url-get-url-at-point)))
@@ -599,7 +484,7 @@ by using nxml's indentation rules."
 
 (defun fetch-my-feed (name)
   (interactive "sFeed name: ")
-  (format-shell-command "curl -s http://seanmcafee.name/rss/%s.pl" name))
+  (format-shell-command "curl -s http://seanmc.org/rss/%s.pl" name))
 
 (defun multi-occur-in-all-buffers (regexp &optional allbufs)
   (interactive (occur-read-primary-args))

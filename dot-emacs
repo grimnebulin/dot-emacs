@@ -9,11 +9,6 @@
  (t
   (menu-bar-mode -1)))
 
-;; "Inconsolata"
-;; "Droid Sans Mono"
-;; "Monofur"
-;; "DejaVu Sans Mono" also looks nice
-
 (add-to-list 'load-path "~/emacs/")
 
 (load "functions")
@@ -51,7 +46,6 @@
 
 (require 'package)
 (setq package-archives (mapcar (lambda (x) (cons (car x) (replace-regexp-in-string "\\`http:" "https:" (cdr x)))) package-archives))
-;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
@@ -72,22 +66,6 @@
   :bind ("C-x C-b" . ibuffer))
 
 (use-package paredit)
-
-;; (require 'git-gutter+)
-;; (global-git-gutter+-mode 1)
-
-;; git clone https://github.com/kiwanami/emacs-calfw.git
-;; (add-to-list 'load-path "~/emacs/emacs-calfw")
-;; (require 'calfw)
-;; (require 'calfw-org)
-;; (defalias 'oc 'cfw:open-org-calendar)
-
-;; (add-to-list 'load-path "~/emacs/cyberpunk-theme.el")
-
-;; (use-package twittering-mode
-;;   :config
-;;   (setq twittering-use-master-password t)
-;;   (add-hook 'twittering-mode-hook (lambda () (twittering-icon-mode 1))))
 
 (use-package ack)
 
@@ -388,16 +366,6 @@
   'scala-mode-hook
   'ruby-mode-hook)
 
-(require 'haskell-interactive-mode)
-(require 'haskell-process)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;; haskell-simple-indent-mode, haskell-indentation-mode, haskell-indent-mode
-(custom-set-variables
- '(haskell-process-suggest-remove-import-lines t)
- '(haskell-process-auto-import-loaded-modules t)
- '(haskell-process-log t))
-
 (add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
 
 (eval-after-load 'clojure-mode
@@ -415,19 +383,10 @@
 ;; Gnus configuration:
 ;;
 
-;; (setq gnus-select-method '(nntp "news.eternal-september.org"))
-
 (setq gnus-select-method
       '(nnimap "gator3189.hostgator.com"
                (nnimap-server-port 993)
                (nnimap-stream tls)))
-
-;; (setq gnus-secondary-select-methods
-;;       '((nnimap "gator3189.hostgator.com"
-;;                 (nnimap-server-port 993)
-;;                 (nnimap-stream tls))))
-
-;; outgoing: same host, SNMP port 465
 
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
@@ -530,8 +489,6 @@
 
 (setq *recenter-fraction* 0.333)
 
-;; Automatically-added stuff:
-
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
@@ -550,23 +507,6 @@
   (isearch-exit)
   (goto-char isearch-other-end))
 
-;; (setq inferior-lisp-program "/usr/bin/sbcl")
-;; (add-to-list 'load-path "~/slime/")
-;; (require 'slime)
-;; (slime-setup)
-;; (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-;; (setq lisp-indent-function 'common-lisp-indent-function)
-;; (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-;; (setq common-lisp-hyperspec-root "file:///home/mcafee/HyperSpec/")
-;; (setq slime-startup-animation t)
-
-;; Local customizations:
-
-;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-
 (use-package diminish)
 
 (use-package expand-region
@@ -581,10 +521,6 @@
 (setq-default dired-listing-switches "-alhv")
 
 (setq uniquify-buffer-name-style 'post-forward)
-
-;; (setq sml/theme 'respectful)
-;; (require 'smart-mode-line)
-;; (sml/setup)
 
 (use-package google-this
   :config (google-this-mode 1)
@@ -606,10 +542,6 @@
         ("C-M-%" . anzu-query-replace-regexp)
   :config (global-anzu-mode))
 
-;; (use-package purescript-mode-autoloads
-;;   :load-path "~/purescript-mode/"
-;;   :config (add-to-list 'Info-default-directory-list "~/purescript-mode/"))
-
 (use-package elisp-slime-nav
   :config (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode))
 
@@ -630,13 +562,6 @@
   :bind ("\C-cd" . define-word-at-point)
         ("\C-cD" . define-word))
 
-;; (use-package ocodo-svg-modelines
-;;   :config
-;;   (ocodo-svg-modelines-init)
-;;   (smt/set-theme 'ocodo-geometry-flakes-smt))
-
-;; (use-package hydra)
-
 (with-eval-after-load 'sgml-mode
   (use-package tagedit
     :config (tagedit-add-paredit-like-keybindings)))
@@ -647,7 +572,8 @@
   :config (volatile-highlights-mode t)
   :diminish volatile-highlights-mode)
 
-;; (use-package git-timemachine)
+(use-package git-timemachine
+  :defer t)
 
 (use-package pdf-tools
   :mode ((rx ".pdf" eos) . pdf-view-mode))
