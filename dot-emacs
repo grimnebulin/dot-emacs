@@ -388,11 +388,6 @@
 ;; Gnus configuration:
 ;;
 
-(setq gnus-select-method
-      '(nnimap "gator3189.hostgator.com"
-               (nnimap-server-port 993)
-               (nnimap-stream tls)))
-
 (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f %* %B%s%)\n"
       gnus-user-date-format-alist '((t . "%d.%m.%Y %H:%M"))
       gnus-treat-hide-citation t
