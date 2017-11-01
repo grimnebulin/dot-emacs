@@ -351,6 +351,11 @@
    (call-program "which" "perl6")
    "\n"))
 
+;; Fixes a bug in perl-mode:
+(with-eval-after-load "perl-mode"
+  (defun perl-electric-noindent-p (_char)
+    (unless (or (bolp) (eolp)) 'no-indent)))
+
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
   'prog-mode-hook
   'html-mode-hook
