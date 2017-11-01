@@ -26,7 +26,7 @@
 (server-start)
 (savehist-mode 1)
 (quietly-read-abbrev-file)
-(electric-pair-mode)
+(electric-pair-mode 1)
 (show-paren-mode)
 (horizontal-scroll-bar-mode -1)
 ;; http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html
@@ -198,11 +198,6 @@
 
 (eval-after-load 'autorevert
   '(auto-revert-set-timer))
-
-(eval-after-load 'jabber
-  '(progn
-     (global-set-key [(super j)] jabber-global-keymap)
-     (global-set-key "\C-x\C-j" 'dired-jump)))
 
 ;; No completion in code comment blocks:
 (eval-after-load "company"
@@ -438,12 +433,11 @@
 (defalias 'ar 'align-regexp)
 (defalias 'nm 'normal-mode)
 (defalias 'rb 'revert-buffer)
-(defalias 'c 'calendar)
+(defalias 'c 'calc)
 (defalias 'sh 'shell)
 (defalias 'aar 'auto-align-regexp)
 (defalias 'eb 'eval-buffer)
 (defalias 'wr 'write-region)
-(defalias 'jc 'jabber-connect)
 (defalias 'tail 'auto-revert-tail-mode)
 (defalias 'pe 'proced)
 (defalias 'ppx 'pretty-print-xml-buffer)
