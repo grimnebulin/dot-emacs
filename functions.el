@@ -574,6 +574,17 @@ by using nxml's indentation rules."
           output
         (error "%s" output)))))
 
+(defun switch-quotes ()
+  (interactive)
+  (let ((new-quote (cond ((looking-at "'") "\"") ((looking-at "\"") "'") (t (error "Point is not on a quote")))))
+    (save-excursion
+      (insert new-quote)
+      (save-excursion
+        (forward-sexp)
+        (delete-char -1)
+        (insert new-quote))
+      (delete-char 1))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
