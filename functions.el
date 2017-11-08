@@ -574,6 +574,11 @@ by using nxml's indentation rules."
           output
         (error "%s" output)))))
 
+(defun url-hexify-region (start end)
+  (interactive "r")
+  (kill-region start end)
+  (insert (url-hexify-string (car kill-ring))))
+
 (defun switch-quotes ()
   (interactive)
   (let ((new-quote (cond ((looking-at "'") "\"") ((looking-at "\"") "'") (t (error "Point is not on a quote")))))
