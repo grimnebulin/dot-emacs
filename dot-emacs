@@ -50,6 +50,8 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
+(fset 'perl-mode 'cperl-mode)
+
 (desktop-save-mode 1)
 
 ;;
@@ -165,6 +167,9 @@
 (setq css-indent-offset 4)
 (setq-default c-basic-offset 4)
 (setq perl-indent-level 4)
+(setq cperl-indent-level 4)
+(setq cperl-close-paren-offset -4)
+(setq cperl-indent-parens-as-block t)
 (setq dired-deletion-confirmer 'y-or-n-p)
 (setq dired-dwim-target t)
 (setq bookmark-save-flag 1)
@@ -351,15 +356,9 @@
    (call-program "which" "perl6")
    "\n"))
 
-;; Fixes a bug in perl-mode:
-(with-eval-after-load "perl-mode"
-  (defun perl-electric-noindent-p (_char)
-    (unless (or (bolp) (eolp)) 'no-indent)))
-
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
   'prog-mode-hook
-  'html-mode-hook
-  )
+  'html-mode-hook)
 
 (add-to-hooks 'subword-mode
   'java-mode-hook
