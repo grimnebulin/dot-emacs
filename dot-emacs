@@ -267,6 +267,8 @@
 (global-set-key (kbd "<kp-home>") #'beginning-of-buffer)
 (global-set-key (kbd "<kp-end>") #'end-of-buffer)
 
+(global-set-key (kbd "C-M-'") #'switch-quotes)
+
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
 
