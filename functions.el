@@ -308,9 +308,9 @@ of the buffer to the system clipboard."
   (defun ido-read-char-completions ()
     (or completions
         (setq completions
-              (sort (cl-delete-if (lambda (s) (= ?< (aref s 0)))
-                                  (mapcar 'car (ucs-names)))
-                    'ido-read-char-sort-predicate)))))
+              (let ((names nil))
+                (maphash (lambda (k _) (if (/= ?< (aref k 0)) (push k names))) (ucs-names))
+                (sort names 'ido-read-char-sort-predicate))))))
 
 (defun ido-read-char-by-name (prompt)
   "Replacement for read-char-by-name that uses ido to read character names."
@@ -324,7 +324,7 @@ of the buffer to the system clipboard."
      ((string-match-p "^#" input)
       (read input))
      (t
-      (cdr (assoc-string input (ucs-names) t))))))
+      (gethash input (ucs-names))))))
 
 (require 'thingatpt)
 
