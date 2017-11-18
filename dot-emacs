@@ -504,6 +504,8 @@
 
 (use-package diminish)
 
+(diminish 'eldoc-mode)
+
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
@@ -538,6 +540,7 @@
   :config (global-anzu-mode))
 
 (use-package elisp-slime-nav
+  :diminish elisp-slime-nav-mode
   :config (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode))
 
 (use-package projectile
