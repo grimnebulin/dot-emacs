@@ -597,6 +597,10 @@ by using nxml's indentation rules."
         (insert new-quote))
       (delete-char 1))))
 
+(defun isearch-or-swiper ()
+  (interactive)
+  (if current-prefix-arg (swiper) (isearch-forward nil t)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
