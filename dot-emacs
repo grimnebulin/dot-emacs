@@ -132,7 +132,7 @@
 (ido-mode 1)
 (ido-everywhere 1)
 
-(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
+(defun ido-disable-line-trucation () (setq-local truncate-lines nil))
 
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
@@ -470,7 +470,9 @@
 
 (with-eval-after-load 'json
   (defun encode-json-array-on-one-line (encode array)
-    (let* ((json-encoding-pretty-print (and json-encoding-pretty-print (loop for x being the elements of array thereis (not (numberp x)))))
+    (let* ((json-encoding-pretty-print
+            (and json-encoding-pretty-print
+                 (not (loop for x across array always (numberp x)))))
            (json-encoding-separator (if json-encoding-pretty-print "," ", ")))
       (funcall encode array)))
   (advice-add 'json-encode-array :around #'encode-json-array-on-one-line))
