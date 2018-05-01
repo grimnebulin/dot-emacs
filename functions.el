@@ -547,13 +547,15 @@ by using nxml's indentation rules."
         (message "Killed buffer %s" name)))))
 
 (defmacro with-synchronous-download (url &rest body)
-  (declare (indent defun))
-  (let ((buffer (make-symbol "buffer")))
-    `(let ((,buffer (url-retrieve-synchronously ,url t t)))
+  (declare (indent 1))
+  (let ((buffer (make-symbol "buffer"))
+        (urlsym (make-symbol "url")))
+    `(let* ((,urlsym ,url)
+            (,buffer (url-retrieve-synchronously ,urlsym t t)))
        (unwind-protect
            (with-current-buffer ,buffer
              (goto-char (point-min))
-             (or (search-forward "\n\n" nil t) (error "Download failed"))
+             (or (search-forward "\n\n" nil t) (error "Download of %s failed: %s" ,urlsym (buffer-string)))
              ,@body)
          (when (buffer-live-p ,buffer) (kill-buffer ,buffer))))))
 
