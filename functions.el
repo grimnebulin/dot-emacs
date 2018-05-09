@@ -2,16 +2,6 @@
 
 (eval-when-compile (require 'cl))
 
-(defmacro aif (test then &rest else)
-  (declare (indent 2))
-  `(let ((it ,test))
-     (if it ,then ,@else)))
-
-(defmacro awhen (test &rest then)
-  (declare (indent defun))
-  `(let ((it ,test))
-     (when it ,@then)))
-
 (defun princ-to-string (x)
   (format "%s" x))
 
@@ -518,9 +508,9 @@ by using nxml's indentation rules."
 
 (defun my-recompile ()
   (interactive)
-  (aif (get-buffer "*compilation*")
+  (if-let (buffer (get-buffer "*compilation*"))
       (progn
-        (pop-to-buffer it)
+        (pop-to-buffer buffer)
         (recompile))
     (message "No old compilation buffer present")))
 
@@ -562,9 +552,9 @@ by using nxml's indentation rules."
 (cl-defun term* (buffer-name &optional (program "/bin/bash"))
   (when (get-buffer buffer-name)
     (error "Buffer %s already in use" buffer-name))
-  (aif (get-buffer "*terminal*")
+  (if-let (buffer (get-buffer "*terminal*"))
       (let ((temp-name (generate-new-buffer-name "temp-terminal")))
-        (with-current-buffer it
+        (with-current-buffer buffer
           (unwind-protect
               (progn
                 (rename-buffer temp-name)

@@ -13,11 +13,6 @@
 
 (load "functions")
 
-(font-lock-add-keywords
- 'emacs-lisp-mode
- '(("aif" . font-lock-keyword-face)
-   ("awhen" . font-lock-keyword-face)))
-
 (add-to-list 'initial-frame-alist '(top . 0))
 (add-to-list 'initial-frame-alist '(right . 0))
 
@@ -575,8 +570,8 @@
 (use-package git-timemachine
   :defer t)
 
-(use-package pdf-tools
-  :mode ((rx ".pdf" eos) . pdf-view-mode))
+;; (use-package pdf-tools
+;;   :mode ((rx ".pdf" eos) . pdf-view-mode))
 
 (use-package visual-regexp-steroids
   :config (setq vr/engine 'pcre2el)
@@ -588,14 +583,14 @@
 (use-package helm-swoop
   :bind ("M-i" . helm-swoop))
 
-(use-package restclient
-  :mode ((rx ".rest" eos) . restclient-mode))
+;; (use-package restclient
+;;   :mode ((rx ".rest" eos) . restclient-mode))
 
 (use-package beginend
   :config (add-hook 'dired-mode-hook (lambda () (beginend-dired-mode 1))))
 
-(awhen (getenv "EMACS_EXTRA_INIT")
-  (loop for file in (split-string it ":")
+(when-let (extra (getenv "EMACS_EXTRA_INIT"))
+  (loop for file in (split-string extra ":")
         if (file-exists-p file)
         do (with-demoted-errors "Error: %S" (load file))))
 
