@@ -589,6 +589,9 @@
 (use-package beginend
   :config (add-hook 'dired-mode-hook (lambda () (beginend-dired-mode 1))))
 
+(use-package shell-pop
+  :init (setq shell-pop-universal-key "C-`"))
+
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
   (loop for file in (split-string extra ":")
         if (file-exists-p file)
