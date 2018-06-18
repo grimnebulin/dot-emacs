@@ -592,6 +592,12 @@
 (use-package shell-pop
   :init (setq shell-pop-universal-key "C-`"))
 
+(use-package fix-word
+  :config
+  (global-set-key "\M-u" #'fix-word-upcase)
+  (global-set-key "\M-l" #'fix-word-downcase)
+  (global-set-key "\M-c" #'fix-word-capitalize))
+
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
   (loop for file in (split-string extra ":")
         if (file-exists-p file)
