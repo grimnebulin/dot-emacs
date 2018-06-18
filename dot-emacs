@@ -191,8 +191,6 @@
 (setq shell-input-autoexpand nil)
 (setq org-agenda-sticky t)
 
-(setenv "GPG_AGENT_INFO" nil)  ;; don't use pinentry program
-
 (eval-after-load 'term
   '(term-set-escape-char ?\C-x))
 
