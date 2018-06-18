@@ -191,9 +191,6 @@
 (setq shell-input-autoexpand nil)
 (setq org-agenda-sticky t)
 
-(eval-after-load 'term
-  '(term-set-escape-char ?\C-x))
-
 (eval-after-load 'autorevert
   '(auto-revert-set-timer))
 
