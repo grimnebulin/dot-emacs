@@ -537,7 +537,8 @@
 
 (use-package projectile
   :config
-  (projectile-global-mode)
+  (projectile-mode 1)
+  (define-key projectile-mode-map "\C-cp" 'projectile-command-map)
   (setq projectile-mode-line
         '(:eval
           (if (let ((projectile-require-project-root t))
