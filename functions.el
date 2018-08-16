@@ -177,21 +177,6 @@ of the buffer to the system clipboard."
 (require 'perl-mode)
 (define-key perl-mode-map [(super q)] 'cycle-perl-quotes)
 
-(defun* rotate-windows (&optional backwards (windows (window-list)))
-  (interactive "P")
-  (cl-flet ((get-meta (w) (cons (window-buffer w) (window-start w)))
-            (set-meta (w m) (setf (window-buffer w) (car m)
-                                  (window-start  w) (cdr m))))
-    (when backwards (setq windows (reverse windows)))
-    (loop with first-meta = (and windows (get-meta (first windows)))
-          for (this next) on windows
-          do (set-meta this (if next (get-meta next) first-meta)))))
-
-(defun swap-windows (&optional backwards)
-  (interactive "P")
-  (rotate-windows nil (list (selected-window)
-                            (if backwards (previous-window) (next-window)))))
-
 ;; Ganked from somewhere.
 
 ;;
@@ -336,20 +321,6 @@ of the buffer to the system clipboard."
          (generate-new-buffer-name
           (if suffix (format "*shell-%s*" suffix) "*shell*")))
         (delete-other-windows))))
-
-(defun shell-in-bookmark-directory (bookmark)
-  (shell-in-directory
-   (cdr (assq 'filename (bookmark-get-bookmark-record bookmark)))
-   bookmark))
-
-(defun bookmark-jump-other-frame (bookmark)
-  (interactive
-   (progn (require 'bookmark)  ; For bookmark-completing-read.
-          (list (bookmark-completing-read "Jump to bookmark in other frame"))))
-  (select-frame (make-frame))
-  (if current-prefix-arg
-      (shell-in-bookmark-directory bookmark)
-    (bookmark-jump bookmark)))
 
 (defun add-to-hooks (func &rest hooks)
   (dolist (hook hooks) (add-hook hook func)))
