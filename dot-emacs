@@ -583,6 +583,14 @@
   (global-set-key "\M-l" #'fix-word-downcase)
   (global-set-key "\M-c" #'fix-word-capitalize))
 
+(use-package dired-filter)
+
+(use-package dired-ranger
+  :config
+  (defalias 'copy 'dired-ranger-copy)
+  (defalias 'paste 'dired-ranger-paste)
+  (defalias 'move 'dired-ranger-move))
+
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
   (loop for file in (split-string extra ":")
         if (file-exists-p file)
