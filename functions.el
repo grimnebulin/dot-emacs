@@ -31,7 +31,7 @@ that module, if it exists."
   (with-temp-buffer
     (let* ((path (concat (replace-regexp-in-string "::" "/" module) ".pm"))
            (status (call-process "perl" nil t nil (concat "-M" module) "-e" "print $INC{ shift() }" path))
-           (output (buffer-substring (point-min) (point-max))))
+           (output (buffer-string)))
       (if (zerop status)
           output
         (error "%s" output)))))
@@ -47,8 +47,15 @@ that module, if it exists."
 (defun python-module-path (module)
   "Returns the path to the Python file that implements the given module."
   (with-temp-buffer
-    (let* ((status (call-process "python" nil t nil "-c" "import importlib, sys\ntry:\n sys.stdout.write(importlib.import_module(sys.argv[1]).__file__)\nexcept ImportError, e:\n sys.stderr.write(e.message)\n sys.exit(1)" module))
-           (output (buffer-substring (point-min) (point-max))))
+    (let* ((status (call-process "python" nil t nil "-c" "
+import importlib, sys
+try:
+ sys.stdout.write(importlib.import_module(sys.argv[1]).__file__)
+except ImportError, e:
+ sys.stderr.write(e.message)
+ sys.exit(1)
+" module))
+           (output (buffer-string)))
       (if (zerop status)
           (replace-regexp-in-string (rx ".pyc" eos) ".py" output)
         (error "%s" output)))))
