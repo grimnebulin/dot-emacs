@@ -531,7 +531,7 @@ by using nxml's indentation rules."
                 (rename-buffer temp-name)
                 (term program)
                 (rename-buffer buffer-name))
-            (with-current-buffer it
+            (with-current-buffer buffer
               (rename-buffer "*terminal*")))))
     (term program)
     (rename-buffer buffer-name)))
