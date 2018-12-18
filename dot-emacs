@@ -512,7 +512,7 @@
   (setq magit-completing-read-function #'magit-ido-completing-read))
 
 (defun my-magit-display-buffer (buffer)
-  (if (eq 'magit-status-mode (with-current-buffer buffer major-mode))
+  (if (eq 'magit-status-mode (buffer-local-value 'major-mode buffer))
       (display-buffer buffer '(display-buffer-same-window))
     (magit-display-buffer-traditional buffer)))
 

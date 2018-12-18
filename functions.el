@@ -112,7 +112,7 @@ of the buffer to the system clipboard."
   (downcase-region (point) (if mark-active (mark) (+ arg (point)))))
 
 (defun is-interactive-shell-buffer (buffer)
-  (and (with-current-buffer buffer (eq major-mode 'shell-mode))
+  (and (eq 'shell-mode (buffer-local-value 'major-mode buffer))
        (let ((proc (get-buffer-process buffer)))
          (and proc (not (process-sentinel proc))))))
 
@@ -314,7 +314,7 @@ of the buffer to the system clipboard."
   (setq dir (file-name-directory dir))
   (or (loop for b being the buffers
             if (and (is-interactive-shell-buffer b)
-                    (with-current-buffer b (string= dir default-directory)))
+                    (string= dir (buffer-local-value 'default-directory b)))
             return (switch-to-buffer b))
       (let ((default-directory dir))
         (shell
