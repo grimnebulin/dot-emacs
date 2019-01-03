@@ -191,12 +191,12 @@
 (setq shell-input-autoexpand nil)
 (setq org-agenda-sticky t)
 
-(eval-after-load 'autorevert
-  '(auto-revert-set-timer))
+(with-eval-after-load 'autorevert
+  (auto-revert-set-timer))
 
 ;; No completion in code comment blocks:
-(eval-after-load "company"
-  '(setq company-backends (delq 'company-dabbrev company-backends)))
+(with-eval-after-load "company"
+  (setq company-backends (delq 'company-dabbrev company-backends)))
 
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
@@ -350,10 +350,9 @@
 
 (add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
 
-(eval-after-load 'clojure-mode
-  '(progn
-     (define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square)
-     (define-key clojure-mode-map [(super \{)] #'paredit-wrap-curly)))
+(with-eval-after-load 'clojure-mode
+  (define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square)
+  (define-key clojure-mode-map [(super \{)] #'paredit-wrap-curly))
 
 (defun paredit-for-lisp-interaction-mode ()
   (paredit-mode 1)
@@ -391,12 +390,11 @@
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
-(eval-after-load "gnus-sum.el.gz"
-  '(progn
-     (define-key gnus-summary-mode-map "n" 'gnus-summary-next-article)
-     (define-key gnus-summary-mode-map "p" 'gnus-summary-prev-article)
-     (define-key gnus-summary-mode-map "N" 'gnus-summary-next-unread-article)
-     (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article)))
+(with-eval-after-load "gnus-sum.el.gz"
+  (define-key gnus-summary-mode-map "n" 'gnus-summary-next-article)
+  (define-key gnus-summary-mode-map "p" 'gnus-summary-prev-article)
+  (define-key gnus-summary-mode-map "N" 'gnus-summary-next-unread-article)
+  (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article))
 
 (defadvice message-insert-citation-line (after remove-extra-newline activate)
   (delete-char -1))
