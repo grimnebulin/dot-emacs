@@ -523,9 +523,11 @@ by using nxml's indentation rules."
        (unwind-protect
            (with-current-buffer ,buffer
              (goto-char (point-min))
-             (or (search-forward "\n\n" nil t) (error "Download of %s failed: %s" ,urlsym (buffer-string)))
+             (unless (search-forward "\n\n" nil t)
+               (error "Download of %s failed: %s" ,urlsym (buffer-string)))
              ,@body)
-         (when (buffer-live-p ,buffer) (kill-buffer ,buffer))))))
+         (when (buffer-live-p ,buffer)
+           (kill-buffer ,buffer))))))
 
 (cl-defun term* (buffer-name &optional (program "/bin/bash"))
   (when (get-buffer buffer-name)
