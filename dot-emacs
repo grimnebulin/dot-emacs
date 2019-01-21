@@ -245,6 +245,7 @@
 (global-set-key (kbd "C-M-=") #'count-region-bytes)
 (global-set-key (kbd "<kp-home>") #'beginning-of-buffer)
 (global-set-key (kbd "<kp-end>") #'end-of-buffer)
+(global-set-key (kbd "C-M-y") #'yank-url-sans-query)
 
 (global-set-key (kbd "C-M-'") #'switch-quotes)
 

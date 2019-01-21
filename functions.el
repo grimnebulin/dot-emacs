@@ -573,6 +573,12 @@ by using nxml's indentation rules."
   (interactive)
   (if current-prefix-arg (swiper) (isearch-forward nil t)))
 
+(defun yank-url-sans-query ()
+  (interactive)
+  (let ((url (url-generic-parse-url (current-kill 0))))
+    (cl-callf (lambda (x) (replace-regexp-in-string (rx "?" (* anything)) "" x)) (url-filename url))
+    (insert (url-recreate-url url))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
