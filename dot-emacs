@@ -18,7 +18,6 @@
 
 (tool-bar-mode -1)
 (random t)
-(server-start)
 (savehist-mode 1)
 (quietly-read-abbrev-file)
 (electric-pair-mode 1)
