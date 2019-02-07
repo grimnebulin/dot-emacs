@@ -7,14 +7,18 @@
 
 ;;
 
-(defun other-window-delete-rest (arg)
+(defun other-window-delete-rest (delete)
   "Goes to the next window with other-window, then makes that window
 the only visible window.  With a prefix argument, kills the current
 buffer first."
   (interactive "P")
-  (if arg (kill-buffer nil))
-  (other-window 1)
-  (delete-other-windows))
+  (if (>= 1 (length (window-list)))
+      (error "No other window")
+    (let ((buffer (current-buffer)))
+      (other-window 1)
+      (delete-other-windows)
+      (when delete
+        (kill-buffer buffer)))))
 
 ;;
 
