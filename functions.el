@@ -577,6 +577,8 @@ by using nxml's indentation rules."
   (interactive)
   (if current-prefix-arg (swiper) (isearch-forward nil t)))
 
+(require 'url)
+
 (defun yank-url-sans-query ()
   (interactive)
   (let ((url (url-generic-parse-url (current-kill 0))))
