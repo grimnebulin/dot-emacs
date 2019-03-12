@@ -202,7 +202,7 @@
 (minibuffer-depth-indicate-mode 1)
 
 (setq electric-pair-inhibit-predicate
-      (lambda (c) (or (and (= c ?\() (looking-back ":-" nil))
+      (lambda (c) (or (looking-back ":-?(" (- (point) 3))
                  (string-match-p (rx bos " *Minibuf-" (+ digit)) (buffer-name))
                  (electric-pair-default-inhibit c))))
 
