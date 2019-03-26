@@ -551,11 +551,10 @@ by using nxml's indentation rules."
 
 (defun call-program (program &rest args)
   (with-temp-buffer
-    (let* ((status (apply 'call-process program nil t nil args))
-           (output (buffer-substring (point-min) (point-max))))
+    (let* ((status (apply 'call-process program nil t nil args)))
       (if (zerop status)
-          output
-        (error "%s" output)))))
+          (buffer-string)
+        (error "%s" (buffer-string))))))
 
 (defun url-hexify-region (start end)
   (interactive "r")
