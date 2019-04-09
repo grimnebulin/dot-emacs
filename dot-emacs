@@ -455,14 +455,13 @@
 
 (load "my-advice")
 (ad-activate 'open-line)
-(ad-activate 'recenter)
 (ad-activate 'insert-char)
 (ad-activate 'gnus)
 (ad-activate 'bookmark-jump)
 (ad-activate 'backward-up-list)
-(advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
 
-(setq *recenter-fraction* 0.333)
+(advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
+(advice-add 'recenter :filter-args (recenter-tweaker 0.333))
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

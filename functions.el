@@ -584,6 +584,9 @@ by using nxml's indentation rules."
     (cl-callf (lambda (x) (replace-regexp-in-string (rx "?" (* anything)) "" x)) (url-filename url))
     (insert (url-recreate-url url))))
 
+(defun recenter-tweaker (fraction)
+  (lambda (args) (if (car args) args (list (truncate (* fraction (window-body-height)))))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

@@ -11,14 +11,6 @@
       (unless do-not-indent-after-open-line
         (indent-according-to-mode)))))
 
-(defvar *recenter-fraction* 0.5
-  "*The recenter-proportionally advice will recenter the screen by
-putting the current line this far down the window.")
-
-(defadvice recenter (before recenter)
-  (or (ad-get-arg 0)
-      (ad-set-arg 0 (truncate (* *recenter-fraction* (window-body-height))))))
-
 (defadvice insert-char (before use-ido-completing-read)
   (interactive (list (ido-read-char-by-name "Unicode (name or hex): "))))
 
