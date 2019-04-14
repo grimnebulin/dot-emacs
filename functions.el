@@ -584,6 +584,11 @@ by using nxml's indentation rules."
     (cl-callf (lambda (x) (replace-regexp-in-string (rx "?" (* anything)) "" x)) (url-filename url))
     (insert (url-recreate-url url))))
 
+(defun vr-search-forward ()
+  (interactive)
+  (let ((isearch-search-fun-function 'vr--isearch-search-fun-function))
+    (isearch-forward)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

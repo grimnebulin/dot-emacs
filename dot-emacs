@@ -515,12 +515,6 @@
       (display-buffer buffer '(display-buffer-same-window))
     (magit-display-buffer-traditional buffer)))
 
-(use-package anzu
-  :diminish anzu-mode
-  :bind ("M-%"   . anzu-query-replace)
-        ("C-M-%" . anzu-query-replace-regexp)
-  :config (global-anzu-mode))
-
 (use-package elisp-slime-nav
   :diminish elisp-slime-nav-mode
   :config (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode))
@@ -561,7 +555,10 @@
 
 (use-package visual-regexp-steroids
   :config (setq vr/engine 'pcre2el)
-  :bind (("\C-cq" . vr/query-replace)))
+  :demand t
+  :bind (("C-r" . vr/isearch-backward)
+         ("C-s" . vr-search-forward)
+         ("C-M-%" . vr/query-replace)))
 
 (use-package helm
   :commands (helm-buffers-list))
