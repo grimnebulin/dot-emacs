@@ -316,7 +316,7 @@
  `((,(rx ".pl" eos) . "Perl program")
    nil
    "#!"
-   (call-program "which" "perl")
+   (or (executable-find "perl") (error "No Perl executable found"))
    "\nuse strict;\n"))
 
 (add-to-list
@@ -326,7 +326,7 @@
    "package "
    (let* ((case-fold-search nil)
           (comps (loop for p in (reverse (split-string (buffer-file-name) "/" t))
-                       while (string-match "^[[:upper:]]" p)
+                       while (string-match (rx bos upper) p)
                        collect p)))
      (substring (string-join (reverse comps) "::") 0 -3))
    ";\n\n"
@@ -338,7 +338,7 @@
  `((,(rx ".p6" eos) . "Perl 6 program")
    nil
    "#!"
-   (call-program "which" "perl6")
+   (or (executable-find "perl6") (error "No Perl 6 interpreter found"))
    "\n"))
 
 (add-to-hooks (lambda () (local-set-key "\C-m" 'newline-and-indent))
