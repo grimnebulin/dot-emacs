@@ -589,6 +589,19 @@
   (defalias 'paste 'dired-ranger-paste)
   (defalias 'move 'dired-ranger-move))
 
+(use-package js2-mode
+  :mode (rx ".js" eos)
+  :bind (:map js2-mode-map ("C-k" . #'js2r-kill) ("M-." . nil))
+  :hook (js2-mode . js2-imenu-extras-mode))
+
+(use-package js2-refactor
+  :config (js2r-add-keybindings-with-prefix "C-c C-r")
+  :hook (js2-mode . js2-refactor-mode))
+
+(use-package xref-js2)
+
+;; tern and company-tern for real projects
+
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
   (loop for file in (split-string extra ":")
         if (file-exists-p file)
