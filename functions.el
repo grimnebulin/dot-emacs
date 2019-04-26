@@ -533,22 +533,6 @@ by using nxml's indentation rules."
          (when (buffer-live-p ,buffer)
            (kill-buffer ,buffer))))))
 
-(cl-defun term* (buffer-name &optional (program "/bin/bash"))
-  (when (get-buffer buffer-name)
-    (error "Buffer %s already in use" buffer-name))
-  (if-let (buffer (get-buffer "*terminal*"))
-      (let ((temp-name (generate-new-buffer-name "temp-terminal")))
-        (with-current-buffer buffer
-          (unwind-protect
-              (progn
-                (rename-buffer temp-name)
-                (term program)
-                (rename-buffer buffer-name))
-            (with-current-buffer buffer
-              (rename-buffer "*terminal*")))))
-    (term program)
-    (rename-buffer buffer-name)))
-
 (defun call-program (program &rest args)
   (with-temp-buffer
     (let* ((status (apply 'call-process program nil t nil args)))
@@ -588,6 +572,21 @@ by using nxml's indentation rules."
   (interactive)
   (let ((isearch-search-fun-function 'vr--isearch-search-fun-function))
     (isearch-forward)))
+
+(defmacro with-temporarily-renamed-buffer (buffer-or-name &rest body)
+  (let ((buffer (make-symbol "buffer"))
+        (name (make-symbol "name")))
+    `(let* ((,buffer (get-buffer ,buffer-or-name))
+            (,name (and ,buffer (buffer-name ,buffer))))
+       (unwind-protect
+           (progn
+             (when ,buffer
+               (with-current-buffer ,buffer
+                 (rename-uniquely))
+             ,@body)
+         (when (and ,buffer (not (get-buffer ,name)))
+           (with-current-buffer ,buffer
+             (rename-buffer ,name))))))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
