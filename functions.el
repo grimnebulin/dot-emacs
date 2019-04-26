@@ -574,6 +574,7 @@ by using nxml's indentation rules."
     (isearch-forward)))
 
 (defmacro with-temporarily-renamed-buffer (buffer-or-name &rest body)
+  (declare (indent defun))
   (let ((buffer (make-symbol "buffer"))
         (name (make-symbol "name")))
     `(let* ((,buffer (get-buffer ,buffer-or-name))
@@ -582,11 +583,11 @@ by using nxml's indentation rules."
            (progn
              (when ,buffer
                (with-current-buffer ,buffer
-                 (rename-uniquely))
+                 (rename-uniquely)))
              ,@body)
          (when (and ,buffer (not (get-buffer ,name)))
            (with-current-buffer ,buffer
-             (rename-buffer ,name))))))))
+             (rename-buffer ,name)))))))
 
 (let (_)
   (defvar json-encoding-pretty-print)
