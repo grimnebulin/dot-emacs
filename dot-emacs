@@ -523,6 +523,8 @@
 ;; (use-package pdf-tools
 ;;   :mode ((rx ".pdf" eos) . pdf-view-mode))
 
+(use-package pcre2el)
+
 (use-package visual-regexp-steroids
   :config (setq vr/engine 'pcre2el)
   :demand t
