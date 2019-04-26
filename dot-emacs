@@ -112,33 +112,19 @@
 ;; ido configuration
 ;;
 
-(require 'ido)
+(use-package ido
+  :config
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (advice-add 'ido-read-buffer :around #'maybe-ignore-ido)
+  (setq ido-enable-flex-matching t
+        ido-use-virtual-buffers t
+        ido-create-new-buffer 'always
+        ido-max-directory-size 60000
+        ido-auto-merge-work-directories-length -1))
 
-(setq ido-enable-flex-matching t
-      ido-use-virtual-buffers t
-      ido-create-new-buffer 'always
-      ido-max-directory-size 60000
-      ido-auto-merge-work-directories-length -1
-      ido-decorations
-      '("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]"
-        " [Not readable]" " [Too big]" " [Confirm]"))
-
-(ido-mode 1)
-(ido-everywhere 1)
-
-(defun ido-disable-line-trucation () (setq-local truncate-lines nil))
-
-(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
-
-(defadvice ido-read-buffer (around ido-read-buffer-possibly-ignore activate)
-  "Check to see if user wanted to avoid using ido"
-  (if (loop for command = this-command then (symbol-function command)
-            while (symbolp command)
-            thereis (eq 'ignore (get command 'ido)))
-      (let ((read-buffer-function nil))
-        (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
-        (setq ad-return-value (apply 'read-buffer (ad-get-args 0))))
-    ad-do-it))
+(use-package ido-vertical-mode
+  :config (ido-vertical-mode 1))
 
 (put 'shell                   'ido 'ignore)
 (put 'dired-create-directory  'ido 'ignore)

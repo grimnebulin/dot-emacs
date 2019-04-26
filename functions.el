@@ -588,6 +588,15 @@ by using nxml's indentation rules."
            (with-current-buffer ,buffer
              (rename-buffer ,name))))))))
 
+(defun maybe-ignore-ido (func &rest args)
+  (if (loop for command = this-command then (symbol-function command)
+            while (symbolp command)
+            thereis (eq 'ignore (get command 'ido)))
+      (let ((read-buffer-function nil))
+        (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
+        (apply #'read-buffer args))
+    (apply func args)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
