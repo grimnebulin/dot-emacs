@@ -588,6 +588,16 @@ by using nxml's indentation rules."
            (with-current-buffer ,buffer
              (rename-buffer ,name))))))))
 
+(let (_)
+  (defvar json-encoding-pretty-print)
+  (defvar json-encoding-separator)
+  (defun encode-json-array-of-numbers-on-one-line (encode array)
+    (let* ((json-encoding-pretty-print
+            (and json-encoding-pretty-print
+                 (not (loop for x across array always (numberp x)))))
+           (json-encoding-separator (if json-encoding-pretty-print "," ", ")))
+      (funcall encode array))))
+
 (defun maybe-ignore-ido (func &rest args)
   (if (loop for command = this-command then (symbol-function command)
             while (symbolp command)
@@ -595,6 +605,39 @@ by using nxml's indentation rules."
       (let ((read-buffer-function nil))
         (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
         (apply #'read-buffer args))
+    (apply func args)))
+
+(make-variable-buffer-local 'do-not-indent-after-open-line)
+
+(defun vim-style-open-line-wrapper (func n)
+  (if (not (called-interactively-p 'any))
+      (funcall func n)
+    (beginning-of-line)
+    (if (equal current-prefix-arg '(4))
+        (open-line 1)
+      (funcall func n)
+      (unless do-not-indent-after-open-line
+        (indent-according-to-mode)))))
+
+(defun interactively-read-unicode-char (&rest _ignore)
+  (interactive (list (ido-read-char-by-name "Unicode (name or hex): "))))
+
+(defun push-mark-backward-up-list ()
+  (interactive)
+  (push-mark)
+  (call-interactively 'backward-up-list))
+
+(defun push-mark-paredit-backward-up ()
+  (interactive)
+  (push-mark)
+  (call-interactively 'paredit-backward-up))
+
+(defun maybe-kill-other-buffers (func &rest args)
+  "With a prefix argument, kill the buffers that were hidden."
+  (if current-prefix-arg
+      (let ((buffers (mapcar #'window-buffer (window-list))))
+        (apply func args)
+        (mapc (lambda (buffer) (unless (get-buffer-window buffer) (kill-buffer buffer))) buffers))
     (apply func args)))
 
 ;; Local Variables:

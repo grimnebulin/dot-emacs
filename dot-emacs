@@ -61,7 +61,8 @@
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
-(use-package paredit)
+(use-package paredit
+  :bind (:map paredit-mode-map ("C-M-u" . #'push-mark-paredit-backward-up)))
 
 (use-package ack)
 
@@ -229,6 +230,7 @@
 (global-set-key (kbd "<kp-home>") #'beginning-of-buffer)
 (global-set-key (kbd "<kp-end>") #'end-of-buffer)
 (global-set-key (kbd "C-M-y") #'yank-url-sans-query)
+(global-set-key (kbd "C-M-u") #'push-mark-backward-up-list)
 
 (global-set-key (kbd "C-M-'") #'switch-quotes)
 
@@ -380,9 +382,6 @@
   (define-key gnus-summary-mode-map "N" 'gnus-summary-next-unread-article)
   (define-key gnus-summary-mode-map "P" 'gnus-summary-prev-unread-article))
 
-(defadvice message-insert-citation-line (after remove-extra-newline activate)
-  (delete-char -1))
-
 (use-package gnus
   :config
   (add-to-list 'gnus-secondary-select-methods
@@ -428,21 +427,10 @@
                  python--prettify-symbols-alist)))
 
 (with-eval-after-load 'json
-  (defun encode-json-array-of-numbers-on-one-line (encode array)
-    (let* ((json-encoding-pretty-print
-            (and json-encoding-pretty-print
-                 (not (loop for x across array always (numberp x)))))
-           (json-encoding-separator (if json-encoding-pretty-print "," ", ")))
-      (funcall encode array)))
   (advice-add 'json-encode-array :around #'encode-json-array-of-numbers-on-one-line))
 
-(load "my-advice")
-(ad-activate 'open-line)
-(ad-activate 'insert-char)
-(ad-activate 'gnus)
-(ad-activate 'bookmark-jump)
-(ad-activate 'backward-up-list)
-
+(advice-add 'open-line :around #'vim-style-open-line-wrapper)
+(advice-add 'insert-char :before #'interactively-read-unicode-char)
 (advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
 
 (put 'upcase-region 'disabled nil)
