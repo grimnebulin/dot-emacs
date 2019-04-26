@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp; -*-
+;; -*- mode: emacs-lisp; lexical-binding: t; -*-
 
 (eval-when-compile (require 'cl))
 
@@ -76,7 +76,7 @@
         ("C-S-c C-S-m" . mc/mark-pop))
 
 (use-package org-bullets
-  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  :hook (org-mode . org-bullets-mode))
 
 (use-package change-inner)
 
@@ -85,10 +85,6 @@
 
 (use-package dired-details+
   :config (setq dired-details-hide-link-targets nil))
-
-(eval-after-load "eww"
-  '(progn (define-key eww-mode-map "f" 'eww-lnum-follow)
-          (define-key eww-mode-map "F" 'eww-lnum-universal)))
 
 ;;
 ;; hippie-expand configuration

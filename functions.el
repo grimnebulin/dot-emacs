@@ -223,13 +223,13 @@ of the buffer to the system clipboard."
 	 (dir
           (if (string-match dir "\\(?:/\\|\\\\)$")
               (substring dir 0 -1) dir))
-	 (newname (concat dir "/" name)))
+	 (temp-name (concat dir "/" name)))
     (if (not filename)
 	(message "Buffer '%s' is not visiting a file!" name)
       (progn
-        (copy-file filename newname 1)
+        (copy-file filename temp-name 1)
  	(delete-file filename)
- 	(set-visited-file-name newname)
+ 	(set-visited-file-name temp-name)
  	(set-buffer-modified-p nil)
  	t))))
 
