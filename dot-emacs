@@ -42,7 +42,6 @@
 (setq package-archives (mapcar (lambda (x) (cons (car x) (replace-regexp-in-string "\\`http:" "https:" (cdr x)))) package-archives))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(package-initialize)
 
 (fset 'perl-mode 'cperl-mode)
 
