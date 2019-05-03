@@ -531,8 +531,8 @@
 (use-package helm-swoop
   :bind ("M-i" . helm-swoop))
 
-;; (use-package restclient
-;;   :mode ((rx ".rest" eos) . restclient-mode))
+(use-package restclient
+  :mode ((rx ".rest" eos) . restclient-mode))
 
 (use-package beginend
   :config (add-hook 'dired-mode-hook (lambda () (beginend-dired-mode 1))))
