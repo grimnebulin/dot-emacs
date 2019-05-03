@@ -490,14 +490,8 @@
 
 (use-package projectile
   :config
-  (projectile-mode 1)
-  (define-key projectile-mode-map "\C-cp" 'projectile-command-map)
-  (setq projectile-mode-line
-        '(:eval
-          (if (let ((projectile-require-project-root t))
-                (ignore-errors (projectile-project-root)))
-              (format " Project[%s]" (projectile-project-name))
-            ""))))
+  (projectile-mode)
+  (define-key projectile-mode-map "\C-cp" 'projectile-command-map))
 
 (use-package dtrt-indent
   :config (dtrt-indent-mode 1))
