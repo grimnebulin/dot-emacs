@@ -2,6 +2,8 @@
 
 (eval-when-compile (require 'cl))
 
+(require 'ido)
+
 (defun princ-to-string (x)
   (format "%s" x))
 
