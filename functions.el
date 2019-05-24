@@ -89,31 +89,19 @@ except ImportError, e:
             isearch-yank-flag t)
       (isearch-search-and-update))))
 
-(defmacro to-system-clipboard (&optional name &rest body)
-  "Execute body in a temporary buffer, then copy the accessible portion
-of the buffer to the system clipboard."
-  `(with-temp-buffer
-     (save-excursion ,@(if (stringp name) body (cons name body)))
-     (clipboard-kill-ring-save (point-min) (point-max))
-     ,@(when (stringp name) (list (message "%s copied to system clipboard" name)))))
-
 (defun stackoverflow-copy-code-snippet (begin end)
   (interactive "r")
   (let ((buffer (current-buffer)))
-    (to-system-clipboard
-     "Code snippet"
-     (insert-buffer-substring-no-properties buffer begin end)
-     (indent-rigidly (point-min) (point-max) 4))))
-
-(defun buffer-file-name* ()
-  (or (buffer-file-name) (error "Not visiting a file")))
+    (with-temp-buffer
+      (insert-buffer-substring-no-properties buffer begin end)
+      (indent-rigidly (point-min) (point-max) 4)
+      (clipboard-kill-ring-save (point-min) (point-max))
+      (message "Code snippet copied to system clipboard"))))
 
 (defun kill-this-buffer-and-associated-file ()
   (interactive)
-  (let ((buffer (current-buffer))
-        (file-name (buffer-file-name*)))
-    (kill-buffer buffer)
-    (when (not (buffer-live-p buffer))
+  (let ((file-name (or (buffer-file-name) (error "Not visiting a file"))))
+    (when (kill-buffer)
       (delete-file file-name))))
 
 (defun upcase-region-or-characters (arg)
@@ -205,11 +193,10 @@ of the buffer to the system clipboard."
 	(message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
           (message "A buffer named '%s' already exists!" new-name)
-	(progn
-          (rename-file name new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+	(rename-file name new-name 1)
+        (rename-buffer new-name)
+        (set-visited-file-name new-name)
+        (set-buffer-modified-p nil)))))
 
 ;; Ganked from somewhere.
 
@@ -228,12 +215,11 @@ of the buffer to the system clipboard."
 	 (temp-name (concat dir "/" name)))
     (if (not filename)
 	(message "Buffer '%s' is not visiting a file!" name)
-      (progn
-        (copy-file filename temp-name 1)
- 	(delete-file filename)
- 	(set-visited-file-name temp-name)
- 	(set-buffer-modified-p nil)
- 	t))))
+      (copy-file filename temp-name 1)
+      (delete-file filename)
+      (set-visited-file-name temp-name)
+      (set-buffer-modified-p nil)
+      t)))
 
 (defun auto-align-regexp ()
   (interactive)
@@ -284,7 +270,8 @@ of the buffer to the system clipboard."
 
 (defun delete-frame-and-buffer ()
   (interactive)
-  (and (kill-buffer) (delete-frame)))
+  (when (kill-buffer)
+    (delete-frame)))
 
 (defun ido-read-char-sort-predicate (a b)
   "Order character names first by increasing length, then by lexicographic order."
@@ -404,13 +391,6 @@ of the buffer to the system clipboard."
    (t
     (when old (he-reset-string))
     nil)))
-
-(defun clear-frame-recursive-edit ()
-  (interactive)
-  (save-window-excursion
-    (delete-other-windows)
-    (switch-to-buffer "*scratch*")
-    (recursive-edit)))
 
 (defun absorb-other-frame (arg)
   (interactive "p")
@@ -532,8 +512,7 @@ by using nxml's indentation rules."
              (unless (search-forward "\n\n" nil t)
                (error "Download of %s failed: %s" ,urlsym (buffer-string)))
              ,@body)
-         (when (buffer-live-p ,buffer)
-           (kill-buffer ,buffer))))))
+         (kill-buffer ,buffer)))))
 
 (defun call-program (program &rest args)
   (with-temp-buffer
