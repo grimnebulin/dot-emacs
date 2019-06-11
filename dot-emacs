@@ -418,6 +418,7 @@
 (defalias 'cn 'column-number-mode)
 (defalias 'jpp 'json-pretty-print)
 (defalias 'mexp 'pp-macroexpand-last-sexp)
+(defalias 'yr 'yank-rectangle-single-line)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 

@@ -622,6 +622,12 @@ by using nxml's indentation rules."
         (mapc (lambda (buffer) (unless (get-buffer-window buffer) (kill-buffer buffer))) buffers))
     (apply func args)))
 
+(defun yank-rectangle-single-line (separator)
+  (interactive (list (if current-prefix-arg (read-string "Line separator: ") " ")))
+  (if killed-rectangle
+      (insert (s-join separator killed-rectangle))
+    (error "No rectangle")))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
