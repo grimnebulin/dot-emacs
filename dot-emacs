@@ -18,15 +18,15 @@
 
 (tool-bar-mode -1)
 (random t)
-(savehist-mode 1)
+(savehist-mode)
 (quietly-read-abbrev-file)
-(electric-pair-mode 1)
+(electric-pair-mode)
 (show-paren-mode)
 (horizontal-scroll-bar-mode -1)
 ;; http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html
-(global-prettify-symbols-mode 1)
+(global-prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
-(winner-mode 1)
+(winner-mode)
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -45,7 +45,7 @@
 
 (fset 'perl-mode 'cperl-mode)
 
-(desktop-save-mode 1)
+(desktop-save-mode)
 
 ;;
 ;; Various extra packages:
@@ -67,7 +67,7 @@
 
 (use-package undo-tree
   :config
-  (global-undo-tree-mode 1)
+  (global-undo-tree-mode)
   (setq undo-tree-mode-lighter ""))
 
 (use-package multiple-cursors
@@ -111,7 +111,7 @@
 (use-package ido
   :config
   (ido-mode 1)
-  (ido-everywhere 1)
+  (ido-everywhere)
   (advice-add 'ido-read-buffer :around #'maybe-ignore-ido)
   (setq ido-enable-flex-matching t
         ido-use-virtual-buffers t
@@ -120,7 +120,7 @@
         ido-auto-merge-work-directories-length -1))
 
 (use-package ido-vertical-mode
-  :config (ido-vertical-mode 1))
+  :config (ido-vertical-mode))
 
 (put 'shell                   'ido 'ignore)
 (put 'dired-create-directory  'ido 'ignore)
@@ -182,7 +182,7 @@
   (setq company-backends (delq 'company-dabbrev company-backends)))
 
 (setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
+(minibuffer-depth-indicate-mode)
 
 (setq electric-pair-inhibit-predicate
       (lambda (c) (or (looking-back ":-?(" (- (point) 3))
@@ -463,7 +463,7 @@
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (setq flycheck-standard-error-navigation nil)
-  (global-flycheck-mode 1))
+  (global-flycheck-mode))
 
 (setq-default dired-listing-switches "-alhv")
 
@@ -496,7 +496,7 @@
   (define-key projectile-mode-map "\C-cp" 'projectile-command-map))
 
 (use-package dtrt-indent
-  :config (dtrt-indent-mode 1))
+  :config (dtrt-indent-mode))
 
 (use-package define-word
   :bind ("\C-cd" . define-word-at-point)
