@@ -443,10 +443,6 @@ by using nxml's indentation rules."
   (interactive)
   (pretty-print-xml-region (point-min) (point-max)))
 
-(defun fetch-my-feed (name)
-  (interactive "sFeed name: ")
-  (format-shell-command "curl -s http://seanmc.org/rss/%s.pl" name))
-
 (defun multi-occur-in-all-buffers (regexp &optional allbufs)
   (interactive (occur-read-primary-args))
   (multi-occur-in-matching-buffers "" regexp))
