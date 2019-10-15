@@ -522,17 +522,6 @@ by using nxml's indentation rules."
   (kill-region start end)
   (insert (url-hexify-string (car kill-ring))))
 
-(defun switch-quotes ()
-  (interactive)
-  (let ((new-quote (cond ((looking-at "'") "\"") ((looking-at "\"") "'") (t (error "Point is not on a quote")))))
-    (save-excursion
-      (insert new-quote)
-      (save-excursion
-        (forward-sexp)
-        (delete-char -1)
-        (insert new-quote))
-      (delete-char 1))))
-
 (defun isearch-or-swiper ()
   (interactive)
   (if current-prefix-arg (swiper) (isearch-forward nil t)))

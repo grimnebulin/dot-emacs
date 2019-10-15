@@ -232,8 +232,6 @@
 (global-set-key (kbd "C-M-y") #'yank-url-sans-query)
 (global-set-key (kbd "C-M-u") #'push-mark-backward-up-list)
 
-(global-set-key (kbd "C-M-'") #'switch-quotes)
-
 (global-set-key "\C-s" 'isearch-or-swiper)
 
 (global-set-key [(control ?*)] 'my-isearch-word-at-point)
