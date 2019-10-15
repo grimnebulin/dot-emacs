@@ -9,17 +9,17 @@
 
 ;;
 
-(defun other-window-delete-rest (delete)
+(defun other-window-delete-rest (kill-current)
   "Goes to the next window with other-window, then makes that window
-the only visible window.  With a prefix argument, kills the current
-buffer first."
+the only visible window.  With a prefix argument, also kills the
+starting buffer."
   (interactive "P")
   (if (>= 1 (length (window-list)))
       (error "No other window")
     (let ((buffer (current-buffer)))
       (other-window 1)
       (delete-other-windows)
-      (when delete
+      (when kill-current
         (kill-buffer buffer)))))
 
 ;;
