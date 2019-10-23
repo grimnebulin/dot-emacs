@@ -512,7 +512,7 @@ by using nxml's indentation rules."
 
 (defun call-program (program &rest args)
   (with-temp-buffer
-    (let* ((status (apply 'call-process program nil t nil args)))
+    (let ((status (apply 'call-process program nil t nil args)))
       (if (zerop status)
           (buffer-string)
         (error "%s" (buffer-string))))))
