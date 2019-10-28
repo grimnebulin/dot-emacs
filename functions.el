@@ -534,20 +534,12 @@ by using nxml's indentation rules."
         (apply #'read-buffer args))
     (apply func args)))
 
-(make-variable-buffer-local 'do-not-indent-after-open-line)
-
-(defun vim-style-open-line-wrapper (func n)
-  (if (not (called-interactively-p 'any))
-      (funcall func n)
-    (beginning-of-line)
-    (if (equal current-prefix-arg '(4))
-        (open-line 1)
-      (funcall func n)
-      (unless do-not-indent-after-open-line
-        (indent-according-to-mode)))))
-
-(defun interactively-read-unicode-char (&rest _ignore)
-  (interactive (list (ido-read-char-by-name "Unicode (name or hex): "))))
+(defun vim-style-open-line (prefix)
+  (interactive "P")
+  (beginning-of-line)
+  (open-line 1)
+  (unless (equal prefix '(4))
+    (indent-according-to-mode)))
 
 (defun push-mark-backward-up-list ()
   (interactive)

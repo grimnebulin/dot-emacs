@@ -231,6 +231,7 @@
 (global-set-key (kbd "<kp-end>") #'end-of-buffer)
 (global-set-key (kbd "C-M-y") #'yank-url-sans-query)
 (global-set-key (kbd "C-M-u") #'push-mark-backward-up-list)
+(global-set-key [remap open-line] #'vim-style-open-line)
 
 (global-set-key "\C-s" 'isearch-or-swiper)
 
@@ -332,8 +333,6 @@
   'scala-mode-hook
   'ruby-mode-hook)
 
-(add-hook 'org-mode-hook (lambda () (setq do-not-indent-after-open-line t)))
-
 (with-eval-after-load 'clojure-mode
   (define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square)
   (define-key clojure-mode-map [(super \{)] #'paredit-wrap-curly))
@@ -429,7 +428,6 @@
 (with-eval-after-load 'json
   (advice-add 'json-encode-array :around #'encode-json-array-of-numbers-on-one-line))
 
-(advice-add 'open-line :around #'vim-style-open-line-wrapper)
 (advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
 
 (put 'upcase-region 'disabled nil)
