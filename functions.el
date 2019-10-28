@@ -273,41 +273,6 @@ except ImportError, e:
   (when (kill-buffer)
     (delete-frame)))
 
-(defun ido-read-char-sort-predicate (a b)
-  "Order character names first by increasing length, then by lexicographic order."
-  (let ((alen (length a))
-        (blen (length b)))
-    (or (< alen blen) (and (= alen blen) (string-lessp a b)))))
-
-(defconst ucs-names-is-alist (listp (ucs-names)))
-
-(let (completions)
-  (defun ido-read-char-completions ()
-    (or completions
-        (setq completions
-              (sort (if ucs-names-is-alist
-                        (cl-delete-if (lambda (s) (= ?< (aref s 0))) (mapcar 'car (ucs-names)))
-                      (let ((names nil))
-                        (maphash (lambda (k _) (if (/= ?< (aref k 0)) (push k names))) (ucs-names))
-                        names))
-                    'ido-read-char-sort-predicate)))))
-
-(defun ido-read-char-by-name (prompt)
-  "Replacement for read-char-by-name that uses ido to read character names."
-  (let* ((completion-ignore-case t)
-         (completions (ido-read-char-completions))
-         (ido-enable-flex-matching nil)
-	 (input (ido-completing-read prompt completions)))
-    (cond
-     ((string-match-p "^[0-9a-fA-F]+$" input)
-      (string-to-number input 16))
-     ((string-match-p "^#" input)
-      (read input))
-     (t
-      (if ucs-names-is-alist
-          (cdr (assoc-string input (ucs-names) t))
-        (gethash input (ucs-names)))))))
-
 (require 'thingatpt)
 
 (defun shell-in-directory (dir &optional suffix)
