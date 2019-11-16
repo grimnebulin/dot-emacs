@@ -232,6 +232,7 @@
 (global-set-key (kbd "C-M-y") #'yank-url-sans-query)
 (global-set-key (kbd "C-M-u") #'push-mark-backward-up-list)
 (global-set-key [remap open-line] #'vim-style-open-line)
+(global-set-key (kbd "C-x r C-M-w") #'copy-rectangle-as-single-line)
 
 (global-set-key "\C-s" 'isearch-or-swiper)
 
@@ -416,7 +417,6 @@
 (defalias 'cn 'column-number-mode)
 (defalias 'jpp 'json-pretty-print)
 (defalias 'mexp 'pp-macroexpand-last-sexp)
-(defalias 'yr 'yank-rectangle-single-line)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 

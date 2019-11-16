@@ -559,11 +559,17 @@ by using nxml's indentation rules."
         (mapc (lambda (buffer) (unless (get-buffer-window buffer) (kill-buffer buffer))) buffers))
     (apply func args)))
 
-(defun yank-rectangle-single-line (separator)
-  (interactive (list (if current-prefix-arg (read-string "Line separator: ") " ")))
-  (if killed-rectangle
-      (insert (s-join separator killed-rectangle))
-    (error "No rectangle")))
+(defun copy-rectangle-as-single-line (start end separator)
+  (interactive
+   (list
+    (min (point) (mark))
+    (max (point) (mark))
+    (if current-prefix-arg (read-string "Line separator: ") ", ")))
+  (unless (use-region-p)
+    (error "Region is not active"))
+  (let (killed-rectangle)
+    (copy-rectangle-as-kill start end)
+    (kill-new (s-join separator killed-rectangle))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
