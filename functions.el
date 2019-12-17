@@ -571,6 +571,14 @@ by using nxml's indentation rules."
     (copy-rectangle-as-kill start end)
     (kill-new (s-join separator killed-rectangle))))
 
+(defun notify-of-remote-shell-command (args)
+  (save-match-data
+    (cons
+     (if (string-match "/ssh:\\([^:]+\\)" default-directory)
+         (format "REMOTE shell command on %s: " (match-string 1 default-directory))
+       (car args))
+     (cdr args))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

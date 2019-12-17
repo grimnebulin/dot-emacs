@@ -436,6 +436,8 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
+(advice-add 'read-shell-command :filter-args #'notify-of-remote-shell-command)
+
 
 (add-to-list 'auto-mode-alist `(,(rx ".m" eos) . octave-mode))
 (add-to-list 'auto-mode-alist `(,(rx ".scala" eos) . scala-mode))
