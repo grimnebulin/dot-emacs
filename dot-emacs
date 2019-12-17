@@ -430,14 +430,10 @@
 
 (advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
 
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
 (advice-add 'read-shell-command :filter-args #'notify-of-remote-shell-command)
 
+(dolist (sym '(upcase-region downcase-region erase-buffer narrow-to-region dired-find-alternate-file narrow-to-page))
+  (put sym 'disabled nil))
 
 (add-to-list 'auto-mode-alist `(,(rx ".m" eos) . octave-mode))
 (add-to-list 'auto-mode-alist `(,(rx ".scala" eos) . scala-mode))
