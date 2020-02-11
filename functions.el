@@ -574,7 +574,7 @@ by using nxml's indentation rules."
 (defun notify-of-remote-shell-command (args)
   (save-match-data
     (cons
-     (if (string-match "/ssh:\\([^:]+\\)" default-directory)
+     (if (string-match (rx bos "/ssh:" (group (1+ (not (any ?:))))) default-directory)
          (format "REMOTE shell command on %s: " (match-string 1 default-directory))
        (car args))
      (cdr args))))
