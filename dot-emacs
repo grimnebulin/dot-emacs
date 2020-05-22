@@ -482,6 +482,7 @@
   :config (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode))
 
 (use-package projectile
+  :diminish projectile-mode
   :config
   (projectile-mode)
   (define-key projectile-mode-map "\C-cp" 'projectile-command-map))
@@ -522,6 +523,7 @@
   :mode ((rx ".rest" eos) . restclient-mode))
 
 (use-package beginend
+  :diminish beginend-dired-mode
   :config (add-hook 'dired-mode-hook (lambda () (beginend-dired-mode 1))))
 
 (use-package shell-pop
