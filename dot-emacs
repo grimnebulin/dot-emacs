@@ -269,10 +269,6 @@
 (add-to-hooks 'paredit-for-lisp-interaction-mode
    'lisp-interaction-mode-hook)
 
-(add-to-hooks 'turn-on-auto-fill
-   'message-mode-hook
-   'text-mode-hook)
-
 (add-to-hooks 'turn-off-auto-fill
    'html-mode-hook)
 
