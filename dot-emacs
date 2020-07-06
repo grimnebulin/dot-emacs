@@ -411,7 +411,7 @@
 (defalias 'lp 'list-packages)
 (defalias 'vl 'visual-line-mode)
 (defalias 'mff 'magit-find-file)
-(defalias 'eb 'erase-buffer)
+(defalias 'xb 'erase-buffer)
 (defalias 'cn 'column-number-mode)
 (defalias 'jpp 'json-pretty-print)
 (defalias 'mexp 'pp-macroexpand-last-sexp)
