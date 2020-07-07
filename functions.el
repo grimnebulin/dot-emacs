@@ -579,13 +579,11 @@ by using nxml's indentation rules."
        (car args))
      (cdr args))))
 
-(defun kill-helm-unicode ()
+(defun helm-unicode-with-kill-option ()
   (interactive)
   (let ((source (helm-unicode-source)))
-    (setcdr (assq 'action source)
-            `(("Kill Character" . ,(lambda (candidate) (kill-new (substring candidate -1))))))
+    (callf append (alist-get 'action source) `(("Kill Character" . ,(lambda (candidate) (kill-new (substring candidate -1))))))
     (helm :sources source :buffer "*helm-unicode-search*")))
-
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)

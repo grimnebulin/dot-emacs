@@ -234,7 +234,7 @@
 (global-set-key (kbd "C-M-u") #'push-mark-backward-up-list)
 (global-set-key [remap open-line] #'vim-style-open-line)
 (global-set-key (kbd "C-x r C-M-w") #'copy-rectangle-as-single-line)
-(global-set-key (kbd "C-x 8 <C-return>") #'kill-helm-unicode)
+(global-set-key (kbd "C-x 8 RET") #'helm-unicode-with-kill-option)
 
 (global-set-key "\C-s" 'isearch-or-swiper)
 
