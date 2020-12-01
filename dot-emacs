@@ -413,7 +413,7 @@
 (defalias 'mff 'magit-find-file)
 (defalias 'xb 'erase-buffer)
 (defalias 'cn 'column-number-mode)
-(defalias 'jpp 'json-pretty-print)
+(defalias 'jpp 'json-pretty-print-region-or-element-at-point)
 (defalias 'mexp 'pp-macroexpand-last-sexp)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))

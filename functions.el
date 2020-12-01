@@ -515,6 +515,13 @@ by using nxml's indentation rules."
            (with-current-buffer ,buffer
              (rename-buffer ,name)))))))
 
+(defun json-pretty-print-region-or-element-at-point ()
+  (interactive)
+  (save-excursion
+    (if (use-region-p)
+        (json-pretty-print (region-beginning) (region-end))
+      (json-pretty-print (point) (progn (forward-sexp) (point))))))
+
 (let (_)
   (defvar json-encoding-pretty-print)
   (defvar json-encoding-separator)
