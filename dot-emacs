@@ -23,6 +23,7 @@
 (electric-pair-mode)
 (show-paren-mode)
 (horizontal-scroll-bar-mode -1)
+(set-scroll-bar-mode 'right)
 ;; http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html
 (global-prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
