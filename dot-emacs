@@ -46,7 +46,6 @@
 
 (fset 'perl-mode 'cperl-mode)
 
-(setq desktop-restore-eager 20)
 (desktop-save-mode)
 
 ;;
