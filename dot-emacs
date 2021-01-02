@@ -514,7 +514,9 @@
   :commands (helm-buffers-list))
 
 (use-package helm-unicode
-  :bind ("C-x 8 RET" . helm-unicode-with-kill-option))
+  :commands (helm-unicode-source))
+
+(global-set-key (kbd "C-x 8 RET") #'helm-unicode-with-kill-option)
 
 (use-package helm-swoop
   :bind ("M-i" . helm-swoop))
