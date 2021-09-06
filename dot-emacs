@@ -452,6 +452,7 @@
   :bind ("C-=" . er/expand-region))
 
 (use-package flycheck
+  :diminish flycheck-mode
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (setq flycheck-standard-error-navigation nil)
