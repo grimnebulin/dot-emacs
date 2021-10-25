@@ -499,22 +499,6 @@ by using nxml's indentation rules."
     (cl-callf (lambda (x) (replace-regexp-in-string (rx "?" (* anything)) "" x)) (url-filename url))
     (insert (url-recreate-url url))))
 
-(defmacro with-temporarily-renamed-buffer (buffer-or-name &rest body)
-  (declare (indent defun))
-  (let ((buffer (make-symbol "buffer"))
-        (name (make-symbol "name")))
-    `(let* ((,buffer (get-buffer ,buffer-or-name))
-            (,name (and ,buffer (buffer-name ,buffer))))
-       (unwind-protect
-           (progn
-             (when ,buffer
-               (with-current-buffer ,buffer
-                 (rename-uniquely)))
-             ,@body)
-         (when (and ,buffer (not (get-buffer ,name)))
-           (with-current-buffer ,buffer
-             (rename-buffer ,name)))))))
-
 (defun json-pretty-print-region-or-element-at-point ()
   (interactive)
   (save-excursion
@@ -557,14 +541,6 @@ by using nxml's indentation rules."
   (interactive)
   (push-mark)
   (call-interactively 'paredit-backward-up))
-
-(defun maybe-kill-other-buffers (func &rest args)
-  "With a prefix argument, kill the buffers that were hidden."
-  (if current-prefix-arg
-      (let ((buffers (mapcar #'window-buffer (window-list))))
-        (apply func args)
-        (mapc (lambda (buffer) (unless (get-buffer-window buffer) (kill-buffer buffer))) buffers))
-    (apply func args)))
 
 (defun copy-rectangle-as-single-line (start end separator)
   (interactive

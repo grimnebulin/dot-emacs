@@ -330,7 +330,8 @@
 (add-to-hooks 'subword-mode
   'java-mode-hook
   'scala-mode-hook
-  'ruby-mode-hook)
+  'ruby-mode-hook
+  'protobuf-mode-hook)
 
 (with-eval-after-load 'clojure-mode
   (define-key clojure-mode-map [(meta \[)] #'paredit-wrap-square)
@@ -407,7 +408,6 @@
 (defalias 'ppx 'pretty-print-xml-buffer)
 (defalias 'rf 'rename-file-and-buffer)
 (defalias 'moab 'multi-occur-in-all-buffers)
-(defalias 'ci 'change-inner)
 (defalias 'lp 'list-packages)
 (defalias 'vl 'visual-line-mode)
 (defalias 'mff 'magit-find-file)
@@ -415,18 +415,17 @@
 (defalias 'cn 'column-number-mode)
 (defalias 'jpp 'json-pretty-print-region-or-element-at-point)
 (defalias 'mx 'pp-macroexpand-last-sexp)
+(defalias 'cal 'calendar)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 
 (with-eval-after-load 'python
-  (setq python--prettify-symbols-alist
+  (setq python-prettify-symbols-alist
         (-remove (lambda (x) (member (car x) '("and" "or")))
                  python--prettify-symbols-alist)))
 
 (with-eval-after-load 'json
   (advice-add 'json-encode-array :around #'encode-json-array-of-numbers-on-one-line))
-
-(advice-add 'delete-other-windows :around #'maybe-kill-other-buffers)
 
 (advice-add 'read-shell-command :filter-args #'notify-of-remote-shell-command)
 
@@ -461,10 +460,6 @@
 (setq-default dired-listing-switches "-alhv")
 
 (setq uniquify-buffer-name-style 'post-forward)
-
-(use-package google-this
-  :config (google-this-mode 1)
-  :diminish google-this-mode)
 
 (use-package ido-completing-read+)
 
@@ -519,9 +514,6 @@
   :commands (helm-unicode-source))
 
 (global-set-key (kbd "C-x 8 RET") #'helm-unicode-with-kill-option)
-
-(use-package helm-swoop
-  :bind ("M-i" . helm-swoop))
 
 (use-package restclient
   :mode ((rx ".rest" eos) . restclient-mode))
