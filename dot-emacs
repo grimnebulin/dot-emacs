@@ -173,6 +173,7 @@
 (setq extended-command-suggest-shorter nil)
 (setq shell-input-autoexpand nil)
 (setq org-agenda-sticky t)
+(setq org-startup-folded nil)
 (setq blink-cursor-blinks 0)
 (setq recenter-positions '(0.333 top bottom))
 
