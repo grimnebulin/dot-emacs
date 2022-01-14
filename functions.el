@@ -475,13 +475,6 @@ by using nxml's indentation rules."
              ,@body)
          (kill-buffer ,buffer)))))
 
-(defun call-program (program &rest args)
-  (with-temp-buffer
-    (let ((status (apply 'call-process program nil t nil args)))
-      (if (zerop status)
-          (buffer-string)
-        (error "%s" (buffer-string))))))
-
 (defun url-hexify-region (start end)
   (interactive "r")
   (kill-region start end)

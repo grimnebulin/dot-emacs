@@ -33,11 +33,14 @@
 (set-default-coding-systems 'utf-8)
 
 ;; https://glyph.twistedmatrix.com/2015/11/editor-malware.html
-(let ((trustfile (replace-regexp-in-string "\n" "" (call-program "python" "-m" "certifi"))))
-  (setq tls-program (list (format "gnutls-cli --x509cafile %s -p %%p %%h" trustfile)))
-  (setq tls-checktrust t)
-  (setq gnutls-verify-error t)
-  (setq gnutls-trustfiles (list trustfile)))
+(with-temp-buffer
+  (if (zerop (call-process "python" nil t nil "-m" "certifi"))
+      (let ((trustfile (string-trim (buffer-string))))
+        (setq tls-program (list (format "gnutls-cli --x509cafile %s -p %%p %%h" (shell-quote-argument trustfile)))
+              tls-checktrust t
+              gnutls-verify-error t
+              gnutls-trustfiles (list trustfile)))
+    (message "Certificate failed!")))
 
 (require 'package)
 (setq package-archives (mapcar (lambda (x) (cons (car x) (replace-regexp-in-string "\\`http:" "https:" (cdr x)))) package-archives))
