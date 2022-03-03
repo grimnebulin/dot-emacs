@@ -561,6 +561,23 @@ by using nxml's indentation rules."
     (callf append (alist-get 'action source) `(("Kill Character" . ,(lambda (candidate) (kill-new (substring candidate -1))))))
     (helm :sources source :buffer "*helm-unicode-search*")))
 
+(defun my-emms-seek (seconds &optional minutes hours)
+  (interactive
+   (pcase (read-string "Time to seek: ")
+     ((rx string-start
+          (? (let negative "-"))
+          (?? (let hours (+ digit)) ":")
+          (? (let minutes (+ digit)) ":")
+          (let seconds (+ digit))
+          string-end)
+      (let ((sign (if negative -1 +1)))
+        (list (* sign (string-to-number seconds))
+              (when minutes (* sign (string-to-number minutes)))
+              (when hours (* sign (string-to-number hours))))))
+     (Δt
+      (error "Don't understand time delta “%s”" Δt))))
+  (emms-seek (+ seconds (* 60 (+ (or minutes 0) (* 60 (or hours 0)))))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
