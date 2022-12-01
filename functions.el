@@ -492,22 +492,30 @@ by using nxml's indentation rules."
     (cl-callf (lambda (x) (replace-regexp-in-string (rx "?" (* anything)) "" x)) (url-filename url))
     (insert (url-recreate-url url))))
 
-(defun json-pretty-print-region-or-element-at-point ()
-  (interactive)
+(defun json-pretty-print-region-or-element-at-point (unpretty)
+  (interactive "P")
   (save-excursion
     (if (use-region-p)
-        (json-pretty-print (region-beginning) (region-end))
-      (json-pretty-print (point) (progn (forward-sexp) (point))))))
+        (json-pretty-print (region-beginning) (region-end) unpretty)
+      (json-pretty-print (point) (progn (forward-sexp) (point)) unpretty))))
+
+(defvar json-pretty-print-array-on-single-line-predicate (lambda (array) (loop for x across array always (numberp x))))
 
 (let (_)
   (defvar json-encoding-pretty-print)
   (defvar json-encoding-separator)
   (defun encode-json-array-of-numbers-on-one-line (encode array)
     (let* ((json-encoding-pretty-print
-            (and json-encoding-pretty-print
-                 (not (loop for x across array always (numberp x)))))
+            (and json-encoding-pretty-print (not (funcall json-pretty-print-array-on-single-line-predicate array))))
            (json-encoding-separator (if json-encoding-pretty-print "," ", ")))
       (funcall encode array))))
+
+(defun json-array-length ()
+  (interactive)
+  (if (looking-at (rx "["))
+      (save-excursion
+        (message "%d" (length (json-read))))
+    (error "Point is not on a JSON array")))
 
 (defun maybe-ignore-ido (func &rest args)
   (if (loop for command = this-command then (symbol-function command)
