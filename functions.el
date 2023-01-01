@@ -124,7 +124,7 @@ except ImportError, e:
 (defun toggle-case ()
   (interactive)
   (let ((case-fold-search nil))
-    (when (search-forward-regexp "\\=\\([A-Z]\\)\\|\\=\\([a-z]\\)" nil t)
+    (when (search-forward-regexp (rx point (| (group upper) (group lower))) nil t)
       (replace-match
        (if (match-string 1)
            (downcase (match-string 1))
