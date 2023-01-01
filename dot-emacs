@@ -199,7 +199,7 @@
                  (string-match-p (rx bos " *Minibuf-" (+ digit)) (buffer-name))
                  (electric-pair-default-inhibit c))))
 
-(setq browse-url-generic-program "conkeror")
+(setq browse-url-generic-program "firefox")
 
 (setq browse-url-browser-function
       (lambda (&rest args)
