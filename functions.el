@@ -132,52 +132,6 @@ except ImportError, e:
        t)
       (backward-char 1))))
 
-(defconst +cycle-single-quotes+
-  '("''" "q()" "q{}" "q//" "q[]"))
-
-(defconst +cycle-double-quotes+
-  '("\"\"" "qq()" "qq{}" "qq//" "qq[]"))
-
-(defun cycle-perl-quotes (pos)
-  (interactive "d")
-  (or (eq 'font-lock-string-face (get-text-property pos 'face))
-      (error "Not within a string"))
-  (let* ((start (or (previous-single-property-change pos 'face)
-                    (error "Can't find beginning of string")))
-         (end   (or (    next-single-property-change pos 'face)
-                    (error "Can't find end of string")))
-         (string (buffer-substring-no-properties (1+ start) (1- end)))
-         (delims (format "%s%s%c%c"
-                         (if (equal (char-before (1- start)) ?q) "q" "")
-                         (if (equal (char-before     start ) ?q) "q" "")
-                         (char-after start)
-                         (char-before end)))
-         list
-         (tail (or (member delims (setq list +cycle-single-quotes+))
-                   (member delims (setq list +cycle-double-quotes+))
-                   (error "Can't determine string delimiters")))
-         (these-quotes (first tail))
-         (next-quotes (or (loop for q in (append (rest tail) list)
-                                while (not (eq q these-quotes))
-                                if (not (string-match
-                                         (format "[%s%s]"
-                                                 (substring q -1)
-                                                 (substring q -2 -1))
-                                         string))
-                                return q)
-                          (error "No appropriate delimiters"))))
-    (save-excursion
-      (goto-char end)
-      (delete-char -1)
-      (insert (substring next-quotes -1))
-      (goto-char start)
-      (delete-char 1)
-      (delete-char (- 2 (length these-quotes)))
-      (insert (substring next-quotes 0 -1)))))
-
-(require 'perl-mode)
-(define-key perl-mode-map [(super q)] 'cycle-perl-quotes)
-
 ;; Ganked from somewhere.
 
 ;;
