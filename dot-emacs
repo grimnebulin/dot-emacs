@@ -182,6 +182,7 @@
 (setq org-adapt-indentation nil)
 (setq blink-cursor-blinks 0)
 (setq recenter-positions '(0.333 top bottom))
+(setq undo-tree-auto-save-history nil)
 
 (with-eval-after-load 'autorevert
   (auto-revert-set-timer))
