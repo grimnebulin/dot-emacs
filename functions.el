@@ -523,6 +523,20 @@ by using nxml's indentation rules."
     (callf append (alist-get 'action source) `(("Kill Character" . ,(lambda (candidate) (kill-new (substring candidate -1))))))
     (helm :sources source :buffer "*helm-unicode-search*")))
 
+(defun unicode-italicize-region (start end)
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (while (search-forward-regexp "[A-Za-z]" end t)
+      (replace-match
+       (string
+        (pcase (aref (match-string 0) 0)
+          ((and (pred (lambda (x) (<= ?A x ?Z))) upper)
+           (+ upper (- ?𝐴 ?A)))
+          (?h ?ℎ)
+          (lower
+           (+ lower (- ?𝑎 ?a)))))))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
