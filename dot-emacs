@@ -184,6 +184,7 @@
 (setq org-startup-folded nil)
 (setq org-yank-folded-subtrees nil)
 (setq org-adapt-indentation nil)
+(setq org-export-with-section-numbers nil)
 (setq blink-cursor-blinks 0)
 (setq recenter-positions '(0.333 top bottom))
 (setq undo-tree-auto-save-history nil)
