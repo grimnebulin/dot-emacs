@@ -385,14 +385,6 @@ by using nxml's indentation rules."
   (isearch-push-state)
   (isearch-update))
 
-(defun my-recompile ()
-  (interactive)
-  (if-let (buffer (get-buffer "*compilation*"))
-      (progn
-        (pop-to-buffer buffer)
-        (recompile))
-    (message "No old compilation buffer present")))
-
 (defun multi-switch-buffers (prefix)
   "With no prefix argument, call ido-switch-buffer; otherwise call helm-buffers-list."
   (interactive "P")

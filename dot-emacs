@@ -235,7 +235,6 @@
 ; (global-set-key "\C-cc" 'comment-copy-of-lines)
 (global-set-key "\C-cm" 'magit-status)
 (global-set-key "\C-cc" 'compile)
-(global-set-key "\C-cr" #'my-recompile)
 (global-set-key [(control kp-end)] #'kill-this-buffer)
 (global-set-key (kbd "<C-M-backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "C-.") 'next-multiframe-window)
