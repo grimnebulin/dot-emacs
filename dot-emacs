@@ -428,6 +428,7 @@
 (defalias 'jpp 'json-pretty-print-region-or-element-at-point)
 (defalias 'mx 'pp-macroexpand-last-sexp)
 (defalias 'cal 'calendar)
+(defalias 'browse 'browse-url-at-point)
 
 (add-hook 'visual-line-mode-hook (lambda () (when visual-line-mode (turn-off-auto-fill))))
 
