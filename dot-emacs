@@ -192,16 +192,17 @@
 (with-eval-after-load 'autorevert
   (auto-revert-set-timer))
 
-(with-eval-after-load 'org
-  ;; Holy crap!
-  (advice-add 'org-open-line :around
-              (let ((old-open-line (symbol-function 'open-line)))
-                (lambda (old &rest args)
-                  (cl-letf* ((n 0)
-                             ((symbol-function 'open-line)
-                              (lambda (&rest args)
-                                (apply (if (= 1 (cl-incf n)) #'vim-style-open-line old-open-line) args))))
-                    (apply old args))))))
+;; Holy crap!
+(advice-add 'org-open-line :around
+            (lambda (old &rest args)
+              (cl-letf* ((n 0)
+                         (old-open-line (symbol-function 'open-line))
+                         ((symbol-function 'open-line)
+                          (lambda (&rest args)
+                            (if (= 1 (cl-incf n))
+                                (vim-style-open-line current-prefix-arg)
+                              (apply old-open-line args)))))
+                (apply old args))))
 
 ;; No completion in code comment blocks:
 (with-eval-after-load "company"
