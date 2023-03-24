@@ -529,6 +529,14 @@ by using nxml's indentation rules."
           (lower
            (+ lower (- ?𝑎 ?a)))))))))
 
+(defun add-process-sentinel (process sentinel)
+  (set-process-sentinel process
+                        (if-let (old-sentinel (process-sentinel process))
+                            (lambda (&rest args)
+                              (apply old-sentinel args)
+                              (apply sentinel args))
+                          sentinel)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
