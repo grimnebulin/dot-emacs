@@ -492,8 +492,8 @@ by using nxml's indentation rules."
 (defun copy-rectangle-as-single-line (start end separator)
   (interactive
    (list
-    (min (point) (mark))
-    (max (point) (mark))
+    (region-beginning)
+    (region-end)
     (if current-prefix-arg (read-string "Line separator: ") ", ")))
   (unless (use-region-p)
     (error "Region is not active"))
