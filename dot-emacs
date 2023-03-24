@@ -51,6 +51,7 @@
 
 (fset 'perl-mode 'cperl-mode)
 
+(setq desktop-load-locked-desktop t)
 (desktop-save-mode)
 
 ;;
