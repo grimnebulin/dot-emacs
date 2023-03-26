@@ -89,14 +89,6 @@
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
 
-(use-package change-inner)
-
-(use-package anchored-transpose
-  :bind ("C-x t" . anchored-transpose))
-
-(use-package dired-details+
-  :config (setq dired-details-hide-link-targets nil))
-
 ;;
 ;; hippie-expand configuration
 ;;
