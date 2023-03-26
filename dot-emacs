@@ -559,12 +559,6 @@
 
 (use-package dired-filter)
 
-(use-package dired-ranger
-  :config
-  (defalias 'copy 'dired-ranger-copy)
-  (defalias 'paste 'dired-ranger-paste)
-  (defalias 'move 'dired-ranger-move))
-
 (use-package js2-mode
   :mode (rx ".js" eos)
   :bind (:map js2-mode-map ("C-k" . #'js2r-kill) ("M-." . nil))
