@@ -70,7 +70,7 @@
 (use-package paredit
   ;; https://www.reddit.com/r/emacs/comments/101uwgd/enable_paredit_mode_for_evalexpression_mini/
   :hook
-  (minibuffer-setup . (lambda () (when (eq this-command 'eval-expression) (enable-paredit-mode) (unbind-key (kbd "RET") paredit-mode-map))))
+  (minibuffer-setup . (lambda () (when (memq this-command '(eval-expression ibuffer-do-eval)) (enable-paredit-mode) (unbind-key (kbd "RET") paredit-mode-map))))
   (minibuffer-exit . (lambda () (bind-key (kbd "RET") #'paredit-newline paredit-mode-map)))
   :bind (:map paredit-mode-map ("C-M-u" . #'push-mark-paredit-backward-up)))
 
