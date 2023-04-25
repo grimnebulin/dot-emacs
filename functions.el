@@ -537,6 +537,12 @@ by using nxml's indentation rules."
                               (apply sentinel args))
                           sentinel)))
 
+(defun other-window-dwim ()
+  (interactive)
+  (if (< 1 (length (window-list)))
+      (other-window 1)
+    (other-frame 1)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

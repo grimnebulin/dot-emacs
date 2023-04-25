@@ -242,7 +242,7 @@
 (global-set-key "\C-cc" 'compile)
 (global-set-key [(control kp-end)] #'kill-this-buffer)
 (global-set-key (kbd "<C-M-backspace>") 'backward-kill-sexp)
-(global-set-key (kbd "C-.") 'next-multiframe-window)
+(global-set-key (kbd "C-.") 'other-window-dwim)
 (global-set-key (kbd "C-x b") #'multi-switch-buffers)
 (global-set-key (kbd "C-M-=") #'count-region-bytes)
 (global-set-key (kbd "<kp-home>") #'beginning-of-buffer)
