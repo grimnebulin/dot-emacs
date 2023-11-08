@@ -447,9 +447,7 @@ by using nxml's indentation rules."
 
 (defvar json-pretty-print-array-on-single-line-predicate (lambda (array) (loop for x across array always (numberp x))))
 
-(let (_)
-  (defvar json-encoding-pretty-print)
-  (defvar json-encoding-separator)
+(with-eval-after-load 'json
   (defun encode-json-array-of-numbers-on-one-line (encode array)
     (let* ((json-encoding-pretty-print
             (and json-encoding-pretty-print (not (funcall json-pretty-print-array-on-single-line-predicate array))))
@@ -539,7 +537,7 @@ by using nxml's indentation rules."
 
 (defun other-window-dwim ()
   (interactive)
-  (if (< 1 (length (window-list)))
+  (if (cdr (window-list))
       (other-window 1)
     (other-frame 1)))
 
