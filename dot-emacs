@@ -435,6 +435,8 @@
 (defalias 'mx 'pp-macroexpand-last-sexp)
 (defalias 'cal 'calendar)
 (defalias 'browse 'browse-url-at-point)
+(defalias 'fl 'flush-lines)
+(defalias 'kl 'keep-lines)
 
 (setq js-indent-level 2)
 
