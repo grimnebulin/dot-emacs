@@ -390,6 +390,8 @@
         gnus-sum-thread-tree-vertical "│"))
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(setq dired-hide-details-hide-symlink-targets nil)
 
 (with-eval-after-load "gnus-sum.el.gz"
   (define-key gnus-summary-mode-map "n" 'gnus-summary-next-article)
