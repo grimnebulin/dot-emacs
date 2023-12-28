@@ -35,7 +35,7 @@
 ;; https://glyph.twistedmatrix.com/2015/11/editor-malware.html
 (with-temp-buffer
   (require 'subr-x)
-  (if (zerop (call-process "python" nil t nil "-m" "certifi"))
+  (if (zerop (call-process "python3" nil t nil "-m" "certifi"))
       (let ((trustfile (string-trim (buffer-string))))
         (setq tls-program (list (format "gnutls-cli --x509cafile %s -p %%p %%h" (shell-quote-argument trustfile)))
               tls-checktrust t
@@ -44,9 +44,10 @@
     (message "Certificate failed!")))
 
 (require 'package)
-(setq package-archives (mapcar (lambda (x) (cons (car x) (replace-regexp-in-string "\\`http:" "https:" (cdr x)))) package-archives))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")))
 (package-initialize)
 
 (fset 'perl-mode 'cperl-mode)
