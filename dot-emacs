@@ -303,6 +303,7 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-exec-hook 'no-process-query-on-exit)
+(add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
 
 (add-hook 'find-file-hook 'auto-insert)
 
