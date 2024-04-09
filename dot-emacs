@@ -572,6 +572,9 @@
 
 (use-package xref-js2)
 
+(use-package treesit-auto
+  :config (treesit-auto-add-to-auto-mode-alist 'all))
+
 ;; tern and company-tern for real projects
 
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
