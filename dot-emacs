@@ -184,6 +184,7 @@
 (setq blink-cursor-blinks 0)
 (setq recenter-positions '(0.333 top bottom))
 (setq undo-tree-auto-save-history nil)
+(setq dired-vc-rename-file t)
 
 (with-eval-after-load 'autorevert
   (auto-revert-set-timer))
