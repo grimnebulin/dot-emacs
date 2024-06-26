@@ -215,17 +215,6 @@
 
 (setq browse-url-generic-program "firefox")
 
-(setq browse-url-browser-function
-      (lambda (&rest args)
-        (apply (cond ((eq (not (eq major-mode 'lisp-mode))
-                          (not current-prefix-arg))
-                      #'browse-url-generic)
-                     ((fboundp 'eww-browse-url)
-                      #'eww-browse-url)
-                     (t
-                      #'w3m-browse-url))
-               args)))
-
 (load (setq custom-file "~/.emacs-custom.el"))
 
 ;; Key bindings:
