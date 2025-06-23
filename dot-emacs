@@ -265,6 +265,7 @@
 (global-set-key [remap open-line] #'vim-style-open-line)
 (global-set-key (kbd "C-x r C-M-w") #'copy-rectangle-as-single-line)
 (global-set-key [remap just-one-space] #'cycle-spacing)
+(global-set-key [remap kill-whole-line] #'my-kill-whole-line)
 
 (global-set-key "\C-s" 'isearch-or-swiper)
 

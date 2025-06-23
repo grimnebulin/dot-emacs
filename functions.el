@@ -541,6 +541,12 @@ by using nxml's indentation rules."
       (other-window 1)
     (other-frame 1)))
 
+(defun my-kill-whole-line (arg)
+  (interactive "p")
+  (forward-line 0)
+  (kill-whole-line arg))
+
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
