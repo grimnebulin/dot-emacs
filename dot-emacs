@@ -341,9 +341,9 @@
    nil
    "package "
    (let* ((case-fold-search nil)
-          (comps (loop for p in (reverse (split-string (buffer-file-name) "/" t))
-                       while (string-match (rx bos upper) p)
-                       collect p)))
+          (comps (cl-loop for p in (reverse (split-string (buffer-file-name) "/" t))
+                          while (string-match (rx bos upper) p)
+                          collect p)))
      (substring (string-join (reverse comps) "::") 0 -3))
    ";\n\n"
    _
@@ -593,9 +593,9 @@
 ;; tern and company-tern for real projects
 
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
-  (loop for file in (split-string extra ":")
-        if (file-exists-p file)
-        do (with-demoted-errors "Error: %S" (load file))))
+  (cl-loop for file in (split-string extra ":")
+           if (file-exists-p file)
+           do (with-demoted-errors "Error: %S" (load file))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
