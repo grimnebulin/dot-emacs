@@ -4,11 +4,6 @@
 
 (require 'ido)
 
-(defun princ-to-string (x)
-  (format "%s" x))
-
-;;
-
 (defun other-window-delete-rest (kill-current)
   "Goes to the next window with other-window, then makes that window
 the only visible window.  With a prefix argument, also kills the
