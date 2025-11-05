@@ -184,6 +184,7 @@
 (setq recenter-positions '(0.333 top bottom))
 (setq undo-tree-auto-save-history nil)
 (setq dired-vc-rename-file t)
+(setq delete-pair-blink-delay 0)
 
 (setq tramp-auto-save-directory "/tmp")
 (setq remote-file-name-inhibit-locks t
@@ -266,6 +267,7 @@
 (global-set-key (kbd "C-x r C-M-w") #'copy-rectangle-as-single-line)
 (global-set-key [remap just-one-space] #'cycle-spacing)
 (global-set-key [remap kill-whole-line] #'my-kill-whole-line)
+(global-set-key (kbd "C-M-z") #'delete-pair)
 
 (global-set-key "\C-s" 'isearch-or-swiper)
 
