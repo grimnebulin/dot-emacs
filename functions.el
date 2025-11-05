@@ -541,6 +541,10 @@ by using nxml's indentation rules."
   (forward-line 0)
   (kill-whole-line arg))
 
+(defun ordered-marked-files ()
+  (nconc (cl-loop for dired-marker-char from ?1 to ?9
+                  nconc (dired-get-marked-files nil 'marked))
+         (dired-get-marked-files nil (or current-prefix-arg 'marked))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
