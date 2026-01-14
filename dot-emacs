@@ -456,7 +456,6 @@
 (defalias 'browse 'browse-url-at-point)
 (defalias 'fl 'flush-lines)
 (defalias 'kl 'keep-lines)
-(defalias 'at 'anchored-transpose)
 (defalias 'fnd 'find-name-dired)
 
 (setq js-indent-level 2)
