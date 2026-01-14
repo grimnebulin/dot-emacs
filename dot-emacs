@@ -64,8 +64,6 @@
 
 (setq use-package-always-ensure t)
 
-(use-package dash)
-
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
@@ -326,7 +324,7 @@
 (setq auto-insert-query nil)
 
 (setq auto-insert-alist
-      (-remove (lambda (x) (pcase x (`((,_ . "Emacs Lisp header") . ,_) t))) auto-insert-alist))
+      (seq-remove (lambda (x) (pcase x (`((,_ . "Emacs Lisp header") . ,_) t))) auto-insert-alist))
 
 (add-to-list
  'auto-insert-alist
@@ -464,8 +462,8 @@
 
 (with-eval-after-load 'python
   (setq python-prettify-symbols-alist
-        (-remove (lambda (x) (member (car x) '("and" "or")))
-                 python--prettify-symbols-alist)))
+        (seq-remove (lambda (x) (member (car x) '("and" "or")))
+                    python--prettify-symbols-alist)))
 
 (with-eval-after-load 'json
   (advice-add 'json-encode-array :around #'encode-json-array-of-numbers-on-one-line))
