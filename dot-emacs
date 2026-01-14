@@ -21,6 +21,7 @@
 (savehist-mode)
 (quietly-read-abbrev-file)
 (electric-pair-mode)
+(add-to-list 'electric-pair-pairs '(?« . ?»))
 (show-paren-mode)
 (horizontal-scroll-bar-mode -1)
 (set-scroll-bar-mode 'right)
