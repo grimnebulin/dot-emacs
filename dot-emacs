@@ -267,6 +267,7 @@
 (global-set-key [remap just-one-space] #'cycle-spacing)
 (global-set-key [remap kill-whole-line] #'my-kill-whole-line)
 (global-set-key (kbd "C-M-z") #'delete-pair)
+(global-set-key (kbd "C-x M-l") #'toggle-let*)
 
 (global-set-key "\C-s" 'isearch-or-swiper)
 
