@@ -595,9 +595,8 @@
 ;; tern and company-tern for real projects
 
 (when-let (extra (getenv "EMACS_EXTRA_INIT"))
-  (cl-loop for file in (split-string extra ":")
-           if (file-exists-p file)
-           do (with-demoted-errors "Error: %S" (load file))))
+  (mapc (lambda (path) (when (file-exists-p path) (with-demoted-errors "Error: %S" (load path))))
+        (split-string extra ":")))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
