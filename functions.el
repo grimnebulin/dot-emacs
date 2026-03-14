@@ -554,7 +554,7 @@ then reindent that form's bindings."
     (while (progn
              (condition-case nil (backward-up-list nil t) (scan-error (error "Not within a let form")))
              (not (search-forward-regexp (rx point "(" (* space) "let" (? "*") symbol-end) nil t))))
-    (if (= ?* (char-before)) (backward-delete-char 1) (insert "*"))
+    (if (= ?* (char-before)) (delete-char -1) (insert "*"))
     (indent-region (point) (progn (forward-sexp) (point)))))
 
 ;; Local Variables:
