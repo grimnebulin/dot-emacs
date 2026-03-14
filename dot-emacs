@@ -184,6 +184,7 @@
 (setq undo-tree-auto-save-history nil)
 (setq dired-vc-rename-file t)
 (setq delete-pair-blink-delay 0)
+(setq remote-file-name-inhibit-delete-by-moving-to-trash t)
 
 (setq tramp-auto-save-directory "/tmp")
 (setq remote-file-name-inhibit-locks t
