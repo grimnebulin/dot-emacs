@@ -1,8 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-(eval-when-compile (require 'cl))
-
-(require 'ido)
+(require 'cl-lib)
 
 (defun other-window-delete-rest (kill-current)
   "Goes to the next window with other-window, then makes that window
@@ -226,10 +224,10 @@ except ImportError, e:
 
 (defun shell-in-directory (dir &optional suffix)
   (setq dir (file-name-directory dir))
-  (or (loop for b being the buffers
-            if (and (is-interactive-shell-buffer b)
-                    (string= dir (buffer-local-value 'default-directory b)))
-            return (switch-to-buffer b))
+  (or (cl-loop for b being the buffers
+               if (and (is-interactive-shell-buffer b)
+                       (string= dir (buffer-local-value 'default-directory b)))
+               return (switch-to-buffer b))
       (let ((default-directory dir))
         (shell
          (generate-new-buffer-name
@@ -254,7 +252,7 @@ except ImportError, e:
      (t
       (setq start (line-beginning-position (1+ prefix))
             end   (line-end-position))))
-    (incf end)
+    (cl-incf end)
     (let ((text (buffer-substring start end)))
       (goto-char end)
       (comment-region start end)
@@ -292,12 +290,12 @@ except ImportError, e:
     (setq he-expand-list
           (save-excursion
             (goto-char (point-min))
-            (loop with he-match-length = (length he-search-string)
-                  while (search-forward-regexp +perl-package-regexp+ nil t)
-                  when (and (> (length (match-string 0)) he-match-length)
-                            (string= he-search-string
-                                     (substring (match-string 0) 0 he-match-length)))
-                  collect (match-string 0)))))
+            (cl-loop with he-match-length = (length he-search-string)
+                     while (search-forward-regexp +perl-package-regexp+ nil t)
+                     when (and (> (length (match-string 0)) he-match-length)
+                               (string= he-search-string
+                                        (substring (match-string 0) 0 he-match-length)))
+                     collect (match-string 0)))))
   (cond
    (he-expand-list
     (he-substitute-string (pop he-expand-list))
@@ -440,7 +438,7 @@ by using nxml's indentation rules."
         (json-pretty-print (region-beginning) (region-end) unpretty)
       (json-pretty-print (point) (progn (forward-sexp) (point)) unpretty))))
 
-(defvar json-pretty-print-array-on-single-line-predicate (lambda (array) (loop for x across array always (numberp x))))
+(defvar json-pretty-print-array-on-single-line-predicate (lambda (array) (cl-loop for x across array always (numberp x))))
 
 (with-eval-after-load 'json
   (defun encode-json-array-of-numbers-on-one-line (encode array)
@@ -457,9 +455,9 @@ by using nxml's indentation rules."
     (error "Point is not on a JSON array")))
 
 (defun maybe-ignore-ido (func &rest args)
-  (if (loop for command = this-command then (symbol-function command)
-            while (symbolp command)
-            thereis (eq 'ignore (get command 'ido)))
+  (if (cl-loop for command = this-command then (symbol-function command)
+               while (symbolp command)
+               thereis (eq 'ignore (get command 'ido)))
       (let ((read-buffer-function nil))
         (run-hook-with-args 'ido-before-fallback-functions 'read-buffer)
         (apply #'read-buffer args))
@@ -505,7 +503,7 @@ by using nxml's indentation rules."
 (defun helm-unicode-with-kill-option ()
   (interactive)
   (let ((source (helm-unicode-source)))
-    (callf append (alist-get 'action source) `(("Kill Character" . ,(lambda (candidate) (kill-new (substring candidate -1))))))
+    (cl-callf append (alist-get 'action source) `(("Kill Character" . ,(lambda (candidate) (kill-new (substring candidate -1))))))
     (helm :sources source :buffer "*helm-unicode-search*")))
 
 (defun unicode-italicize-region (start end)
