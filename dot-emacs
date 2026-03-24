@@ -175,7 +175,7 @@
 (setq delete-pair-blink-delay 0)
 (setq remote-file-name-inhibit-delete-by-moving-to-trash t)
 
-(setq tramp-auto-save-directory "/tmp")
+(setq tramp-auto-save-directory "/tmp/")
 (setq remote-file-name-inhibit-locks t
       tramp-use-scp-direct-remote-copying t
       remote-file-name-inhibit-auto-save-visited t)
