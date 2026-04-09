@@ -44,6 +44,7 @@
 
 (setq desktop-load-locked-desktop t)
 (desktop-save-mode)
+(add-to-list 'desktop-modes-not-to-save 'eww-mode)
 
 ;;
 ;; Various extra packages:
