@@ -181,6 +181,20 @@
       remote-file-name-inhibit-auto-save-visited t)
 (setq tramp-copy-size-limit (* 1024 1024))
 (setq tramp-verbose 2)
+(setq redisplay-skip-fontification-on-input t)
+(setq read-process-output-max (* 1024 1024))
+(setq save-interprogram-paste-before-kill t)
+(setq kill-do-not-save-duplicates t)
+
+(dolist (ring '(search-ring regexp-search-ring kill-ring))
+  (add-to-list 'savehist-additional-variables ring))
+
+(add-hook 'savehist-mode-hook #'strip-kill-ring-string-properties)
+
+;; Since I don't edit right-to-left languages:
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
 
 (connection-local-set-profile-variables
  'remote-direct-async-process

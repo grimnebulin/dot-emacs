@@ -555,6 +555,12 @@ then reindent that form's bindings."
     (if (= ?* (char-before)) (delete-char -1) (insert "*"))
     (indent-region (point) (progn (forward-sexp) (point)))))
 
+(defun strip-kill-ring-string-properties ()
+  (thread-last kill-ring
+               (seq-filter #'stringp)
+               (mapcar #'substring-no-properties)
+               (setq kill-ring)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
