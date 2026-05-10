@@ -490,6 +490,13 @@
   (isearch-exit)
   (goto-char isearch-other-end))
 
+(repeat-mode 1)
+
+(defvar-keymap org-mode-repeat-map
+  :repeat t
+  "p" #'org-previous-link
+  "n" #'org-next-link)
+
 (use-package diminish)
 
 (diminish 'eldoc-mode)
