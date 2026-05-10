@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t; -*-
 
-(eval-when-compile (require 'cl))
+(require 'cl-lib)
 
 (cond
  ((display-graphic-p)
