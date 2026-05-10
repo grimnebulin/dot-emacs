@@ -186,6 +186,7 @@
 (setq read-process-output-max (* 1024 1024))
 (setq save-interprogram-paste-before-kill t)
 (setq kill-do-not-save-duplicates t)
+(setq isearch-lazy-count t)
 
 (dolist (ring '(search-ring regexp-search-ring kill-ring))
   (add-to-list 'savehist-additional-variables ring))
