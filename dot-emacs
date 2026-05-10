@@ -62,7 +62,10 @@
   :hook
   (minibuffer-setup . (lambda () (when (memq this-command '(eval-expression ibuffer-do-eval)) (enable-paredit-mode) (unbind-key (kbd "RET") paredit-mode-map))))
   (minibuffer-exit . (lambda () (bind-key (kbd "RET") #'paredit-newline paredit-mode-map)))
-  :bind (:map paredit-mode-map ("C-M-u" . #'push-mark-paredit-backward-up)))
+  :bind (:map paredit-mode-map
+              ("C-M-u" . #'push-mark-paredit-backward-up)
+              ("M-D" . #'paredit-splice-sexp)
+              ("M-s" . nil)))
 
 (use-package ack)
 
